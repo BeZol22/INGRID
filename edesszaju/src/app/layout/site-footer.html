@@ -1,0 +1,42 @@
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="col">
+      <div class="brand">
+        <span aria-hidden="true">🍰</span>
+        <span>Édesszájú</span>
+      </div>
+      <p class="lead">
+        Magyarország legnagyobb független cukrászda-ajánló és blog portálja.
+        Őszinte vélemények, friss receptek, gondosan válogatott helyek.
+      </p>
+    </div>
+    <div class="col">
+      <h4>Felfedezés</h4>
+      <ul>
+        <li><a routerLink="/cukraszdak">Cukrászdák</a></li>
+        <li><a routerLink="/blog">Blog &amp; hírek</a></li>
+        <li><a routerLink="/rolunk">Rólunk</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Kapcsolat</h4>
+      <ul>
+        <li>hello&#64;edesszaju.hu</li>
+        <li>+36 1 234 5678</li>
+        <li>1052 Budapest, Édes utca 1.</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Hírlevél</h4>
+      <p>Heti receptek és új helyek a postaládádba.</p>
+      <form (submit)="$event.preventDefault()">
+        <input type="email" placeholder="email@pelda.hu" aria-label="Email cím" />
+        <button type="submit">Feliratkozás</button>
+      </form>
+    </div>
+  </div>
+  <div class="container small">
+    <span>© {{ year }} Édesszájú. Minden jog fenntartva.</span>
+    <span>Készítve sok ❤️-tel és cukorral.</span>
+  </div>
+</footer>

@@ -1,0 +1,27 @@
+<div class="admin">
+  <aside class="sidebar">
+    <div class="brand">
+      <span aria-hidden="true">🍰</span>
+      <span>Édesszájú</span>
+      <span class="tag">admin</span>
+    </div>
+    <nav>
+      <a routerLink="/admin/attekintes" routerLinkActive="active">
+        <span class="ico">📊</span> Áttekintés
+      </a>
+      <a routerLink="/admin/cukraszdak" routerLinkActive="active">
+        <span class="ico">🏬</span> Cukrászdák
+      </a>
+      <a routerLink="/admin/blog" routerLinkActive="active">
+        <span class="ico">✍️</span> Blog cikkek
+      </a>
+    </nav>
+    <div class="bottom">
+      <a routerLink="/" class="back-link">← Vissza az oldalra</a>
+      <button class="btn ghost block" type="button" (click)="logout()">Kijelentkezés</button>
+    </div>
+  </aside>
+  <section class="content">
+    <router-outlet />
+  </section>
+</div>

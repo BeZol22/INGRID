@@ -1,0 +1,125 @@
+:host { display: block; }
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 800;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
+}
+
+.brand-icon {
+  font-size: 1.55rem;
+  filter: drop-shadow(0 2px 3px rgba(214, 51, 132, 0.25));
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+
+  a {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-soft);
+    font-weight: 500;
+    padding: 0.4rem 0.1rem;
+    transition: color 0.15s;
+
+    &:hover { color: var(--primary); }
+
+    &.active {
+      color: var(--primary);
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -4px;
+        height: 2px;
+        background: var(--primary);
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .cta {
+    background: var(--primary);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-weight: 600;
+
+    &:hover { background: var(--primary-dark); color: #fff; }
+    &.active::after { display: none; }
+  }
+}
+
+.burger {
+  display: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0.4rem;
+  flex-direction: column;
+  gap: 4px;
+
+  span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+  }
+}
+
+@media (max-width: 760px) {
+  .burger { display: inline-flex; }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.25rem 1.25rem;
+    gap: 1rem;
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s, transform 0.15s;
+
+    &.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    a { width: 100%; padding: 0.6rem 0; }
+    .cta { text-align: center; }
+  }
+}

@@ -1,0 +1,85 @@
+<section class="page-head">
+  <div class="container">
+    <h1>Cukrászdák</h1>
+    <p class="lead">
+      {{ filtered().length }} találat
+      @if (city()) { • {{ city() }} }
+      @if (query()) { • „{{ query() }}" }
+    </p>
+  </div>
+</section>
+
+<section class="container layout">
+  <aside class="filters">
+    <div class="filter-card">
+      <h4>Keresés</h4>
+      <div class="field">
+        <input
+          type="text"
+          [value]="query()"
+          (input)="query.set(asInput($event).value)"
+          placeholder="Név vagy specialitás" />
+      </div>
+
+      <h4>Város</h4>
+      <div class="chips">
+        <button
+          type="button"
+          class="chip"
+          [class.active]="city() === ''"
+          (click)="city.set('')">
+          Mind
+        </button>
+        @for (c of data.cities(); track c) {
+          <button
+            type="button"
+            class="chip"
+            [class.active]="city() === c"
+            (click)="city.set(c)">
+            {{ c }}
+          </button>
+        }
+      </div>
+
+      <h4>Árkategória</h4>
+      <div class="chips">
+        @for (p of priceOptions; track p.value) {
+          <button
+            type="button"
+            class="chip"
+            [class.active]="price() === p.value"
+            (click)="togglePrice(p.value)">
+            {{ p.label }}
+          </button>
+        }
+      </div>
+
+      <h4>Rendezés</h4>
+      <select
+        [value]="sort()"
+        (change)="sort.set(asSort($event))">
+        <option value="rating">Legjobb értékelés</option>
+        <option value="name">Név szerint A-Z</option>
+        <option value="newest">Legújabb</option>
+      </select>
+
+      <button class="btn ghost block reset" type="button" (click)="reset()">
+        Szűrők törlése
+      </button>
+    </div>
+  </aside>
+
+  <div class="results">
+    @if (filtered().length === 0) {
+      <div class="empty">
+        Nincs találat a megadott szűrésre. Próbálj kevesebb szűrőt!
+      </div>
+    } @else {
+      <div class="grid">
+        @for (shop of filtered(); track shop.id) {
+          <shop-card [shop]="shop" />
+        }
+      </div>
+    }
+  </div>
+</section>

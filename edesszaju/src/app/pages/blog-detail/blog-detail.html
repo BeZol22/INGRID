@@ -1,0 +1,49 @@
+@let p = post();
+@if (!p) {
+  <section class="container section">
+    <h1>Cikk nem található</h1>
+    <a class="btn" routerLink="/blog">Vissza a blogra</a>
+  </section>
+} @else {
+  <article class="post">
+    <header class="post-head" [style.backgroundImage]="'url(' + p.coverImageUrl + ')'">
+      <div class="overlay"></div>
+      <div class="container head-inner">
+        <a class="back" routerLink="/blog">← Blog</a>
+        <div class="tag-list">
+          @for (t of p.tags; track t) {
+            <span class="badge warm">#{{ t }}</span>
+          }
+        </div>
+        <h1>{{ p.title }}</h1>
+        <p class="meta">
+          {{ p.author }}
+          <span class="dot">•</span>
+          {{ p.publishedAt | date: 'longDate' : '' : 'hu' }}
+          <span class="dot">•</span>
+          {{ readingMinutes(p.content) }} perc olvasás
+        </p>
+      </div>
+    </header>
+    <div class="container post-body">
+      <p class="excerpt">{{ p.excerpt }}</p>
+      @for (para of paragraphs(); track $index) {
+        <p>{{ para }}</p>
+      }
+    </div>
+
+    <section class="container related">
+      <h3>További cikkek</h3>
+      <ul>
+        @for (other of related(); track other.id) {
+          <li>
+            <a [routerLink]="['/blog', other.slug]">
+              <span class="t">{{ other.title }}</span>
+              <span class="d">{{ other.publishedAt | date: 'mediumDate' : '' : 'hu' }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </section>
+  </article>
+}

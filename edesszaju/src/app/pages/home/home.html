@@ -1,0 +1,117 @@
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+  </div>
+  <div class="container hero-inner">
+    <span class="eyebrow">⭐ Több mint 250 cukrászda értékelése</span>
+    <h1>
+      Találd meg a tökéletes
+      <span class="accent">cukrászdát</span>
+      a környékeden
+    </h1>
+    <p class="lead">
+      Őszinte vélemények, friss receptek, gondosan válogatott helyek
+      Budapesttől Debrecenig. Az Édesszájú segít, hogy minden falat
+      a legjobb legyen.
+    </p>
+
+    <form class="search" (submit)="onSearch($event)">
+      <div class="search-field">
+        <span class="ico" aria-hidden="true">🔍</span>
+        <input
+          type="text"
+          [value]="query()"
+          (input)="query.set(asInput($event).value)"
+          placeholder="Cukrászda neve vagy specialitás" />
+      </div>
+      <div class="search-divider" aria-hidden="true"></div>
+      <div class="search-field">
+        <span class="ico" aria-hidden="true">📍</span>
+        <select [value]="city()" (change)="city.set(asSelect($event).value)">
+          <option value="">Bármely város</option>
+          @for (c of data.cities(); track c) {
+            <option [value]="c">{{ c }}</option>
+          }
+        </select>
+      </div>
+      <button class="btn" type="submit">Keresés</button>
+    </form>
+
+    <div class="hero-stats">
+      <div><strong>{{ data.shops().length }}</strong><span>cukrászda</span></div>
+      <div><strong>{{ totalReviews() }}</strong><span>vélemény</span></div>
+      <div><strong>{{ data.posts().length }}</strong><span>cikk</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Kiemelt cukrászdák</h2>
+        <p class="lead">A szerkesztőség által kézzel válogatva</p>
+      </div>
+      <a routerLink="/cukraszdak" class="link-arrow">Összes megtekintése →</a>
+    </div>
+    <div class="grid">
+      @for (shop of data.featuredShops(); track shop.id) {
+        <shop-card [shop]="shop" />
+      } @empty {
+        <p class="empty">Még nincs kiemelt cukrászda.</p>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section cream-band">
+  <div class="container">
+    <div class="how">
+      <div class="how-text">
+        <span class="eyebrow">Hogyan működik?</span>
+        <h2>Három lépés a tökéletes desszertig</h2>
+        <p>
+          Nem foglalsz, nem regisztrálsz - egyszerűen csak böngészed
+          Magyarország legjobb cukrászdáit, és kiválasztod a következő
+          édes pillanatot.
+        </p>
+      </div>
+      <div class="how-steps">
+        <div class="step">
+          <span class="num">1</span>
+          <h4>Keress</h4>
+          <p>Válassz várost vagy specialitást, és találd meg, ami pont jól esne.</p>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <h4>Olvass</h4>
+          <p>Nézd meg az őszinte értékeléseket, képeket és nyitvatartást.</p>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <h4>Kóstolj</h4>
+          <p>Menj el, kóstold meg, és oszd meg saját véleményed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Friss a blogról</h2>
+        <p class="lead">Receptek, ajánlók és cukrászda-történetek</p>
+      </div>
+      <a routerLink="/blog" class="link-arrow">Tovább a bloghoz →</a>
+    </div>
+    <div class="post-grid">
+      @for (post of data.latestPosts(); track post.id) {
+        <post-card [post]="post" />
+      }
+    </div>
+  </div>
+</section>

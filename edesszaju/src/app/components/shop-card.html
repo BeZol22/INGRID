@@ -1,0 +1,30 @@
+<a class="card" [routerLink]="['/cukraszdak', shop().slug]">
+  <div class="cover">
+    <img [src]="shop().imageUrl" [alt]="shop().name" loading="lazy" />
+    @if (shop().featured) {
+      <span class="ribbon">Kiemelt</span>
+    }
+    <span class="price">{{ shop().priceRange }}</span>
+  </div>
+  <div class="body">
+    <div class="row">
+      <span class="city">📍 {{ shop().city }}</span>
+      <span class="stars">
+        <span class="ico">★</span>
+        @if (avg() > 0) {
+          <strong>{{ avg() }}</strong>
+          <span class="muted">({{ shop().reviews.length }})</span>
+        } @else {
+          <span class="muted">Még nincs vélemény</span>
+        }
+      </span>
+    </div>
+    <h3>{{ shop().name }}</h3>
+    <p>{{ shop().description }}</p>
+    <div class="tag-list">
+      @for (s of shop().specialties.slice(0, 3); track s) {
+        <span class="badge ghost">{{ s }}</span>
+      }
+    </div>
+  </div>
+</a>

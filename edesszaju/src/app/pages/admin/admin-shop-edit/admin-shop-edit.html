@@ -1,0 +1,109 @@
+<header class="page-head">
+  <div>
+    <a routerLink="/admin/cukraszdak" class="back">← Vissza a listához</a>
+    <h1>{{ existing() ? 'Cukrászda szerkesztése' : 'Új cukrászda' }}</h1>
+  </div>
+  @if (existing(); as e) {
+    <button class="btn danger" type="button" (click)="remove(e)">Törlés</button>
+  }
+</header>
+
+<form (submit)="save($event)" class="card form">
+  <div class="form-grid">
+    <div class="field">
+      <label>Név *</label>
+      <input
+        type="text"
+        [value]="name()"
+        (input)="name.set(asInput($event).value)"
+        required />
+    </div>
+    <div class="field">
+      <label>Város *</label>
+      <input
+        type="text"
+        [value]="city()"
+        (input)="city.set(asInput($event).value)"
+        required />
+    </div>
+    <div class="field full">
+      <label>Cím</label>
+      <input
+        type="text"
+        [value]="address()"
+        (input)="address.set(asInput($event).value)" />
+    </div>
+    <div class="field full">
+      <label>Leírás *</label>
+      <textarea
+        [value]="description()"
+        (input)="description.set(asTextarea($event).value)"
+        required></textarea>
+    </div>
+    <div class="field">
+      <label>Borítókép URL</label>
+      <input
+        type="text"
+        [value]="imageUrl()"
+        (input)="imageUrl.set(asInput($event).value)"
+        placeholder="https://… vagy data:image/svg…" />
+      <span class="hint">Hagyd üresen az automatikus illusztrációhoz.</span>
+    </div>
+    <div class="field">
+      <label>Specialitások (vesszővel)</label>
+      <input
+        type="text"
+        [value]="specialtiesText()"
+        (input)="specialtiesText.set(asInput($event).value)"
+        placeholder="Dobos torta, Krémes, Macaron" />
+    </div>
+    <div class="field">
+      <label>Árkategória</label>
+      <select
+        [value]="priceRange()"
+        (change)="priceRange.set(asPrice($event))">
+        <option value="$">$ — Megfizethető</option>
+        <option value="$$">$$ — Közepes</option>
+        <option value="$$$">$$$ — Prémium</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Nyitvatartás</label>
+      <input
+        type="text"
+        [value]="openingHours()"
+        (input)="openingHours.set(asInput($event).value)"
+        placeholder="H-V: 09:00 - 19:00" />
+    </div>
+    <div class="field">
+      <label>Telefon</label>
+      <input
+        type="text"
+        [value]="phone()"
+        (input)="phone.set(asInput($event).value)" />
+    </div>
+    <div class="field">
+      <label>Weboldal</label>
+      <input
+        type="text"
+        [value]="website()"
+        (input)="website.set(asInput($event).value)" />
+    </div>
+    <div class="field full">
+      <label class="check">
+        <input
+          type="checkbox"
+          [checked]="featured()"
+          (change)="featured.set(asInput($event).checked)" />
+        Kiemelt cukrászda a főoldalon
+      </label>
+    </div>
+  </div>
+
+  <footer class="form-foot">
+    <a routerLink="/admin/cukraszdak" class="btn ghost">Mégse</a>
+    <button class="btn" type="submit" [disabled]="!canSave()">
+      {{ existing() ? 'Mentés' : 'Létrehozás' }}
+    </button>
+  </footer>
+</form>

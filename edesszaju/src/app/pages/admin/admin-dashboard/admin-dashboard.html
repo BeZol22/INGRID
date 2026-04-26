@@ -1,0 +1,72 @@
+<header class="page-head">
+  <div>
+    <h1>Áttekintés</h1>
+    <p class="muted">Üdv a vezérlőpulton. Itt találod a legfontosabb mutatókat.</p>
+  </div>
+  <div class="actions">
+    <button class="btn ghost" type="button" (click)="resetSeed()">Adatok visszaállítása</button>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat">
+    <div class="ico" aria-hidden="true">🏬</div>
+    <div>
+      <div class="num">{{ data.shops().length }}</div>
+      <div class="lbl">Cukrászda</div>
+    </div>
+  </div>
+  <div class="stat">
+    <div class="ico" aria-hidden="true">⭐</div>
+    <div>
+      <div class="num">{{ totalReviews() }}</div>
+      <div class="lbl">Vélemény</div>
+    </div>
+  </div>
+  <div class="stat">
+    <div class="ico" aria-hidden="true">✍️</div>
+    <div>
+      <div class="num">{{ data.posts().length }}</div>
+      <div class="lbl">Blog cikk</div>
+    </div>
+  </div>
+  <div class="stat">
+    <div class="ico" aria-hidden="true">🌟</div>
+    <div>
+      <div class="num">{{ data.featuredShops().length }}</div>
+      <div class="lbl">Kiemelt</div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <section class="panel">
+    <header>
+      <h3>Legutóbbi cukrászdák</h3>
+      <a routerLink="/admin/cukraszdak">Összes →</a>
+    </header>
+    <ul>
+      @for (s of recentShops(); track s.id) {
+        <li>
+          <a [routerLink]="['/admin/cukraszdak', s.id]">{{ s.name }}</a>
+          <span class="muted">{{ s.city }} • {{ s.createdAt | date: 'mediumDate' : '' : 'hu' }}</span>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="panel">
+    <header>
+      <h3>Legutóbbi cikkek</h3>
+      <a routerLink="/admin/blog">Összes →</a>
+    </header>
+    <ul>
+      @for (p of recentPosts(); track p.id) {
+        <li>
+          <a [routerLink]="['/admin/blog', p.id]">{{ p.title }}</a>
+          <span class="muted">{{ p.author }} • {{ p.publishedAt | date: 'mediumDate' : '' : 'hu' }}</span>
+        </li>
+      }
+    </ul>
+  </section>
+</div>

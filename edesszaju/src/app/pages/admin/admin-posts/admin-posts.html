@@ -1,0 +1,62 @@
+<header class="page-head">
+  <div>
+    <h1>Blog cikkek</h1>
+    <p class="muted">{{ filtered().length }} / {{ data.posts().length }} cikk</p>
+  </div>
+  <a class="btn" routerLink="/admin/blog/uj">+ Új cikk</a>
+</header>
+
+<div class="toolbar">
+  <input
+    type="text"
+    placeholder="Keresés címben, szerző szerint…"
+    [value]="query()"
+    (input)="query.set(asInput($event).value)" />
+</div>
+
+@if (filtered().length === 0) {
+  <div class="empty">Nincs találat.</div>
+} @else {
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Cikk</th>
+          <th>Szerző</th>
+          <th>Címkék</th>
+          <th>Megjelenés</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of filtered(); track p.id) {
+          <tr>
+            <td>
+              <div class="name">
+                <img [src]="p.coverImageUrl" [alt]="p.title" />
+                <div>
+                  <strong>{{ p.title }}</strong>
+                  <span class="slug">/blog/{{ p.slug }}</span>
+                </div>
+              </div>
+            </td>
+            <td>{{ p.author }}</td>
+            <td>
+              <div class="tags">
+                @for (t of p.tags; track t) {
+                  <span class="badge ghost">#{{ t }}</span>
+                }
+              </div>
+            </td>
+            <td class="muted">{{ p.publishedAt | date: 'mediumDate' : '' : 'hu' }}</td>
+            <td class="actions">
+              <a class="btn ghost sm" [routerLink]="['/admin/blog', p.id]">Szerkeszt</a>
+              <button class="btn ghost sm" type="button" (click)="duplicate(p.id)">Másol</button>
+              <button class="btn danger sm" type="button" (click)="remove(p)">Töröl</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

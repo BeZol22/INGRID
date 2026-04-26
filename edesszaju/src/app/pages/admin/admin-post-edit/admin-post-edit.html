@@ -1,0 +1,76 @@
+<header class="page-head">
+  <div>
+    <a routerLink="/admin/blog" class="back">← Vissza a listához</a>
+    <h1>{{ existing() ? 'Cikk szerkesztése' : 'Új cikk' }}</h1>
+  </div>
+  @if (existing(); as e) {
+    <button class="btn danger" type="button" (click)="remove(e)">Törlés</button>
+  }
+</header>
+
+<form (submit)="save($event)" class="card form">
+  <div class="form-grid">
+    <div class="field full">
+      <label>Cím *</label>
+      <input
+        type="text"
+        [value]="title()"
+        (input)="title.set(asInput($event).value)"
+        required />
+    </div>
+    <div class="field">
+      <label>Szerző</label>
+      <input
+        type="text"
+        [value]="author()"
+        (input)="author.set(asInput($event).value)" />
+    </div>
+    <div class="field">
+      <label>Megjelenés dátuma</label>
+      <input
+        type="date"
+        [value]="publishedAt()"
+        (input)="publishedAt.set(asInput($event).value)" />
+    </div>
+    <div class="field full">
+      <label>Borítókép URL</label>
+      <input
+        type="text"
+        [value]="coverImageUrl()"
+        (input)="coverImageUrl.set(asInput($event).value)"
+        placeholder="https://… vagy data:image/svg…" />
+      <span class="hint">Hagyd üresen az automatikus illusztrációhoz.</span>
+    </div>
+    <div class="field full">
+      <label>Címkék (vesszővel)</label>
+      <input
+        type="text"
+        [value]="tagsText()"
+        (input)="tagsText.set(asInput($event).value)"
+        placeholder="recept, klasszikus, torta" />
+    </div>
+    <div class="field full">
+      <label>Beharangozó (rövid összefoglaló) *</label>
+      <textarea
+        [value]="excerpt()"
+        (input)="excerpt.set(asTextarea($event).value)"
+        required></textarea>
+    </div>
+    <div class="field full">
+      <label>Tartalom *</label>
+      <textarea
+        class="long"
+        [value]="content()"
+        (input)="content.set(asTextarea($event).value)"
+        required></textarea>
+      <span class="hint">Új bekezdés egy üres sorral.</span>
+    </div>
+  </div>
+
+  <footer class="form-foot">
+    <a routerLink="/admin/blog" class="btn ghost">Mégse</a>
+    <button class="btn" type="submit" [disabled]="!canSave()">
+      {{ existing() ? 'Mentés' : 'Létrehozás' }}
+    </button>
+  </footer>
+</form>

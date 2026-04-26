@@ -1,0 +1,19 @@
+<a class="card" [routerLink]="['/blog', post().slug]">
+  <div class="cover">
+    <img [src]="post().coverImageUrl" [alt]="post().title" loading="lazy" />
+  </div>
+  <div class="body">
+    <div class="meta">
+      <span>{{ post().publishedAt | date: 'mediumDate' : '' : 'hu' }}</span>
+      <span>•</span>
+      <span>{{ post().author }}</span>
+    </div>
+    <h3>{{ post().title }}</h3>
+    <p>{{ post().excerpt }}</p>
+    <div class="tag-list">
+      @for (t of post().tags; track t) {
+        <span class="badge warm">#{{ t }}</span>
+      }
+    </div>
+  </div>
+</a>

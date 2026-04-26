@@ -1,0 +1,47 @@
+<section class="page-head">
+  <div class="container">
+    <span class="badge">Blog &amp; hírek</span>
+    <h1>Édes történetek a cukrászdák világából</h1>
+    <p class="lead">
+      Receptek, ajánlók, interjúk és szezonális trendek minden héten.
+    </p>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="filter-bar">
+    <input
+      type="text"
+      [value]="query()"
+      (input)="query.set(asInput($event).value)"
+      placeholder="Keress címben, szövegben vagy szerzőben…" />
+    <div class="tag-cloud">
+      <button
+        type="button"
+        class="chip"
+        [class.active]="tag() === ''"
+        (click)="tag.set('')">
+        Mind
+      </button>
+      @for (t of tags(); track t) {
+        <button
+          type="button"
+          class="chip"
+          [class.active]="tag() === t"
+          (click)="tag.set(tag() === t ? '' : t)">
+          #{{ t }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (filtered().length === 0) {
+    <div class="empty">Nincs találat. Próbálj más szűrőt!</div>
+  } @else {
+    <div class="grid">
+      @for (post of filtered(); track post.id) {
+        <post-card [post]="post" />
+      }
+    </div>
+  }
+</section>

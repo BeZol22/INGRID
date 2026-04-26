@@ -1,0 +1,51 @@
+:host { display: block; }
+
+.wrap {
+  min-height: calc(100vh - 240px);
+  display: grid;
+  place-items: center;
+  padding: 3rem 1.25rem;
+  background: linear-gradient(160deg, var(--cream) 0%, var(--cream-2) 100%);
+}
+
+.login {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem 2rem 2.25rem;
+  box-shadow: var(--shadow-md);
+
+  &:hover { transform: none; }
+
+  h1 {
+    font-size: 1.8rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .hint {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  code {
+    background: var(--cream);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+  }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text);
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+}
+
+.field-error { margin-bottom: 1rem; }
+
+.btn.block { margin-top: 0.5rem; }

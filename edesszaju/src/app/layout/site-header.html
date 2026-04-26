@@ -1,0 +1,29 @@
+<header class="header">
+  <div class="container header-inner">
+    <a routerLink="/" class="brand" (click)="closeMenu()">
+      <span class="brand-icon" aria-hidden="true">🍰</span>
+      <span class="brand-name">Édesszájú</span>
+    </a>
+
+    <button
+      class="burger"
+      type="button"
+      [attr.aria-expanded]="open()"
+      aria-label="Menü"
+      (click)="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" [class.open]="open()">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Főoldal</a>
+      <a routerLink="/cukraszdak" routerLinkActive="active" (click)="closeMenu()">Cukrászdák</a>
+      <a routerLink="/blog" routerLinkActive="active" (click)="closeMenu()">Blog</a>
+      <a routerLink="/rolunk" routerLinkActive="active" (click)="closeMenu()">Rólunk</a>
+      @if (auth.isLoggedIn()) {
+        <a routerLink="/admin" routerLinkActive="active" class="cta" (click)="closeMenu()">Admin</a>
+      } @else {
+        <a routerLink="/admin/belepes" routerLinkActive="active" class="cta" (click)="closeMenu()">Belépés</a>
+      }
+    </nav>
+  </div>
+</header>

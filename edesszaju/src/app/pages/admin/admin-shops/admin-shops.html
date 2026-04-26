@@ -1,0 +1,72 @@
+<header class="page-head">
+  <div>
+    <h1>Cukrászdák</h1>
+    <p class="muted">{{ filtered().length }} / {{ data.shops().length }} cukrászda</p>
+  </div>
+  <a class="btn" routerLink="/admin/cukraszdak/uj">+ Új cukrászda</a>
+</header>
+
+<div class="toolbar">
+  <input
+    type="text"
+    placeholder="Keresés név, város, specialitás szerint…"
+    [value]="query()"
+    (input)="query.set(asInput($event).value)" />
+</div>
+
+@if (filtered().length === 0) {
+  <div class="empty">Nincs találat.</div>
+} @else {
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Név</th>
+          <th>Város</th>
+          <th>Ár</th>
+          <th>Értékelés</th>
+          <th>Kiemelt</th>
+          <th>Létrehozva</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (s of filtered(); track s.id) {
+          <tr>
+            <td>
+              <div class="name">
+                <img [src]="s.imageUrl" [alt]="s.name" />
+                <div>
+                  <strong>{{ s.name }}</strong>
+                  <span class="slug">/{{ s.slug }}</span>
+                </div>
+              </div>
+            </td>
+            <td>{{ s.city }}</td>
+            <td>{{ s.priceRange }}</td>
+            <td>
+              @if (s.reviews.length) {
+                <span class="rating">★ {{ data.averageRating(s) }} <span class="muted">({{ s.reviews.length }})</span></span>
+              } @else {
+                <span class="muted">—</span>
+              }
+            </td>
+            <td>
+              @if (s.featured) {
+                <span class="badge">Igen</span>
+              } @else {
+                <span class="muted">—</span>
+              }
+            </td>
+            <td class="muted">{{ s.createdAt | date: 'mediumDate' : '' : 'hu' }}</td>
+            <td class="actions">
+              <a class="btn ghost sm" [routerLink]="['/admin/cukraszdak', s.id]">Szerkeszt</a>
+              <button class="btn ghost sm" type="button" (click)="duplicate(s.id)">Másol</button>
+              <button class="btn danger sm" type="button" (click)="remove(s)">Töröl</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

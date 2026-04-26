@@ -1,0 +1,37 @@
+<section class="wrap">
+  <div class="card login">
+    <a routerLink="/" class="logo">
+      <span aria-hidden="true">🍰</span>
+      <span>Édesszájú</span>
+    </a>
+    <h1>Admin belépés</h1>
+    <p class="hint">
+      Csak az oldal szerkesztői léphetnek be ide. Demó belépés:
+      <code>admin / edes123</code>
+    </p>
+    <form (submit)="submit($event)">
+      <div class="field">
+        <label>Felhasználó</label>
+        <input
+          type="text"
+          autocomplete="username"
+          [value]="username()"
+          (input)="username.set(asInput($event).value)"
+          required />
+      </div>
+      <div class="field">
+        <label>Jelszó</label>
+        <input
+          type="password"
+          autocomplete="current-password"
+          [value]="password()"
+          (input)="password.set(asInput($event).value)"
+          required />
+      </div>
+      @if (error()) {
+        <div class="field-error">{{ error() }}</div>
+      }
+      <button class="btn block" type="submit">Belépés</button>
+    </form>
+  </div>
+</section>

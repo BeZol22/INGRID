@@ -1,0 +1,134 @@
+@let s = shop();
+@if (!s) {
+  <section class="container section">
+    <h1>Nem találtuk a cukrászdát</h1>
+    <p>Lehet, hogy törölve lett. Nézz körül a többi helyen!</p>
+    <a class="btn" routerLink="/cukraszdak">Vissza a listához</a>
+  </section>
+} @else {
+  <article>
+    <section class="hero">
+      <img class="hero-img" [src]="s.imageUrl" [alt]="s.name" />
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <a class="back" routerLink="/cukraszdak">← Cukrászdák</a>
+        <div class="title-row">
+          <div>
+            <span class="badge warm">{{ s.city }}</span>
+            <h1>{{ s.name }}</h1>
+            <p class="addr">📍 {{ s.address }}</p>
+          </div>
+          <div class="rating-block">
+            <div class="rating-num">{{ avg() || '–' }}</div>
+            <div class="rating-stars">{{ starString() }}</div>
+            <div class="rating-count">{{ s.reviews.length }} vélemény</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container content">
+      <div class="main">
+        <h2>A cukrászdáról</h2>
+        <p class="desc">{{ s.description }}</p>
+
+        <h3>Specialitások</h3>
+        <div class="tag-list big">
+          @for (sp of s.specialties; track sp) {
+            <span class="badge">{{ sp }}</span>
+          }
+        </div>
+
+        <h3 class="reviews-title">Vélemények ({{ s.reviews.length }})</h3>
+
+        <form class="review-form" (submit)="submit($event)">
+          <h4>Írd meg a véleményed</h4>
+          <div class="form-grid">
+            <div class="field">
+              <label>Neved</label>
+              <input
+                type="text"
+                [value]="author()"
+                (input)="author.set(asInput($event).value)"
+                placeholder="Pl. Kovács Anna"
+                required />
+            </div>
+            <div class="field">
+              <label>Értékelés</label>
+              <div class="star-input">
+                @for (n of [1,2,3,4,5]; track n) {
+                  <button
+                    type="button"
+                    class="star-btn"
+                    [class.on]="n <= rating()"
+                    (click)="rating.set(n)"
+                    [attr.aria-label]="n + ' csillag'">★</button>
+                }
+              </div>
+            </div>
+            <div class="field full">
+              <label>Vélemény</label>
+              <textarea
+                [value]="comment()"
+                (input)="comment.set(asTextarea($event).value)"
+                placeholder="Mit kóstoltál? Milyen volt a kiszolgálás?"
+                required></textarea>
+            </div>
+          </div>
+          <button class="btn" type="submit">Vélemény küldése</button>
+        </form>
+
+        @if (s.reviews.length === 0) {
+          <p class="empty">Még nincs vélemény. Légy te az első!</p>
+        } @else {
+          <ul class="reviews">
+            @for (r of s.reviews; track r.id) {
+              <li class="review">
+                <div class="review-head">
+                  <strong>{{ r.author }}</strong>
+                  <span class="dot">•</span>
+                  <span class="when">{{ r.createdAt | date: 'mediumDate' : '' : 'hu' }}</span>
+                  <span class="r-stars">
+                    @for (i of [1,2,3,4,5]; track i) {
+                      <span [class.on]="i <= r.rating">★</span>
+                    }
+                  </span>
+                </div>
+                <p>{{ r.comment }}</p>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <aside class="side">
+        <div class="info-card">
+          <h4>Információk</h4>
+          <div class="info-row">
+            <span class="ico">🕒</span>
+            <div><strong>Nyitvatartás</strong><span>{{ s.openingHours }}</span></div>
+          </div>
+          <div class="info-row">
+            <span class="ico">📞</span>
+            <div><strong>Telefon</strong><span>{{ s.phone }}</span></div>
+          </div>
+          <div class="info-row">
+            <span class="ico">🌐</span>
+            <div><strong>Weboldal</strong><span>{{ s.website }}</span></div>
+          </div>
+          <div class="info-row">
+            <span class="ico">💰</span>
+            <div><strong>Árkategória</strong><span>{{ s.priceRange }}</span></div>
+          </div>
+          <a
+            class="btn block"
+            [href]="'https://maps.google.com/?q=' + encode(s.name + ' ' + s.address)"
+            target="_blank"
+            rel="noopener">
+            Útvonalterv 🚗
+          </a>
+        </div>
+      </aside>
+    </section>
+  </article>
+}
