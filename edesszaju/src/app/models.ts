@@ -24,6 +24,8 @@ export interface CakeShop {
   featured: boolean;
   reviews: Review[];
   createdAt: string;
+  lat?: number;
+  lng?: number;
 }
 
 export interface BlogPost {

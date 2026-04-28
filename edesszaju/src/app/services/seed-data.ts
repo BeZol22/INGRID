@@ -23,6 +23,8 @@ export const SEED_SHOPS: CakeShop[] = [
     name: 'Auguszt Cukrászda',
     city: 'Budapest',
     address: 'Kossuth Lajos utca 14-16.',
+    lat: 47.4936,
+    lng: 19.0540,
     description:
       'A főváros egyik legrégibb családi cukrászdája 1870 óta. Klasszikus magyar és francia desszertek, házi készítésű krémesek és Dobos-tortájuk legendás.',
     imageUrl: placeholder('Auguszt', 340),
@@ -56,6 +58,8 @@ export const SEED_SHOPS: CakeShop[] = [
     name: 'Gerbeaud Ház',
     city: 'Budapest',
     address: 'Vörösmarty tér 7-8.',
+    lat: 47.4965,
+    lng: 19.0518,
     description:
       'A Vörösmarty tér ikonikus cukrászdája. Csillogó vitrin, klasszikus bécsi és pesti desszertek, kiváló kávé. Turistáknak és helyieknek egyaránt élmény.',
     imageUrl: placeholder('Gerbeaud', 20),
@@ -82,6 +86,8 @@ export const SEED_SHOPS: CakeShop[] = [
     name: 'Szamos Marcipán',
     city: 'Szentendre',
     address: 'Dumtsa Jenő utca 12.',
+    lat: 47.6695,
+    lng: 19.0780,
     description:
       'A Szamos család marcipánkészítő hagyománya 1935 óta él. Saját készítésű marcipán figurák, torták és bonbonok, múzeummal egybekötve.',
     imageUrl: placeholder('Szamos', 280),
@@ -108,6 +114,8 @@ export const SEED_SHOPS: CakeShop[] = [
     name: 'Mihályi Patisserie',
     city: 'Budapest',
     address: 'Bartók Béla út 25.',
+    lat: 47.4815,
+    lng: 19.0533,
     description:
       'Modern francia ihletésű patisserie a XI. kerületben. Mihályi Bea kreatív sütijei, minimalista design, kiváló kávé.',
     imageUrl: placeholder('Mihályi', 320),
@@ -126,6 +134,8 @@ export const SEED_SHOPS: CakeShop[] = [
     name: 'Molnár Cukrászda',
     city: 'Szeged',
     address: 'Klauzál tér 5.',
+    lat: 46.2536,
+    lng: 20.1490,
     description:
       'Szeged szívében, családi vállalkozásként három generáció óta. Híres a házi készítésű somlóijukról és a friss gyümölcsös sütikről.',
     imageUrl: placeholder('Molnár', 180),
@@ -152,6 +162,8 @@ export const SEED_SHOPS: CakeShop[] = [
     name: 'Édes Mignon',
     city: 'Debrecen',
     address: 'Piac utca 32.',
+    lat: 47.5316,
+    lng: 21.6275,
     description:
       'Apró, hangulatos cukrászda Debrecen belvárosában. Saját receptúra szerinti mignonok, házi limonádék és különleges szezonális desszertek.',
     imageUrl: placeholder('Mignon', 30),

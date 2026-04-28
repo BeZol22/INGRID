@@ -73,9 +73,9 @@ export class SiteHeader {
             },
             {
               icon: 'navigation',
-              label: 'Vidéki gyöngyszemek',
-              desc: 'Szentendre, Szeged, Debrecen és még sok más.',
-              href: '/cukraszdak',
+              label: 'Térképes nézet',
+              desc: 'Cukrászdák a Google Térképen, egy kattintás távolságra.',
+              href: '/cukraszdak/terkep',
             },
             {
               icon: 'sparkle',

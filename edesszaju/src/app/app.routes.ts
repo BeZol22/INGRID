@@ -14,6 +14,12 @@ export const routes: Routes = [
     title: 'Cukrászdák - Édesszájú',
   },
   {
+    path: 'cukraszdak/terkep',
+    loadComponent: () =>
+      import('./pages/shops-map/shops-map').then((m) => m.ShopsMapPage),
+    title: 'Térképes nézet - Édesszájú',
+  },
+  {
     path: 'cukraszdak/:slug',
     loadComponent: () =>
       import('./pages/shop-detail/shop-detail').then((m) => m.ShopDetailPage),

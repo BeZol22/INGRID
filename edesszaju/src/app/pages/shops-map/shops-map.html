@@ -1,0 +1,141 @@
+<section class="page-head">
+  <div class="container">
+    <span class="badge">Térképes nézet</span>
+    <h1>Cukrászdák a térképen</h1>
+    <p class="lead">
+      {{ filtered().length }} cukrászda Magyarország minden szegletéből —
+      válassz egyet a listából, vagy kérd a legközelebbit.
+    </p>
+  </div>
+</section>
+
+<section class="container map-layout">
+  <aside class="map-sidebar">
+    <button
+      type="button"
+      class="locate-btn"
+      [class.is-active]="geoStatus() === 'ok'"
+      [disabled]="geoStatus() === 'loading'"
+      (click)="geoStatus() === 'ok' ? clearLocation() : requestLocation()">
+      @switch (geoStatus()) {
+        @case ('loading') {
+          <span class="locate-spinner" aria-hidden="true"></span>
+          Helyzeted lekérdezése…
+        }
+        @case ('ok') {
+          <app-icon name="check" />
+          Legközelebbi cukrászda kiválasztva
+        }
+        @default {
+          <app-icon name="navigation" />
+          Legközelebbi cukrászda
+        }
+      }
+    </button>
+
+    @if (geoStatus() === 'denied') {
+      <p class="geo-msg geo-msg--err">
+        A böngésző tiltja a helyhozzáférést. Engedélyezd a beállításokban,
+        vagy válassz manuálisan a listából.
+      </p>
+    } @else if (geoStatus() === 'unavailable') {
+      <p class="geo-msg geo-msg--err">
+        Nem sikerült meghatározni a helyzeted. Próbáld újra később.
+      </p>
+    } @else if (geoStatus() === 'ok' && selected(); as s) {
+      <p class="geo-msg geo-msg--ok">
+        @if (distanceKm(s); as d) {
+          <strong>{{ formatDistance(d) }}</strong> távolságra:
+        }
+        {{ s.name }}
+      </p>
+    }
+
+    <div class="map-search">
+      <app-icon name="search" class="ico" />
+      <input
+        type="text"
+        [value]="query()"
+        (input)="query.set(asInput($event).value)"
+        placeholder="Keresés cukrászdára vagy specialitásra…"
+        aria-label="Keresés" />
+    </div>
+
+    <div class="city-chips">
+      <button
+        type="button"
+        class="chip"
+        [class.active]="city() === ''"
+        (click)="city.set('')">
+        Mind
+      </button>
+      @for (c of data.cities(); track c) {
+        <button
+          type="button"
+          class="chip"
+          [class.active]="city() === c"
+          (click)="toggleCity(c)">
+          {{ c }}
+        </button>
+      }
+    </div>
+
+    <ul class="shop-list">
+      @for (shop of displayed(); track shop.id) {
+        <li>
+          <button
+            type="button"
+            class="shop-item"
+            [class.active]="selected()?.id === shop.id"
+            (click)="select(shop)">
+            <span class="shop-marker"><app-icon name="map-pin" /></span>
+            <span class="shop-meta">
+              <strong>{{ shop.name }}</strong>
+              <span>{{ shop.city }} · {{ shop.address }}</span>
+            </span>
+            @if (distanceKm(shop); as d) {
+              <span class="shop-distance">{{ formatDistance(d) }}</span>
+            }
+          </button>
+        </li>
+      } @empty {
+        <li class="empty">Nincs találat erre a szűrésre.</li>
+      }
+    </ul>
+  </aside>
+
+  <div class="map-frame">
+    <iframe
+      [src]="mapUrl()"
+      title="Google Térkép"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen></iframe>
+
+    @if (selected(); as s) {
+      <div class="map-card">
+        <div class="map-card-body">
+          <span class="map-card-eyebrow">
+            {{ s.city }}
+            @if (distanceKm(s); as d) {
+              · <strong>{{ formatDistance(d) }}</strong> tőled
+            }
+          </span>
+          <strong>{{ s.name }}</strong>
+          <p>{{ s.address }}</p>
+          <p class="hours"><app-icon name="clock" /> {{ s.openingHours }}</p>
+        </div>
+        <div class="map-card-actions">
+          <a [routerLink]="['/cukraszdak', s.slug]" class="btn btn-primary">
+            Részletek
+            <app-icon name="arrow-right" />
+          </a>
+          <a [href]="directionsUrl()" target="_blank" rel="noopener" class="btn btn-secondary">
+            <app-icon name="navigation" />
+            Útvonal
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</section>
