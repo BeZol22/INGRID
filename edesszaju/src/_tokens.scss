@@ -1,0 +1,322 @@
+// =============================================================================
+// Design tokens — generated from Figma (Mode/Value/Style)
+// All tokens exposed as CSS custom properties under :root.
+// =============================================================================
+
+:root {
+  // ---------------------------------------------------------------------------
+  // Primitives — Colors / Base
+  // ---------------------------------------------------------------------------
+  --color-base-white: #ffffff;
+  --color-base-black: #000000;
+  --color-base-transparent: rgba(255, 255, 255, 0);
+
+  // ---------------------------------------------------------------------------
+  // Primitives — Neutral
+  // ---------------------------------------------------------------------------
+  --color-neutral-50:  #f4f2f0;
+  --color-neutral-100: #eae6e2;
+  --color-neutral-200: #d5cec7;
+  --color-neutral-300: #bdb3a9;
+  --color-neutral-400: #9f9185;
+  --color-neutral-500: #827468;
+  --color-neutral-600: #695d53;
+  --color-neutral-700: #544a42;
+  --color-neutral-800: #3f3731;
+  --color-neutral-900: #2b2622;
+  --color-neutral-950: #212121;
+
+  // ---------------------------------------------------------------------------
+  // Primitives — Brand pink
+  // ---------------------------------------------------------------------------
+  --color-brand-pink-50:  #fdf5f6;
+  --color-brand-pink-100: #fbebee;
+  --color-brand-pink-200: #f8d6dc;
+  --color-brand-pink-300: #f1aec0;
+  --color-brand-pink-400: #fca6af; // 400-brand
+  --color-brand-pink-500: #e56e82;
+  --color-brand-pink-600: #d23955; // 600-brand
+  --color-brand-pink-700: #98293d;
+  --color-brand-pink-800: #7b2132;
+  --color-brand-pink-900: #4b141e;
+  --color-brand-pink-950: #320d14;
+
+  // ---------------------------------------------------------------------------
+  // Primitives — Brand brown
+  // ---------------------------------------------------------------------------
+  --color-brand-brown-50:  #f3ebe9;
+  --color-brand-brown-100: #e7d4ce;
+  --color-brand-brown-200: #d0ab9d;
+  --color-brand-brown-300: #b8826d;
+  --color-brand-brown-400: #94583e;
+  --color-brand-brown-500: #562914; // 500-brand
+  --color-brand-brown-600: #4a2311;
+  --color-brand-brown-700: #3e1d0e;
+  --color-brand-brown-800: #32170b;
+  --color-brand-brown-900: #1c0d06;
+  --color-brand-brown-950: #120804;
+
+  // ---------------------------------------------------------------------------
+  // Primitives — Brand cream
+  // ---------------------------------------------------------------------------
+  --color-brand-cream-50:  #fff9f4;
+  --color-brand-cream-100: #f5ebd9; // 100-brand (page bg)
+  --color-brand-cream-200: #ffead5; // 200-brand (text on brand)
+  --color-brand-cream-300: #eadcc2;
+  --color-brand-cream-400: #dec9a7;
+  --color-brand-cream-500: #d3b78d;
+  --color-brand-cream-600: #bfa37b;
+  --color-brand-cream-700: #a28b69;
+  --color-brand-cream-800: #7b6a50;
+  --color-brand-cream-900: #4a4030;
+  --color-brand-cream-950: #312b20;
+
+  // ---------------------------------------------------------------------------
+  // Primitives — Brand other (accents)
+  // ---------------------------------------------------------------------------
+  --color-brand-cherry: #81241f;
+  --color-brand-gold:   #e9d09a;
+
+  // ---------------------------------------------------------------------------
+  // Primitives — Status palettes
+  // ---------------------------------------------------------------------------
+  --color-blue-50:  #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: #172554;
+
+  --color-green-50:  #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-green-900: #14532d;
+  --color-green-950: #052e16;
+
+  --color-yellow-50:  #fefce8;
+  --color-yellow-100: #fef9c3;
+  --color-yellow-200: #fef08a;
+  --color-yellow-300: #fde047;
+  --color-yellow-400: #facc15;
+  --color-yellow-500: #eab308;
+  --color-yellow-600: #ca8a04;
+  --color-yellow-700: #a16207;
+  --color-yellow-800: #854d0e;
+  --color-yellow-900: #713f12;
+  --color-yellow-950: #422006;
+
+  --color-red-50:  #fef1f1;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
+  --color-red-950: #450a0a;
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Text
+  // ---------------------------------------------------------------------------
+  --text-primary:           #562914; // brand-brown 500
+  --text-primary-on-brand:  #ffead5; // brand-cream 200
+  --text-secondary:         #3f3731;
+  --text-secondary-hover:   #2b2622;
+  --text-secondary-on-brand:#fdf5f6;
+  --text-tertiary:          #544a42;
+  --text-tertiary-hover:    #3f3731;
+  --text-tertiary-on-brand: #fbebee;
+  --text-quaternary:        #695d53;
+  --text-quaternary-on-brand: #f8d6dc;
+  --text-white:             #ffffff;
+  --text-placeholder:       #695d53;
+  --text-brand-primary:     #4b141e; // pink 900
+  --text-brand-secondary:   #98293d; // pink 700
+  --text-brand-secondary-hover: #7b2132;
+  --text-brand-tertiary:    #d23955; // pink 600-brand
+  --text-info-primary:      #2563eb;
+  --text-success-primary:   #16a34a;
+  --text-warning-primary:   #ca8a04;
+  --text-error-primary:     #dc2626;
+  --text-error-primary-hover: #b91c1c;
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Border
+  // ---------------------------------------------------------------------------
+  --border-primary:        #bdb3a9; // neutral 300
+  --border-secondary:      #d5cec7; // neutral 200
+  --border-secondary-alt:  rgba(0, 0, 0, 0.10);
+  --border-tertiary:       #eae6e2; // neutral 100
+  --border-brand:          #e56e82;
+  --border-brand-alt:      #d23955;
+  --border-error:          #ef4444;
+  --border-error-subtle:   #fca5a5;
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Foreground (icons / inline shapes)
+  // ---------------------------------------------------------------------------
+  --fg-primary:           #2b2622;
+  --fg-secondary:         #544a42;
+  --fg-secondary-hover:   #3f3731;
+  --fg-tertiary:          #695d53;
+  --fg-tertiary-hover:    #544a42;
+  --fg-quaternary:        #9f9185;
+  --fg-quaternary-hover:  #827468;
+  --fg-white:             #ffffff;
+  --fg-brand-primary:     #d23955;
+  --fg-brand-secondary:   #e56e82;
+  --fg-brand-secondary-hover: #d23955;
+  --fg-error-primary:     #dc2626;
+  --fg-error-secondary:   #ef4444;
+  --fg-warning-primary:   #ca8a04;
+  --fg-warning-secondary: #eab308;
+  --fg-success-primary:   #16a34a;
+  --fg-success-secondary: #22c55e;
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Background
+  // ---------------------------------------------------------------------------
+  --bg-page:                  #f5ebd9; // brand-cream 100 — the warm app canvas
+  --bg-primary:               #fff9f4; // brand-cream 50 — surface / cards
+  --bg-primary-hover:         #e9d09a; // brand-gold
+  --bg-primary-solid:         #562914; // brand-brown 500
+  --bg-secondary:             #fff9f4;
+  --bg-secondary-alt:         #fdf5f6; // pink 50
+  --bg-secondary-hover:       #d5cec7;
+  --bg-secondary-solid:       #695d53;
+  --bg-tertiary:              #eae6e2;
+  --bg-quaternary:            #d5cec7;
+  --bg-overlay:               #212121;
+  --bg-brand-primary:         #fdf5f6;
+  --bg-brand-primary-alt:     #fdf5f6;
+  --bg-brand-secondary:       #fbebee;
+  --bg-brand-solid:           #d23955; // primary CTA
+  --bg-brand-solid-hover:     #98293d;
+  --bg-brand-section:         #562914; // dark brown sections (footer, admin)
+  --bg-brand-section-subtle:  #81241f; // cherry
+  --bg-error-primary:         #fef1f1;
+  --bg-error-secondary:       #fee2e2;
+  --bg-error-solid:           #dc2626;
+  --bg-error-solid-hover:     #b91c1c;
+  --bg-warning-primary:       #fefce8;
+  --bg-warning-secondary:     #fef9c3;
+  --bg-warning-solid:         #ca8a04;
+  --bg-success-primary:       #f0fdf4;
+  --bg-success-secondary:     #dcfce7;
+  --bg-success-solid:         #16a34a;
+
+  // ---------------------------------------------------------------------------
+  // Semantic — Effects
+  // ---------------------------------------------------------------------------
+  --focus-ring:        #1d4ed8;
+  --focus-ring-error:  #ef4444;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.10);
+  --shadow-md:
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 4px 8px -2px rgba(0, 0, 0, 0.10);
+  --shadow-lg:
+    0 4px 6px -2px rgba(0, 0, 0, 0.03),
+    0 12px 16px -4px rgba(0, 0, 0, 0.08),
+    0 4px 8px -4px rgba(0, 0, 0, 0.04);
+  --shadow-xl:
+    0 8px 8px -4px rgba(0, 0, 0, 0.03),
+    0 20px 24px -4px rgba(0, 0, 0, 0.08),
+    0 4px 8px -4px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 24px 48px -12px rgba(0, 0, 0, 0.18);
+  --shadow-3xl: 0 32px 64px -12px rgba(0, 0, 0, 0.14);
+
+  // ---------------------------------------------------------------------------
+  // Typography — families
+  // ---------------------------------------------------------------------------
+  --font-display: 'Literata', 'Georgia', serif;
+  --font-body:    'Albert Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Literata', 'Georgia', serif;
+  --font-accent:  'Aguafina Script', 'Brush Script MT', cursive;
+
+  // ---------------------------------------------------------------------------
+  // Typography — sizes / line-heights (matching Figma scale)
+  // ---------------------------------------------------------------------------
+  --text-xs-size: 0.75rem;   --text-xs-lh: 1.125rem;   // 12 / 18
+  --text-sm-size: 0.875rem;  --text-sm-lh: 1.25rem;    // 14 / 20
+  --text-md-size: 1rem;      --text-md-lh: 1.5rem;     // 16 / 24
+  --text-lg-size: 1.125rem;  --text-lg-lh: 1.75rem;    // 18 / 28
+  --text-xl-size: 1.25rem;   --text-xl-lh: 1.875rem;   // 20 / 30
+
+  --display-xs-size: 1.5rem;   --display-xs-lh: 2rem;     // 24 / 32
+  --display-sm-size: 1.875rem; --display-sm-lh: 2.375rem; // 30 / 38
+  --display-md-size: 2.25rem;  --display-md-lh: 2.75rem;  // 36 / 44
+  --display-lg-size: 3rem;     --display-lg-lh: 3.75rem;  // 48 / 60
+  --display-xl-size: 3.75rem;  --display-xl-lh: 4.5rem;   // 60 / 72
+  --display-2xl-size: 4.5rem;  --display-2xl-lh: 5.625rem;// 72 / 90
+
+  // ---------------------------------------------------------------------------
+  // Spacing scale (4px base)
+  // ---------------------------------------------------------------------------
+  --space-0:   0;
+  --space-0-5: 0.125rem; //  2
+  --space-1:   0.25rem;  //  4
+  --space-1-5: 0.375rem; //  6
+  --space-2:   0.5rem;   //  8
+  --space-3:   0.75rem;  // 12
+  --space-4:   1rem;     // 16
+  --space-5:   1.25rem;  // 20
+  --space-6:   1.5rem;   // 24
+  --space-8:   2rem;     // 32
+  --space-10:  2.5rem;   // 40
+  --space-12:  3rem;     // 48
+  --space-16:  4rem;     // 64
+  --space-20:  5rem;     // 80
+  --space-24:  6rem;     // 96
+  --space-32:  8rem;     // 128
+
+  // ---------------------------------------------------------------------------
+  // Radii (kept from prior system, now token-named)
+  // ---------------------------------------------------------------------------
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 8px; // buttons / badges / labels — flat 8px per design system
+
+  // ---------------------------------------------------------------------------
+  // Backwards-compat aliases (used by existing component SCSS)
+  // ---------------------------------------------------------------------------
+  --primary:       var(--bg-brand-solid);          // #d23955
+  --primary-dark:  var(--bg-brand-solid-hover);    // #98293d
+  --primary-soft:  var(--bg-brand-secondary);      // #fbebee
+  --accent:        var(--text-primary);            // #562914 brown
+  --accent-light:  var(--color-brand-brown-300);   // #b8826d
+  --cream:         var(--bg-primary);              // #fff9f4
+  --cream-2:       var(--bg-page);                 // #f5ebd9
+  --surface:       var(--color-base-white);
+  --surface-soft:  var(--bg-page);                 // page canvas
+  --surface-dark:  var(--bg-brand-section);        // dark brown section
+  --text:          var(--text-primary);            // brown
+  --text-soft:     var(--text-tertiary);
+  --text-muted:    var(--text-quaternary);
+  --text-on-dark:  var(--text-primary-on-brand);   // cream on brown
+  --border:        var(--border-tertiary);
+  --border-strong: var(--border-secondary);
+  --warning:       var(--fg-warning-primary);
+  --success:       var(--fg-success-primary);
+  --danger:        var(--fg-error-primary);
+  --font-serif:    var(--font-display);            // legacy alias
+  --font-sans:     var(--font-body);               // legacy alias
+}

@@ -9,7 +9,7 @@
     <header class="post-head" [style.backgroundImage]="'url(' + p.coverImageUrl + ')'">
       <div class="overlay"></div>
       <div class="container head-inner">
-        <a class="back" routerLink="/blog">← Blog</a>
+        <a class="back" routerLink="/blog"><app-icon name="arrow-left" /> Blog</a>
         <div class="tag-list">
           @for (t of p.tags; track t) {
             <span class="badge warm">#{{ t }}</span>

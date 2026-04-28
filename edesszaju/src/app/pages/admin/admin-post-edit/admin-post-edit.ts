@@ -2,10 +2,11 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { Router, RouterLink } from '@angular/router';
 import { DataService } from '../../../services/data.service';
 import { BlogPost } from '../../../models';
+import { Icon } from '../../../components/icon';
 
 @Component({
   selector: 'page-admin-post-edit',
-  imports: [RouterLink],
+  imports: [RouterLink, Icon],
   templateUrl: './admin-post-edit.html',
   styleUrl: './admin-post-edit.scss',
 })

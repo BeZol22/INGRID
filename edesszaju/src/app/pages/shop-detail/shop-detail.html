@@ -11,16 +11,20 @@
       <img class="hero-img" [src]="s.imageUrl" [alt]="s.name" />
       <div class="hero-overlay"></div>
       <div class="container hero-content">
-        <a class="back" routerLink="/cukraszdak">← Cukrászdák</a>
+        <a class="back" routerLink="/cukraszdak"><app-icon name="arrow-left" /> Cukrászdák</a>
         <div class="title-row">
           <div>
             <span class="badge warm">{{ s.city }}</span>
             <h1>{{ s.name }}</h1>
-            <p class="addr">📍 {{ s.address }}</p>
+            <p class="addr"><app-icon name="map-pin" /> {{ s.address }}</p>
           </div>
           <div class="rating-block">
             <div class="rating-num">{{ avg() || '–' }}</div>
-            <div class="rating-stars">{{ starString() }}</div>
+            <div class="rating-stars">
+              @for (n of [1,2,3,4,5]; track n) {
+                <app-icon [name]="n <= roundedAvg() ? 'star' : 'star-outline'" />
+              }
+            </div>
             <div class="rating-count">{{ s.reviews.length }} vélemény</div>
           </div>
         </div>
@@ -62,7 +66,9 @@
                     class="star-btn"
                     [class.on]="n <= rating()"
                     (click)="rating.set(n)"
-                    [attr.aria-label]="n + ' csillag'">★</button>
+                    [attr.aria-label]="n + ' csillag'">
+                    <app-icon [name]="n <= rating() ? 'star' : 'star-outline'" />
+                  </button>
                 }
               </div>
             </div>
@@ -90,7 +96,7 @@
                   <span class="when">{{ r.createdAt | date: 'mediumDate' : '' : 'hu' }}</span>
                   <span class="r-stars">
                     @for (i of [1,2,3,4,5]; track i) {
-                      <span [class.on]="i <= r.rating">★</span>
+                      <app-icon [name]="i <= r.rating ? 'star' : 'star-outline'" [class.on]="i <= r.rating" />
                     }
                   </span>
                 </div>
@@ -105,19 +111,19 @@
         <div class="info-card">
           <h4>Információk</h4>
           <div class="info-row">
-            <span class="ico">🕒</span>
+            <app-icon name="clock" class="ico" />
             <div><strong>Nyitvatartás</strong><span>{{ s.openingHours }}</span></div>
           </div>
           <div class="info-row">
-            <span class="ico">📞</span>
+            <app-icon name="phone" class="ico" />
             <div><strong>Telefon</strong><span>{{ s.phone }}</span></div>
           </div>
           <div class="info-row">
-            <span class="ico">🌐</span>
+            <app-icon name="globe" class="ico" />
             <div><strong>Weboldal</strong><span>{{ s.website }}</span></div>
           </div>
           <div class="info-row">
-            <span class="ico">💰</span>
+            <app-icon name="tag" class="ico" />
             <div><strong>Árkategória</strong><span>{{ s.priceRange }}</span></div>
           </div>
           <a
@@ -125,7 +131,7 @@
             [href]="'https://maps.google.com/?q=' + encode(s.name + ' ' + s.address)"
             target="_blank"
             rel="noopener">
-            Útvonalterv 🚗
+            Útvonalterv <app-icon name="navigation" />
           </a>
         </div>
       </aside>

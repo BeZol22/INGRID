@@ -1,23 +1,23 @@
 <div class="admin">
   <aside class="sidebar">
     <div class="brand">
-      <span aria-hidden="true">🍰</span>
+      <app-icon name="cake" class="brand-icon" />
       <span>Édesszájú</span>
       <span class="tag">admin</span>
     </div>
     <nav>
       <a routerLink="/admin/attekintes" routerLinkActive="active">
-        <span class="ico">📊</span> Áttekintés
+        <app-icon name="chart" class="ico" /> Áttekintés
       </a>
       <a routerLink="/admin/cukraszdak" routerLinkActive="active">
-        <span class="ico">🏬</span> Cukrászdák
+        <app-icon name="store" class="ico" /> Cukrászdák
       </a>
       <a routerLink="/admin/blog" routerLinkActive="active">
-        <span class="ico">✍️</span> Blog cikkek
+        <app-icon name="pencil" class="ico" /> Blog cikkek
       </a>
     </nav>
     <div class="bottom">
-      <a routerLink="/" class="back-link">← Vissza az oldalra</a>
+      <a routerLink="/" class="back-link"><app-icon name="arrow-left" /> Vissza az oldalra</a>
       <button class="btn ghost block" type="button" (click)="logout()">Kijelentkezés</button>
     </div>
   </aside>

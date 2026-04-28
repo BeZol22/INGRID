@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { Icon } from '../../../components/icon';
 
 @Component({
   selector: 'page-admin-login',
-  imports: [RouterLink],
+  imports: [RouterLink, Icon],
   templateUrl: './admin-login.html',
   styleUrl: './admin-login.scss',
 })

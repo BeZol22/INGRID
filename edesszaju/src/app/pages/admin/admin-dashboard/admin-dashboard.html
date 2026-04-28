@@ -10,28 +10,28 @@
 
 <div class="stats">
   <div class="stat">
-    <div class="ico" aria-hidden="true">🏬</div>
+    <div class="ico"><app-icon name="store" /></div>
     <div>
       <div class="num">{{ data.shops().length }}</div>
       <div class="lbl">Cukrászda</div>
     </div>
   </div>
   <div class="stat">
-    <div class="ico" aria-hidden="true">⭐</div>
+    <div class="ico"><app-icon name="star" /></div>
     <div>
       <div class="num">{{ totalReviews() }}</div>
       <div class="lbl">Vélemény</div>
     </div>
   </div>
   <div class="stat">
-    <div class="ico" aria-hidden="true">✍️</div>
+    <div class="ico"><app-icon name="pencil" /></div>
     <div>
       <div class="num">{{ data.posts().length }}</div>
       <div class="lbl">Blog cikk</div>
     </div>
   </div>
   <div class="stat">
-    <div class="ico" aria-hidden="true">🌟</div>
+    <div class="ico"><app-icon name="sparkle" /></div>
     <div>
       <div class="num">{{ data.featuredShops().length }}</div>
       <div class="lbl">Kiemelt</div>
@@ -43,7 +43,7 @@
   <section class="panel">
     <header>
       <h3>Legutóbbi cukrászdák</h3>
-      <a routerLink="/admin/cukraszdak">Összes →</a>
+      <a routerLink="/admin/cukraszdak">Összes <app-icon name="arrow-right" /></a>
     </header>
     <ul>
       @for (s of recentShops(); track s.id) {
@@ -58,7 +58,7 @@
   <section class="panel">
     <header>
       <h3>Legutóbbi cikkek</h3>
-      <a routerLink="/admin/blog">Összes →</a>
+      <a routerLink="/admin/blog">Összes <app-icon name="arrow-right" /></a>
     </header>
     <ul>
       @for (p of recentPosts(); track p.id) {

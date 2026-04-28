@@ -2,10 +2,11 @@ import { Component, computed, inject, input, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../services/data.service';
+import { Icon } from '../../components/icon';
 
 @Component({
   selector: 'page-shop-detail',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, Icon],
   templateUrl: './shop-detail.html',
   styleUrl: './shop-detail.scss',
 })
@@ -24,10 +25,7 @@ export class ShopDetailPage {
     return s ? this.data.averageRating(s) : 0;
   });
 
-  protected readonly starString = computed(() => {
-    const v = Math.round(this.avg());
-    return '★★★★★'.slice(0, v) + '☆☆☆☆☆'.slice(0, 5 - v);
-  });
+  protected readonly roundedAvg = computed(() => Math.round(this.avg()));
 
   protected readonly author = signal('');
   protected readonly comment = signal('');

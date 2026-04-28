@@ -28,8 +28,10 @@
     width: 100%;
     padding: 0.7rem 1rem;
     border: 1px solid var(--border-strong);
-    border-radius: 999px;
+    border-radius: var(--radius-sm);
     font: inherit;
+    font-size: var(--text-xl-size);
+    line-height: var(--text-xl-lh);
     background: #fff;
     outline: none;
 
@@ -60,7 +62,7 @@
   border: 1px solid var(--border-strong);
   color: var(--text-soft);
   padding: 0.35rem 0.85rem;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
   cursor: pointer;
 

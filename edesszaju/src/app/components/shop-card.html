@@ -8,9 +8,9 @@
   </div>
   <div class="body">
     <div class="row">
-      <span class="city">📍 {{ shop().city }}</span>
+      <span class="city"><app-icon name="map-pin" /> {{ shop().city }}</span>
       <span class="stars">
-        <span class="ico">★</span>
+        <app-icon name="star" class="ico" />
         @if (avg() > 0) {
           <strong>{{ avg() }}</strong>
           <span class="muted">({{ shop().reviews.length }})</span>

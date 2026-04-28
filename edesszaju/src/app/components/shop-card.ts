@@ -2,10 +2,11 @@ import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CakeShop } from '../models';
 import { DataService } from '../services/data.service';
+import { Icon } from './icon';
 
 @Component({
   selector: 'shop-card',
-  imports: [RouterLink],
+  imports: [RouterLink, Icon],
   templateUrl: './shop-card.html',
   styleUrl: './shop-card.scss',
 })

@@ -1,49 +1,47 @@
 <section class="hero">
-  <div class="hero-bg" aria-hidden="true">
-    <span class="blob b1"></span>
-    <span class="blob b2"></span>
-    <span class="blob b3"></span>
-  </div>
-  <div class="container hero-inner">
-    <span class="eyebrow">⭐ Több mint 250 cukrászda értékelése</span>
-    <h1>
-      Találd meg a tökéletes
-      <span class="accent">cukrászdát</span>
-      a környékeden
-    </h1>
-    <p class="lead">
-      Őszinte vélemények, friss receptek, gondosan válogatott helyek
-      Budapesttől Debrecenig. Az Édesszájú segít, hogy minden falat
-      a legjobb legyen.
-    </p>
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <h1>
+        Fedezd fel a finom
+        <span class="accent">sütemények</span>
+        művészetét.
+      </h1>
+      <p class="lead">
+        Válogatott cukrászdák, kézműves pékségek és rejtett kincsek.
+        Érzéki utazás a világ legkiválóbb süteményei között.
+      </p>
 
-    <form class="search" (submit)="onSearch($event)">
-      <div class="search-field">
-        <span class="ico" aria-hidden="true">🔍</span>
+      <form class="search" (submit)="onSearch($event)">
+        <app-icon name="search" class="search-ico" />
         <input
           type="text"
           [value]="query()"
           (input)="query.set(asInput($event).value)"
-          placeholder="Cukrászda neve vagy specialitás" />
-      </div>
-      <div class="search-divider" aria-hidden="true"></div>
-      <div class="search-field">
-        <span class="ico" aria-hidden="true">📍</span>
-        <select [value]="city()" (change)="city.set(asSelect($event).value)">
-          <option value="">Bármely város</option>
-          @for (c of data.cities(); track c) {
-            <option [value]="c">{{ c }}</option>
-          }
-        </select>
-      </div>
-      <button class="btn" type="submit">Keresés</button>
-    </form>
+          placeholder="Keress sütit, várost vagy kategóriát…"
+          aria-label="Keresés" />
+        <button class="search-submit" type="submit">Keresés</button>
+      </form>
 
-    <div class="hero-stats">
-      <div><strong>{{ data.shops().length }}</strong><span>cukrászda</span></div>
-      <div><strong>{{ totalReviews() }}</strong><span>vélemény</span></div>
-      <div><strong>{{ data.posts().length }}</strong><span>cikk</span></div>
+      <div class="hero-cta">
+        <a class="btn secondary" routerLink="/cukraszdak">
+          <app-icon name="map-pin" /> Térképes nézet
+        </a>
+      </div>
     </div>
+
+    @if (spotlight(); as s) {
+      <a class="hero-feature" [routerLink]="['/cukraszdak', s.slug]" aria-label="Kiemelt cukrászda megnyitása">
+        <img class="hero-img" [src]="s.imageUrl" [alt]="s.name" />
+        <div class="hero-card">
+          <span class="hero-card-ico"><app-icon name="cake" /></span>
+          <div class="hero-card-text">
+            <strong>{{ s.name }}</strong>
+            <span>{{ subtitle(s.priceRange) }}</span>
+          </div>
+          <span class="hero-card-arrow"><app-icon name="arrow-right" /></span>
+        </div>
+      </a>
+    }
   </div>
 </section>
 
@@ -54,7 +52,7 @@
         <h2>Kiemelt cukrászdák</h2>
         <p class="lead">A szerkesztőség által kézzel válogatva</p>
       </div>
-      <a routerLink="/cukraszdak" class="link-arrow">Összes megtekintése →</a>
+      <a routerLink="/cukraszdak" class="link-arrow">Összes megtekintése <app-icon name="arrow-right" /></a>
     </div>
     <div class="grid">
       @for (shop of data.featuredShops(); track shop.id) {
@@ -106,7 +104,7 @@
         <h2>Friss a blogról</h2>
         <p class="lead">Receptek, ajánlók és cukrászda-történetek</p>
       </div>
-      <a routerLink="/blog" class="link-arrow">Tovább a bloghoz →</a>
+      <a routerLink="/blog" class="link-arrow">Tovább a bloghoz <app-icon name="arrow-right" /></a>
     </div>
     <div class="post-grid">
       @for (post of data.latestPosts(); track post.id) {

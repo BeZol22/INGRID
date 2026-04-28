@@ -3,7 +3,7 @@
     <h1>Cukrászdák</h1>
     <p class="muted">{{ filtered().length }} / {{ data.shops().length }} cukrászda</p>
   </div>
-  <a class="btn" routerLink="/admin/cukraszdak/uj">+ Új cukrászda</a>
+  <a class="btn" routerLink="/admin/cukraszdak/uj"><app-icon name="plus" /> Új cukrászda</a>
 </header>
 
 <div class="toolbar">
@@ -46,7 +46,7 @@
             <td>{{ s.priceRange }}</td>
             <td>
               @if (s.reviews.length) {
-                <span class="rating">★ {{ data.averageRating(s) }} <span class="muted">({{ s.reviews.length }})</span></span>
+                <span class="rating"><app-icon name="star" /> {{ data.averageRating(s) }} <span class="muted">({{ s.reviews.length }})</span></span>
               } @else {
                 <span class="muted">—</span>
               }

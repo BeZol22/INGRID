@@ -1,29 +1,170 @@
-<header class="header">
+<header class="header" [class.is-open]="submenu() !== null" (mouseleave)="closeAll()">
   <div class="container header-inner">
-    <a routerLink="/" class="brand" (click)="closeMenu()">
-      <span class="brand-icon" aria-hidden="true">🍰</span>
+    <a routerLink="/" class="brand" (click)="closeMobile()">
+      <app-icon name="cake" class="brand-icon" />
       <span class="brand-name">Édesszájú</span>
     </a>
+
+    <nav class="nav-desktop" aria-label="Főnavigáció">
+      @for (item of navOrder; track item.key) {
+        <button
+          type="button"
+          class="nav-trigger"
+          [class.active]="submenu() === item.key"
+          [attr.aria-expanded]="submenu() === item.key"
+          (mouseenter)="openSubmenu(item.key)"
+          (focus)="openSubmenu(item.key)"
+          (click)="toggleSubmenu(item.key)">
+          {{ item.label }}
+          <app-icon name="chevron-down" class="chev" />
+        </button>
+      }
+      <a
+        routerLink="/rolunk"
+        routerLinkActive="active"
+        class="nav-link"
+        (mouseenter)="closeAll()"
+        (focus)="closeAll()">
+        Rólunk
+      </a>
+    </nav>
+
+    <div class="header-cta">
+      @if (auth.isLoggedIn()) {
+        <a routerLink="/admin" class="btn btn-secondary" (click)="closeMobile()">Admin</a>
+        <button type="button" class="btn btn-primary" (click)="auth.logout(); closeMobile()">
+          Kilépés
+        </button>
+      } @else {
+        <a routerLink="/admin/belepes" class="btn btn-secondary" (click)="closeMobile()">Belépés</a>
+        <a routerLink="/admin/belepes" class="btn btn-primary" (click)="closeMobile()">Regisztráció</a>
+      }
+    </div>
 
     <button
       class="burger"
       type="button"
-      [attr.aria-expanded]="open()"
+      [attr.aria-expanded]="mobileOpen()"
       aria-label="Menü"
-      (click)="toggleMenu()">
-      <span></span><span></span><span></span>
+      (click)="toggleMobile()">
+      <app-icon [name]="mobileOpen() ? 'close' : 'menu'" />
     </button>
+  </div>
 
-    <nav class="nav" [class.open]="open()">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Főoldal</a>
-      <a routerLink="/cukraszdak" routerLinkActive="active" (click)="closeMenu()">Cukrászdák</a>
-      <a routerLink="/blog" routerLinkActive="active" (click)="closeMenu()">Blog</a>
-      <a routerLink="/rolunk" routerLinkActive="active" (click)="closeMenu()">Rólunk</a>
-      @if (auth.isLoggedIn()) {
-        <a routerLink="/admin" routerLinkActive="active" class="cta" (click)="closeMenu()">Admin</a>
-      } @else {
-        <a routerLink="/admin/belepes" routerLinkActive="active" class="cta" (click)="closeMenu()">Belépés</a>
+  @for (item of navOrder; track item.key) {
+    <div
+      class="megamenu"
+      [class.open]="submenu() === item.key"
+      [attr.aria-hidden]="submenu() !== item.key">
+      <div class="container megamenu-grid">
+        @for (group of menus[item.key].groups; track group.title) {
+          <div class="megamenu-col">
+            <h6 class="megamenu-title">{{ group.title }}</h6>
+            <ul class="megamenu-links">
+              @for (link of group.links; track link.label) {
+                <li>
+                  <a
+                    [routerLink]="link.href"
+                    [queryParams]="link.queryParams ?? null"
+                    (click)="closeAll()">
+                    <span class="megamenu-icon">
+                      <app-icon [name]="link.icon" />
+                    </span>
+                    <span class="megamenu-text">
+                      <strong>{{ link.label }}</strong>
+                      <span>{{ link.desc }}</span>
+                    </span>
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+        <a
+          class="megamenu-promo"
+          [routerLink]="menus[item.key].promo.href"
+          (click)="closeAll()">
+          <div class="megamenu-promo-img">
+            <app-icon name="cake" />
+          </div>
+          <div class="megamenu-promo-body">
+            <span class="megamenu-promo-badge">{{ menus[item.key].promo.badge }}</span>
+            <strong>{{ menus[item.key].promo.title }}</strong>
+            <p>{{ menus[item.key].promo.text }}</p>
+            <span class="megamenu-promo-cta">
+              {{ menus[item.key].promo.cta }}
+              <app-icon name="arrow-right" />
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  }
+
+  <div class="mobile-drawer" [class.open]="mobileOpen()" [attr.aria-hidden]="!mobileOpen()">
+    <nav class="mobile-nav" aria-label="Mobil navigáció">
+      @for (item of navOrder; track item.key) {
+        <div class="mobile-section" [class.expanded]="submenu() === item.key">
+          <button
+            type="button"
+            class="mobile-trigger"
+            [attr.aria-expanded]="submenu() === item.key"
+            (click)="toggleSubmenu(item.key)">
+            <span>{{ item.label }}</span>
+            <app-icon name="chevron-down" class="chev" />
+          </button>
+          <div class="mobile-section-body">
+            @for (group of menus[item.key].groups; track group.title) {
+              <h6 class="mobile-group-title">{{ group.title }}</h6>
+              <ul class="mobile-group-links">
+                @for (link of group.links; track link.label) {
+                  <li>
+                    <a
+                      [routerLink]="link.href"
+                      [queryParams]="link.queryParams ?? null"
+                      (click)="closeMobile()">
+                      <span class="mobile-icon">
+                        <app-icon [name]="link.icon" />
+                      </span>
+                      {{ link.label }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
       }
+      <a
+        routerLink="/rolunk"
+        routerLinkActive="active"
+        class="mobile-link"
+        (click)="closeMobile()">
+        Rólunk
+      </a>
     </nav>
+
+    <div class="mobile-cta">
+      @if (auth.isLoggedIn()) {
+        <a routerLink="/admin" class="btn btn-primary" (click)="closeMobile()">Admin</a>
+        <button type="button" class="btn btn-secondary" (click)="auth.logout(); closeMobile()">
+          Kilépés
+        </button>
+      } @else {
+        <a routerLink="/admin/belepes" class="btn btn-primary" (click)="closeMobile()">
+          Regisztráció
+        </a>
+        <a routerLink="/admin/belepes" class="btn btn-secondary" (click)="closeMobile()">
+          Belépés
+        </a>
+      }
+    </div>
+  </div>
+
+  <div
+    class="header-backdrop"
+    [class.show]="submenu() !== null || mobileOpen()"
+    (click)="closeAll(); closeMobile()"
+    aria-hidden="true">
   </div>
 </header>

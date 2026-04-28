@@ -2,10 +2,11 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../../services/data.service';
+import { Icon } from '../../../components/icon';
 
 @Component({
   selector: 'page-admin-posts',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, Icon],
   templateUrl: './admin-posts.html',
   styleUrl: './admin-posts.scss',
 })
