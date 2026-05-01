@@ -8,6 +8,20 @@
 @let link = routerLink();
 @let url = href();
 
+<ng-template #content>
+  @if (busy) {
+    <app-spinner class="btn__spinner" />
+  } @else if (iStart) {
+    <app-icon class="btn__icon" [name]="iStart" />
+  }
+  @if (!only) {
+    <span class="btn__label"><ng-content /></span>
+  }
+  @if (!busy && !only && iEnd) {
+    <app-icon class="btn__icon" [name]="iEnd" />
+  }
+</ng-template>
+
 @if (link !== null) {
   <a
     [routerLink]="link"
@@ -17,17 +31,7 @@
     [attr.aria-busy]="busy ? 'true' : null"
     [attr.tabindex]="isDisabled ? -1 : null"
     (click)="onClick($event)">
-    @if (busy) {
-      <app-spinner class="btn__spinner" />
-    } @else if (iStart) {
-      <app-icon class="btn__icon" [name]="iStart" />
-    }
-    @if (!only) {
-      <span class="btn__label"><ng-content /></span>
-    }
-    @if (!busy && !only && iEnd) {
-      <app-icon class="btn__icon" [name]="iEnd" />
-    }
+    <ng-container *ngTemplateOutlet="content" />
   </a>
 } @else if (url !== null) {
   <a
@@ -40,17 +44,7 @@
     [attr.aria-busy]="busy ? 'true' : null"
     [attr.tabindex]="isDisabled ? -1 : null"
     (click)="onClick($event)">
-    @if (busy) {
-      <app-spinner class="btn__spinner" />
-    } @else if (iStart) {
-      <app-icon class="btn__icon" [name]="iStart" />
-    }
-    @if (!only) {
-      <span class="btn__label"><ng-content /></span>
-    }
-    @if (!busy && !only && iEnd) {
-      <app-icon class="btn__icon" [name]="iEnd" />
-    }
+    <ng-container *ngTemplateOutlet="content" />
   </a>
 } @else {
   <button
@@ -60,16 +54,6 @@
     [attr.aria-label]="label"
     [attr.aria-busy]="busy ? 'true' : null"
     (click)="onClick($event)">
-    @if (busy) {
-      <app-spinner class="btn__spinner" />
-    } @else if (iStart) {
-      <app-icon class="btn__icon" [name]="iStart" />
-    }
-    @if (!only) {
-      <span class="btn__label"><ng-content /></span>
-    }
-    @if (!busy && !only && iEnd) {
-      <app-icon class="btn__icon" [name]="iEnd" />
-    }
+    <ng-container *ngTemplateOutlet="content" />
   </button>
 }

@@ -1,4 +1,5 @@
 import { Component, computed, input, output } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Icon, IconName } from '../icon/icon';
 import { Spinner } from '../spinner/spinner';
@@ -10,7 +11,7 @@ export type ButtonType = 'button' | 'submit' | 'reset';
 
 @Component({
   selector: 'app-button',
-  imports: [Icon, RouterLink, Spinner],
+  imports: [Icon, NgTemplateOutlet, RouterLink, Spinner],
   templateUrl: './button.html',
   styleUrl: './button.scss',
 })

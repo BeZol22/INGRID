@@ -39,7 +39,14 @@ export class AdminShopEditPage {
 
   constructor() {
     effect(() => {
+      const i = this.id();
       const e = this.existing();
+      // An id was supplied but no shop matches — bail to the list rather than
+      // silently dropping into the "new shop" form.
+      if (i && !e && this.data.shops().length > 0) {
+        this.router.navigateByUrl('/admin/cukraszdak');
+        return;
+      }
       if (!e || this.hydrated) return;
       this.name.set(e.name);
       this.city.set(e.city);

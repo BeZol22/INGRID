@@ -34,7 +34,14 @@ export class AdminPostEditPage {
 
   constructor() {
     effect(() => {
+      const i = this.id();
       const e = this.existing();
+      // An id was supplied but no post matches — bail to the list rather than
+      // silently dropping into the "new post" form.
+      if (i && !e && this.data.posts().length > 0) {
+        this.router.navigateByUrl('/admin/blog');
+        return;
+      }
       if (!e || this.hydrated) return;
       this.title.set(e.title);
       this.excerpt.set(e.excerpt);

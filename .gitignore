@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# Playwright MCP — local browser snapshots, screenshots, console logs
+.playwright-mcp/
+
+# Loose screenshots / test artifacts dropped at repo root
+/*.png
+/*.jpg
+/*.jpeg
