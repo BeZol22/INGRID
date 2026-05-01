@@ -1,0 +1,188 @@
+// =============================================================================
+// app-hero-section — generated from Figma "Hero header section" master frame
+// Marketing-page hero shell. The Figma frame shows ~150 compositions (Split
+// image, Screen/iPhone/Card mockups, Color cards, Geometric shapes, Abstract
+// angles, Simple text, Split forms × Desktop/Mobile). Those are page-level
+// layouts; the shell handles the cross-cutting chrome and consumers slot in
+// the trailing media (image, mockup, illustration, etc.).
+//
+// Layouts:
+//   stacked — content (overline + heading + description + actions) on top,
+//             trailing media block below (full-width)
+//   split   — content + trailing media side by side (50/50 on desktop,
+//             stacks vertically on mobile)
+//
+// Slots (rendered in order):
+//   [overline]    — eyebrow badge or pill
+//   [heading]     — display-xl heading
+//   [description] — subtitle copy (text-xl)
+//   [actions]     — CTA button row
+//   default       — additional inline content
+//   [trailing]    — image / mockup / illustration block
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.hero-section {
+  --_pad-y: var(--space-24);                       // 96 default
+  --_pad-x: var(--space-8);                        // 32 (container-padding-desktop)
+
+  width: 100%;
+  padding: var(--_pad-y) var(--_pad-x);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+
+  @media (max-width: 768px) {
+    --_pad-y: var(--space-16);                     // 64 mobile
+    --_pad-x: var(--space-4);                      // 16
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Themes
+// ---------------------------------------------------------------------------
+.hero-section--theme-brand {
+  background: var(--bg-brand-section, #562914);
+  color: var(--text-primary-on-brand, #ffead5);
+
+  ::ng-deep [description] { color: var(--text-tertiary-on-brand, #fbebee); }
+}
+
+// ---------------------------------------------------------------------------
+// Container — max-width + center
+// ---------------------------------------------------------------------------
+.hero-section__container {
+  max-width: 1280px;                               // container-max-width-desktop
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-12);                            // 48
+  width: 100%;
+}
+
+// ---------------------------------------------------------------------------
+// Layout: stacked
+// ---------------------------------------------------------------------------
+.hero-section--layout-stacked .hero-section__container {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.hero-section--layout-stacked.hero-section--align-center .hero-section__content {
+  margin-inline: auto;
+  text-align: center;
+  align-items: center;
+}
+
+.hero-section--layout-stacked.hero-section--align-left .hero-section__content {
+  text-align: left;
+  align-items: flex-start;
+}
+
+.hero-section--layout-stacked .hero-section__trailing:not(:empty) {
+  width: 100%;
+}
+
+// ---------------------------------------------------------------------------
+// Layout: split (content + media side by side)
+// ---------------------------------------------------------------------------
+.hero-section--layout-split .hero-section__container {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.hero-section--layout-split .hero-section__content {
+  flex: 1 1 0;
+  min-width: 320px;
+  text-align: left;
+  align-items: flex-start;
+}
+
+.hero-section--layout-split .hero-section__trailing:not(:empty) {
+  flex: 1 1 0;
+  min-width: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .hero-section--layout-split .hero-section__container {
+    flex-direction: column;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Content column — vertical stack of slot pieces
+// ---------------------------------------------------------------------------
+.hero-section__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);                             // 24 between slot pieces
+  min-width: 0;
+}
+
+// Max-width axes for the content column
+.hero-section--max-md  .hero-section__content { max-width: 560px; }
+.hero-section--max-lg  .hero-section__content { max-width: 640px; }
+.hero-section--max-xl  .hero-section__content { max-width: 768px; }
+.hero-section--max-2xl .hero-section__content { max-width: 1024px; }
+
+// In split mode, the content column doesn't need a self-imposed max-width —
+// flex sizes it. Leave the cap on for stacked layouts only.
+.hero-section--layout-split .hero-section__content { max-width: none; }
+
+// ---------------------------------------------------------------------------
+// Trailing slot
+// ---------------------------------------------------------------------------
+.hero-section__trailing {
+  display: contents;
+}
+
+.hero-section__trailing:not(:empty) {
+  display: flex;
+}
+
+// ---------------------------------------------------------------------------
+// Slot conventions — typography auto-applied so consumers pass plain elements
+// with attribute selectors
+// ---------------------------------------------------------------------------
+::ng-deep .hero-section [overline] {
+  display: inline-flex;
+  align-items: center;
+}
+
+::ng-deep .hero-section [heading] {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--display-xl-size, 60px);
+  line-height: var(--display-xl-lh, 72px);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+::ng-deep .hero-section [description] {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-xl-size, 20px);
+  line-height: var(--text-xl-lh, 30px);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+::ng-deep .hero-section [actions] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  ::ng-deep .hero-section [heading] {
+    font-size: var(--display-md-size, 36px);
+    line-height: var(--display-md-lh, 44px);
+  }
+}

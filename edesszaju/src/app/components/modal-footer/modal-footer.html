@@ -1,0 +1,12 @@
+@let cls = rootClass();
+
+<div [class]="cls">
+  <div class="modal-footer__inner">
+    <div class="modal-footer__leading">
+      <ng-content select="[leading]" />
+    </div>
+    <div class="modal-footer__actions">
+      <ng-content />
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@
     <h1>{{ existing() ? 'Cikk szerkesztése' : 'Új cikk' }}</h1>
   </div>
   @if (existing(); as e) {
-    <button class="btn danger" type="button" (click)="remove(e)">Törlés</button>
+    <app-button variant="primary" color="destructive" (clicked)="remove(e)">Törlés</app-button>
   }
 </header>
 
@@ -68,9 +68,9 @@
   </div>
 
   <footer class="form-foot">
-    <a routerLink="/admin/blog" class="btn ghost">Mégse</a>
-    <button class="btn" type="submit" [disabled]="!canSave()">
+    <app-button variant="secondary" routerLink="/admin/blog">Mégse</app-button>
+    <app-button variant="primary" type="submit" [disabled]="!canSave()">
       {{ existing() ? 'Mentés' : 'Létrehozás' }}
-    </button>
+    </app-button>
   </footer>
 </form>

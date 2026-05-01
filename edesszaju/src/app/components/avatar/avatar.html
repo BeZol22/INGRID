@@ -1,0 +1,36 @@
+@let cls = rootClass();
+@let imageSrc = src();
+@let altText = alt();
+@let initials = resolvedInitials();
+@let bordered = border();
+@let st = status();
+
+<span [class]="cls">
+  @if (bordered) {
+    <span class="avatar__outer">
+      <span class="avatar__wrap">
+        <span class="avatar__inner">
+          @if (imageSrc) {
+            <img class="avatar__img" [src]="imageSrc" [alt]="altText" />
+          } @else if (initials) {
+            <span class="avatar__initials" aria-hidden="true">{{ initials }}</span>
+          }
+        </span>
+      </span>
+    </span>
+  } @else {
+    <span class="avatar__wrap">
+      @if (imageSrc) {
+        <img class="avatar__img" [src]="imageSrc" [alt]="altText" />
+      } @else if (initials) {
+        <span class="avatar__initials" aria-hidden="true">{{ initials }}</span>
+      }
+    </span>
+  }
+
+  @if (st !== 'none') {
+    <span
+      class="avatar__status"
+      [attr.aria-label]="st === 'online' ? 'Online' : 'Offline'"></span>
+  }
+</span>

@@ -1,0 +1,14 @@
+@let cls = rootClass();
+@let leading = hasLeading();
+
+<div [class]="cls" role="cell">
+  @if (leading) {
+    <span class="table-cell__leading">
+      <ng-content select="[leading]" />
+    </span>
+  }
+
+  <span class="table-cell__content">
+    <ng-content />
+  </span>
+</div>

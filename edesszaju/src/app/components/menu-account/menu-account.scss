@@ -1,0 +1,175 @@
+// =============================================================================
+// app-menu-account — generated from Figma "Dropdown account list item" frame
+// Account-switcher row: framed square avatar + name/email + trailing radio.
+// Hover/active = gold inner box; selected = filled radio dot.
+// 248px wide typical; flexes to its container.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.menu-account {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--space-0-5) var(--space-1-5);     // 2 / 6
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+
+  &:focus { outline: none; }
+}
+
+.menu-account__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1-5);                          // 6 = spacing-sm
+  width: 100%;
+  padding: var(--space-2);                        // 8 = spacing-md
+  border-radius: 8px;                             // radius-md
+  overflow: hidden;
+  transition: background-color 0.12s ease;
+}
+
+// ---------------------------------------------------------------------------
+// Hover / active — gold inner surface
+// ---------------------------------------------------------------------------
+.menu-account:hover:not(.is-disabled) .menu-account__inner,
+.menu-account.is-active:not(.is-disabled) .menu-account__inner {
+  background: var(--bg-primary-hover);            // #e9d09a gold
+}
+
+.menu-account:focus-visible:not(.is-disabled) .menu-account__inner {
+  background: var(--bg-primary-hover);
+  box-shadow:
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+// ---------------------------------------------------------------------------
+// Avatar — 32×32 inner, 36×36 outer wrapper with bg-page padding ring
+// ---------------------------------------------------------------------------
+.menu-account__avatar-wrap {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 2px;
+  border-radius: 10px;                            // radius-lg
+  background: var(--bg-page);                     // #f5ebd9
+  border: 0.5px solid var(--border-secondary);
+  box-sizing: border-box;
+}
+
+.menu-account__avatar {
+  position: relative;
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;                             // radius-md
+  overflow: hidden;
+  // shadow-md: drop shadow stack
+  box-shadow:
+    0 2px 4px -2px rgba(0, 0, 0, 0.06),
+    0 4px 6px -1px rgba(0, 0, 0, 0.10);
+  // Inner double-border (white inner + black-soft outer) per Figma
+  outline: 0.5px solid rgba(0, 0, 0, 0.16);
+  outline-offset: -0.5px;
+  background: var(--bg-tertiary);
+}
+
+.menu-account__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+}
+
+// ---------------------------------------------------------------------------
+// Text block — name + email, ellipsis on overflow
+// ---------------------------------------------------------------------------
+.menu-account__text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-account__name {
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-primary);                     // #562914 brown
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-account__email {
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);                    // #544a42
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ---------------------------------------------------------------------------
+// Trailing radio — passive visual indicator (the row itself is interactive)
+// ---------------------------------------------------------------------------
+.menu-account__radio {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;                                // align with first text line
+  border: 1px solid var(--border-primary);
+  border-radius: 9999px;
+  background: transparent;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+
+  &.is-checked {
+    background: var(--bg-brand-solid);
+    border-color: var(--bg-brand-solid);
+  }
+}
+
+.menu-account__radio-dot {
+  display: block;
+  width: 37.5%;
+  height: 37.5%;
+  border-radius: 9999px;
+  background: var(--fg-white);
+}
+
+// ---------------------------------------------------------------------------
+// Disabled
+// ---------------------------------------------------------------------------
+.menu-account.is-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+
+  .menu-account__inner { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-account__inner,
+  .menu-account__radio { transition: none; }
+}

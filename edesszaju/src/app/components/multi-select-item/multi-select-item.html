@@ -1,0 +1,35 @@
+@let cls = rootClass();
+@let isChecked = checked();
+@let isDisabled = disabled();
+@let aria = resolvedAriaLabel();
+
+<button
+  [class]="cls"
+  [type]="type()"
+  [disabled]="isDisabled"
+  role="option"
+  [attr.aria-selected]="isChecked ? 'true' : 'false'"
+  [attr.aria-disabled]="isDisabled ? 'true' : null"
+  [attr.aria-label]="aria"
+  (click)="onClick($event)">
+  <span class="multi-select-item__inner">
+    <span class="multi-select-item__checkbox" [class.is-checked]="isChecked" aria-hidden="true">
+      @if (isChecked) {
+        <svg class="multi-select-item__glyph" viewBox="0 0 14 14" fill="none">
+          <path d="M11.6667 3.5L5.25 9.91667L2.33333 7"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+      }
+    </span>
+
+    <span class="multi-select-item__text">
+      <span class="multi-select-item__title">{{ title() }}</span>
+      @if (supportingText(); as sup) {
+        <span class="multi-select-item__supporting">{{ sup }}</span>
+      }
+    </span>
+  </span>
+</button>

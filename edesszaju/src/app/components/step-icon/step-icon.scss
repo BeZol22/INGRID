@@ -1,0 +1,135 @@
+// =============================================================================
+// app-step-icon — generated from Figma "Step icon base" frame
+// Single circular indicator used inside multi-step flows (onboarding, checkout,
+// publishing wizards). Pure visual primitive — no interactive behavior.
+//
+// Axes:
+//   size   — sm (24) / md (32)
+//   type   — check (dot inside) / number (digit inside)
+//   status — incomplete / current / complete
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.step-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: var(--bg-primary);                     // #fff9f4 default surface
+  color: var(--fg-white);                            // shared by check + dot when filled
+  box-sizing: border-box;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.step-icon--sm { width: 24px; height: 24px; }
+.step-icon--md { width: 32px; height: 32px; }
+
+// ---------------------------------------------------------------------------
+// Inner dot (used by `check` type when status is incomplete or current)
+// ---------------------------------------------------------------------------
+.step-icon__dot {
+  display: inline-block;
+  border-radius: 9999px;
+  background: var(--fg-quaternary);                  // #9f9185 default (incomplete)
+}
+
+.step-icon--sm .step-icon__dot { width: 8px;  height: 8px; }
+.step-icon--md .step-icon__dot { width: 10px; height: 10px; }
+
+// ---------------------------------------------------------------------------
+// Number glyph
+// ---------------------------------------------------------------------------
+.step-icon__number {
+  font-family: var(--font-body);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1;
+}
+
+.step-icon--sm .step-icon__number {
+  font-size: var(--text-xs-size);                    // 12
+  line-height: var(--text-xs-lh);                    // 18
+}
+
+.step-icon--md .step-icon__number {
+  font-size: var(--text-sm-size);                    // 14
+  line-height: var(--text-sm-lh);                    // 20
+}
+
+// ---------------------------------------------------------------------------
+// Check glyph
+// ---------------------------------------------------------------------------
+.step-icon__check {
+  display: block;
+  color: var(--fg-white);
+}
+
+.step-icon--sm .step-icon__check { width: 12px; height: 12px; }
+.step-icon--md .step-icon__check { width: 16px; height: 16px; }
+
+// ---------------------------------------------------------------------------
+// Type: check
+// ---------------------------------------------------------------------------
+// Incomplete — light surface, gray ring, gray inner dot
+.step-icon--check.step-icon--incomplete {
+  background: var(--bg-primary);
+  border: 1.5px solid var(--border-primary);
+
+  .step-icon__dot { background: var(--fg-quaternary); }
+}
+
+// `md` Incomplete uses a slightly heavier ring per Figma
+.step-icon--check.step-icon--incomplete.step-icon--md {
+  border-width: 2px;
+}
+
+// Current — brand fill, white inner dot, ring drawn as box-shadow so the
+// surrounding focus indicator does not affect layout
+.step-icon--check.step-icon--current {
+  background: var(--bg-brand-solid);                 // #d23955
+  border: 0;
+  box-shadow:
+    0 0 0 2px var(--bg-page),
+    0 0 0 4px var(--focus-ring);
+
+  .step-icon__dot { background: var(--fg-white); }
+}
+
+// Complete — brand fill with a check glyph
+.step-icon--check.step-icon--complete {
+  background: var(--bg-brand-solid);
+  border: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Type: number
+// ---------------------------------------------------------------------------
+// Incomplete — light surface, hairline ring, muted digit
+.step-icon--number.step-icon--incomplete {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-secondary);
+
+  .step-icon__number { color: var(--text-quaternary); }
+}
+
+// Current — same surface but emphasized digit (no focus ring per Figma)
+.step-icon--number.step-icon--current {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-secondary);
+
+  .step-icon__number { color: var(--text-secondary); }
+}
+
+// Complete — success fill with white check
+.step-icon--number.step-icon--complete {
+  background: var(--bg-success-solid);               // #16a34a
+  border: 0;
+}

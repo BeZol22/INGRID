@@ -1,0 +1,155 @@
+// =============================================================================
+// app-textarea — generated from Figma "Textarea input field" frame
+// Base multi-line input primitive: label + hint/error + 2 sizes + 5 states.
+//
+// Tags inner / Tags outer types from the Figma frame are intentionally
+// separate components — they'll wrap or extend this primitive when those
+// frames come up.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.textarea {
+  --_pad-x: var(--space-3);          // 12 (spacing-lg)
+  --_pad-y: 10px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+  --_radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);             // 6 between label, wrap, message
+  width: 100%;
+  font-family: var(--font-body);
+}
+
+.textarea--sm {
+  --_pad-y: 8px;
+  --_fs: var(--text-sm-size);
+  --_lh: var(--text-sm-lh);
+}
+
+.textarea--md {
+  --_pad-y: 10px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+}
+
+// ---------------------------------------------------------------------------
+// Label
+// ---------------------------------------------------------------------------
+.textarea__label {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.textarea__required {
+  color: var(--text-brand-tertiary);
+  margin-left: 1px;
+}
+
+// ---------------------------------------------------------------------------
+// Wrapper that provides the bordered surface
+// ---------------------------------------------------------------------------
+.textarea__wrap {
+  display: flex;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--_radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.12s ease;
+  overflow: hidden;
+}
+
+// ---------------------------------------------------------------------------
+// Native textarea
+// ---------------------------------------------------------------------------
+.textarea__field {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+  padding: var(--_pad-y) var(--_pad-x);
+  margin: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--_fs);
+  line-height: var(--_lh);
+  color: var(--text-primary);
+  caret-color: var(--bg-brand-solid);
+  resize: vertical;
+
+  &::placeholder { color: var(--text-placeholder); }
+}
+
+// Resize variants
+.textarea--resize-none .textarea__field { resize: none; }
+.textarea--resize-vertical .textarea__field { resize: vertical; }
+.textarea--resize-horizontal .textarea__field { resize: horizontal; }
+.textarea--resize-both .textarea__field { resize: both; }
+
+// ---------------------------------------------------------------------------
+// Focus — brand border + page-bg gap + blue focus ring
+// ---------------------------------------------------------------------------
+.textarea:not(.is-disabled):not(.is-error) .textarea__wrap:has(.textarea__field:focus-visible) {
+  border-color: var(--border-brand);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+// ---------------------------------------------------------------------------
+// Error — error border + error focus ring
+// ---------------------------------------------------------------------------
+.textarea.is-error .textarea__wrap {
+  border-color: var(--border-error-subtle);
+}
+
+.textarea.is-error:not(.is-disabled) .textarea__wrap:has(.textarea__field:focus-visible) {
+  border-color: var(--border-error);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring-error);
+}
+
+// ---------------------------------------------------------------------------
+// Disabled
+// ---------------------------------------------------------------------------
+.textarea.is-disabled {
+  .textarea__label { cursor: not-allowed; opacity: 0.6; }
+  .textarea__wrap {
+    opacity: 0.6;
+    background: var(--color-neutral-100);
+    cursor: not-allowed;
+  }
+  .textarea__field { cursor: not-allowed; resize: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Hint / error message line
+// ---------------------------------------------------------------------------
+.textarea__msg {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+
+.textarea__msg--error {
+  color: var(--text-error-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textarea__wrap { transition: none; }
+}

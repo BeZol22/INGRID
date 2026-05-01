@@ -126,14 +126,17 @@
           <p class="hours"><app-icon name="clock" /> {{ s.openingHours }}</p>
         </div>
         <div class="map-card-actions">
-          <a [routerLink]="['/cukraszdak', s.slug]" class="btn btn-primary">
+          <app-button variant="primary" iconEnd="arrow-right" [routerLink]="['/cukraszdak', s.slug]">
             Részletek
-            <app-icon name="arrow-right" />
-          </a>
-          <a [href]="directionsUrl()" target="_blank" rel="noopener" class="btn btn-secondary">
-            <app-icon name="navigation" />
+          </app-button>
+          <app-button
+            variant="secondary"
+            iconStart="navigation"
+            [href]="directionsUrl()"
+            target="_blank"
+            rel="noopener">
             Útvonal
-          </a>
+          </app-button>
         </div>
       </div>
     }

@@ -1,0 +1,94 @@
+// =============================================================================
+// app-step-progress — generated from Figma "Progress steps - Minimal icons" frame
+// Compact horizontal progress indicator: optional "Step X of Y" caption + a
+// row of <app-step-icon> dots showing complete / current / incomplete by
+// position. No connectors, no per-step labels.
+//
+// Axes:
+//   size — sm (24px dots, 12px gap) | md (32px dots, 16px gap)
+//   type — check | number (passed straight through to step-icon)
+//   showText — toggle the "Step X of Y" caption
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.step-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);                     // 12 (sm)
+  font-family: var(--font-body);
+}
+
+.step-progress--md {
+  gap: var(--space-4);                     // 16 (md)
+}
+
+// ---------------------------------------------------------------------------
+// "Step X of Y" caption
+// ---------------------------------------------------------------------------
+.step-progress__text {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+  color: var(--text-secondary);            // #3f3731
+  white-space: nowrap;
+}
+
+// ---------------------------------------------------------------------------
+// Dot row
+// ---------------------------------------------------------------------------
+.step-progress__dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.step-progress--md .step-progress__dots {
+  gap: var(--space-4);
+}
+
+.step-progress__dot {
+  flex-shrink: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Connected variant — flex-grow lines between dots
+// ---------------------------------------------------------------------------
+.step-progress--connected .step-progress__dots {
+  gap: var(--space-1-5);                     // 6 — small breathing room around each line
+  width: 100%;
+}
+
+.step-progress--connected.step-progress--md .step-progress__dots {
+  gap: var(--space-2);                       // 8 (md)
+}
+
+.step-progress__line {
+  flex: 1 1 auto;
+  height: 2px;
+  align-self: center;
+  min-width: 16px;
+  border-radius: 2px;
+  // Default (after current/incomplete) — dashed gray
+  background-color: transparent;
+  background-image: linear-gradient(
+    to right,
+    var(--border-primary) 0,
+    var(--border-primary) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+}
+
+// Solid brand-pink line when the line follows a complete step
+.step-progress__line--complete {
+  background: var(--bg-brand-solid);
+  background-image: none;
+}
+

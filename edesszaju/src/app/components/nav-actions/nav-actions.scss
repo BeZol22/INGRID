@@ -1,0 +1,123 @@
+// =============================================================================
+// app-nav-actions — generated from Figma "Nav actions" frame
+// Right-side actions of a header bar. Switches between four states:
+//
+//   logged-out + desktop : Log in (secondary) + Sign up (primary), inline
+//   logged-out + mobile  : Sign up + Log in, stacked, full-width
+//   logged-in  + desktop : single 32px avatar button (opens account menu)
+//   logged-in  + mobile  : avatar + name/email row + trailing log-out button
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);                              // 12 default
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Logged-out
+// ---------------------------------------------------------------------------
+.nav-actions--logged-out.nav-actions--desktop {
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-actions--logged-out.nav-actions--mobile {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+// ---------------------------------------------------------------------------
+// Logged-in desktop — avatar-only button
+// ---------------------------------------------------------------------------
+.nav-actions__avatar-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: box-shadow 0.12s ease;
+
+  &:focus { outline: none; }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 4px var(--focus-ring);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Logged-in mobile — full-width row of avatar/text + log-out icon
+// ---------------------------------------------------------------------------
+.nav-actions--logged-in.nav-actions--mobile {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  padding-right: var(--space-6);                   // 24 reserves room for the icon
+  position: relative;
+}
+
+.nav-actions__account {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);                              // 8
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+
+  &:focus { outline: none; }
+
+  &:focus-visible .nav-actions__account-name {
+    text-decoration: underline;
+  }
+}
+
+.nav-actions__account-text {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nav-actions__account-name {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-primary);                       // #562914
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-actions__account-email {
+  font-size: var(--text-xs-size);
+  line-height: var(--text-xs-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);                      // #544a42
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-actions__logout {
+  flex-shrink: 0;
+}

@@ -1,0 +1,204 @@
+// =============================================================================
+// app-radio-card — generated from Figma "Radio group item" frame
+// Selectable card with leading slot + title/description + trailing indicator.
+// Covers: Radio button, Checkbox, Icon simple, Avatar, Payment icon types.
+// (The vertical "Icon card" type is a separate layout — separate component.)
+//
+// Sizes: sm / md
+// States: default / hover / focus-visible / checked / disabled
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.radio-card {
+  --_pad: var(--space-4);            // 16 (spacing-xl)
+  --_gap: var(--space-3);            // 12 (spacing-lg)
+  --_radius: 12px;                   // radius-xl
+  --_title-fs: var(--text-sm-size);
+  --_title-lh: var(--text-sm-lh);
+  --_desc-fs: var(--text-sm-size);
+  --_desc-lh: var(--text-sm-lh);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-template-areas: 'leading text trailing indicator';
+  align-items: start;
+  gap: var(--_gap);
+  width: 100%;
+  padding: var(--_pad);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--_radius);
+  background: var(--bg-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition:
+    border-color 0.12s ease,
+    background-color 0.12s ease,
+    box-shadow 0.12s ease,
+    opacity 0.12s ease;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.radio-card--sm {
+  --_pad: var(--space-4);
+  --_title-fs: var(--text-sm-size);
+  --_title-lh: var(--text-sm-lh);
+  --_desc-fs: var(--text-sm-size);
+  --_desc-lh: var(--text-sm-lh);
+}
+
+.radio-card--md {
+  --_pad: var(--space-4);
+  --_title-fs: var(--text-md-size);
+  --_title-lh: var(--text-md-lh);
+  --_desc-fs: var(--text-md-size);
+  --_desc-lh: var(--text-md-lh);
+}
+
+// ---------------------------------------------------------------------------
+// Native input — visually hidden but covers the card for click/focus
+// ---------------------------------------------------------------------------
+.radio-card__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: inherit;
+  z-index: 1;
+
+  &:disabled { cursor: not-allowed; }
+}
+
+// ---------------------------------------------------------------------------
+// Slots
+// ---------------------------------------------------------------------------
+.radio-card__leading {
+  grid-area: leading;
+  display: inline-flex;
+  align-items: center;
+
+  // collapse the slot when empty
+  &:empty { display: none; }
+}
+
+.radio-card__text {
+  grid-area: text;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.radio-card__title {
+  font-size: var(--_title-fs);
+  line-height: var(--_title-lh);
+  font-weight: 500;
+  color: var(--text-secondary);      // #3f3731
+}
+
+.radio-card__description {
+  font-size: var(--_desc-fs);
+  line-height: var(--_desc-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);       // #544a42
+}
+
+.radio-card__trailing {
+  grid-area: trailing;
+  display: inline-flex;
+  align-items: center;
+
+  &:empty { display: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Indicator (radio / checkbox visual)
+// ---------------------------------------------------------------------------
+.radio-card__indicator {
+  grid-area: indicator;
+  align-self: start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;                   // optical align with first text line
+  border: 1px solid var(--border-primary);
+  background: transparent;
+  color: var(--fg-white);
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.radio-card--radio .radio-card__indicator { border-radius: 9999px; }
+.radio-card--checkbox .radio-card__indicator { border-radius: var(--radius-xs); }
+
+.radio-card__dot {
+  display: block;
+  width: 37.5%;
+  height: 37.5%;
+  border-radius: 9999px;
+  background: var(--fg-white);
+}
+
+.radio-card__glyph {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+// ---------------------------------------------------------------------------
+// Hover (when not disabled)
+// ---------------------------------------------------------------------------
+.radio-card:hover:not(.is-disabled) {
+  background: var(--bg-primary-hover);   // gold cream
+  border-color: var(--border-primary);
+}
+
+// ---------------------------------------------------------------------------
+// Checked — 2px brand border + filled indicator
+// ---------------------------------------------------------------------------
+.radio-card.is-checked {
+  border: 2px solid var(--border-brand);  // #e56e82
+  padding: calc(var(--_pad) - 1px);       // compensate the 1→2px border shift
+}
+
+.radio-card.is-checked .radio-card__indicator {
+  background: var(--bg-brand-solid);
+  border-color: var(--bg-brand-solid);
+}
+
+// ---------------------------------------------------------------------------
+// Focus — focus ring on top of any other state
+// ---------------------------------------------------------------------------
+.radio-card__input:focus-visible ~ * + *,  // tickle layout (no-op)
+.radio-card:has(.radio-card__input:focus-visible) {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+// ---------------------------------------------------------------------------
+// Disabled
+// ---------------------------------------------------------------------------
+.radio-card.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+
+  .radio-card__input { cursor: not-allowed; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radio-card,
+  .radio-card__indicator { transition: none; }
+}

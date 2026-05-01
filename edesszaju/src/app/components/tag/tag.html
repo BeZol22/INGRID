@@ -1,0 +1,39 @@
+@let cls = rootClass();
+@let act = action();
+@let c = count();
+
+<span [class]="cls">
+  @if (checkbox()) {
+    <app-tag-checkbox
+      class="tag__checkbox"
+      [size]="checkboxSize()"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      (checkedChange)="onCheckedChange($event)" />
+  }
+
+  <span class="tag__leading">
+    <ng-content select="[leading]" />
+  </span>
+
+  <span class="tag__label">{{ label() }}</span>
+
+  @switch (act) {
+    @case ('close') {
+      <app-tag-close
+        class="tag__close"
+        [size]="closeSize()"
+        [disabled]="disabled()"
+        [ariaLabel]="closeAriaLabel()"
+        (clicked)="onClose($event)" />
+    }
+    @case ('count') {
+      @if (c !== null) {
+        <app-tag-count
+          class="tag__count"
+          [count]="c"
+          [size]="countSize()" />
+      }
+    }
+  }
+</span>

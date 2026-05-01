@@ -1,0 +1,40 @@
+@let cls = rootClass();
+@let v = variant();
+@let s = status();
+@let sz = size();
+@let supporting = supportingText();
+@let stepNumber = step();
+@let iconName = icon();
+@let stepType = stepIconType();
+@let showLine = showConnector();
+@let textLine = isTextLine();
+
+<div [class]="cls">
+  @if (!textLine) {
+    <div class="step__icon-col">
+      @if (v === 'featured') {
+        <span class="step__featured" aria-hidden="true">
+          <app-icon class="step__featured-icon" [name]="iconName" />
+        </span>
+      } @else {
+        <app-step-icon
+          class="step__step-icon"
+          [size]="sz"
+          [type]="stepType"
+          [status]="s"
+          [step]="stepNumber" />
+      }
+
+      @if (showLine) {
+        <span class="step__connector" aria-hidden="true"></span>
+      }
+    </div>
+  }
+
+  <div class="step__text">
+    <span class="step__title">{{ title() }}</span>
+    @if (supporting) {
+      <span class="step__supporting">{{ supporting }}</span>
+    }
+  </div>
+</div>

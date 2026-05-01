@@ -1,0 +1,16 @@
+@let open = isOpen();
+
+<div class="dropdown-menu__trigger" (click)="onTriggerClick($event)">
+  <ng-content select="[trigger]" />
+</div>
+
+@if (open) {
+  <div
+    [class]="panelClass()"
+    [style]="panelStyle()"
+    [style.--_offset.px]="offset()"
+    role="menu"
+    (click)="onPanelClick($event)">
+    <ng-content />
+  </div>
+}

@@ -1,0 +1,195 @@
+// =============================================================================
+// app-menu-header — generated from Figma "Dropdown menu header" frame
+// 4 variants: avatar / heading / subheading / search
+// All variants live at the top of a dropdown menu (typically 240px wide).
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.menu-header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+// ---------------------------------------------------------------------------
+// avatar / heading / search — share padding + bottom hairline
+// ---------------------------------------------------------------------------
+.menu-header--avatar,
+.menu-header--heading,
+.menu-header--search {
+  padding: var(--space-3);                        // spacing-lg = 12
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+// Heading uses 16px horizontal padding per Figma
+.menu-header--heading {
+  padding: var(--space-3) var(--space-4);         // 12 / 16
+}
+
+// ---------------------------------------------------------------------------
+// Avatar variant
+// ---------------------------------------------------------------------------
+.menu-header__avatar-block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);                            // 8
+  width: 100%;
+}
+
+.menu-header__avatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background: var(--bg-primary);
+  overflow: visible;
+  border: 0.75px solid rgba(0, 0, 0, 0.1);        // border-secondary_alt
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.menu-header__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9999px;
+  display: block;
+}
+
+// Status dot — 14×14 wrapper with white ring, inner colored dot
+.menu-header__status {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--bg-primary);
+  display: inline-flex;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 9999px;
+    background: var(--fg-success-secondary);      // default green
+  }
+
+  &[data-status='offline']::after { background: var(--fg-quaternary); }
+  &[data-status='busy']::after    { background: var(--fg-error-secondary); }
+  &[data-status='away']::after    { background: var(--fg-warning-secondary); }
+}
+
+// ---------------------------------------------------------------------------
+// avatar + heading text block
+// ---------------------------------------------------------------------------
+.menu-header__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.menu-header__title {
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-primary);                     // #562914 brown
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-header__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);                    // #544a42
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ---------------------------------------------------------------------------
+// Subheading variant — small brand-pink section label
+// ---------------------------------------------------------------------------
+.menu-header--subheading {
+  padding: var(--space-1-5) var(--space-4) var(--space-0-5);
+                                                  // 6 top, 16 sides, 2 bottom
+}
+
+.menu-header__subheading {
+  font-family: var(--font-body);
+  font-size: var(--text-xs-size);
+  line-height: var(--text-xs-lh);
+  font-weight: 600;
+  color: var(--text-brand-secondary);             // #98293d pink-700
+  display: block;
+}
+
+// ---------------------------------------------------------------------------
+// Search variant — search input
+// ---------------------------------------------------------------------------
+.menu-header__form {
+  width: 100%;
+  margin: 0;
+}
+
+.menu-header__search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);                            // 8
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+                                                  // py 8, pl 12, pr 8
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: text;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+
+  &:focus-within {
+    border-color: var(--bg-brand-solid);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.05),
+      0 0 0 3px rgba(210, 57, 85, 0.15);
+  }
+}
+
+.menu-header__search-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  color: var(--fg-quaternary);
+}
+
+.menu-header__search-input {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  color: var(--text-primary);
+
+  &::placeholder { color: var(--text-placeholder); }
+
+  // Strip Webkit's built-in clear button on type=search
+  &::-webkit-search-cancel-button { display: none; }
+  &::-webkit-search-decoration { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-header__search { transition: none; }
+}

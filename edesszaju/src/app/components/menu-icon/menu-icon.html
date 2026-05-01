@@ -1,0 +1,47 @@
+@let cls = rootClass();
+@let t = type();
+
+<span [class]="cls" aria-hidden="true">
+  @switch (t) {
+    @case ('icon') {
+      @if (icon(); as i) {
+        <app-icon class="menu-icon__icon" [name]="i" />
+      }
+    }
+    @case ('check') {
+      <svg class="menu-icon__check" viewBox="0 0 14 14" fill="none">
+        <path d="M11.6667 3.5L5.25 9.91667L2.33333 7"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+      </svg>
+    }
+    @case ('checkbox') {
+      <span class="menu-icon__checkbox" [class.is-checked]="checked()">
+        @if (checked()) {
+          <svg viewBox="0 0 14 14" fill="none">
+            <path d="M11.6667 3.5L5.25 9.91667L2.33333 7"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+          </svg>
+        }
+      </span>
+    }
+    @case ('dot') {
+      <span class="menu-icon__dot"></span>
+    }
+    @case ('avatar') {
+      @if (imageUrl(); as src) {
+        <img class="menu-icon__avatar" [src]="src" [alt]="imageAlt()" />
+      }
+    }
+    @case ('integration') {
+      @if (imageUrl(); as src) {
+        <img class="menu-icon__integration" [src]="src" [alt]="imageAlt()" />
+      }
+    }
+  }
+</span>

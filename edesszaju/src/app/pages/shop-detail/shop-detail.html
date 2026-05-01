@@ -3,7 +3,7 @@
   <section class="container section">
     <h1>Nem találtuk a cukrászdát</h1>
     <p>Lehet, hogy törölve lett. Nézz körül a többi helyen!</p>
-    <a class="btn" routerLink="/cukraszdak">Vissza a listához</a>
+    <app-button variant="primary" routerLink="/cukraszdak">Vissza a listához</app-button>
   </section>
 } @else {
   <article>
@@ -81,7 +81,7 @@
                 required></textarea>
             </div>
           </div>
-          <button class="btn" type="submit">Vélemény küldése</button>
+          <app-button variant="primary" type="submit">Vélemény küldése</app-button>
         </form>
 
         @if (s.reviews.length === 0) {
@@ -126,13 +126,15 @@
             <app-icon name="tag" class="ico" />
             <div><strong>Árkategória</strong><span>{{ s.priceRange }}</span></div>
           </div>
-          <a
-            class="btn block"
+          <app-button
+            variant="primary"
+            fullWidth
+            iconEnd="navigation"
             [href]="'https://maps.google.com/?q=' + encode(s.name + ' ' + s.address)"
             target="_blank"
             rel="noopener">
-            Útvonalterv <app-icon name="navigation" />
-          </a>
+            Útvonalterv
+          </app-button>
         </div>
       </aside>
     </section>

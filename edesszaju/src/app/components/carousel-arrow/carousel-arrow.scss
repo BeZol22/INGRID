@@ -1,0 +1,161 @@
+// =============================================================================
+// app-carousel-arrow — generated from Figma "Carousel arrow" + "Testimonial
+// carousel arrow" frames. Circular nav button used to advance carousels.
+//
+// Variants:
+//   scrim            — translucent white circle with backdrop-blur (default;
+//                      sits over images / heroes — original "Carousel arrow")
+//   bordered-chevron — bordered ring with chevron glyph; hover fills gold
+//   bordered-arrow   — bordered ring with arrow glyph; hover fills gold
+//   plain            — bare arrow glyph, no button chrome (just the SVG)
+//
+// Sizes:
+//   md — 36 (scrim) / 48 (bordered) / 40×20 (plain), icon 20
+//   lg — 44 (scrim) / 56 (bordered) / 48×24 (plain), icon 24
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.carousel-arrow {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--fg-secondary);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+
+  &:focus { outline: none; }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 6px var(--focus-ring);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Icon — sized via font-size since app-icon scales with 1em
+// ---------------------------------------------------------------------------
+.carousel-arrow__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Variant: scrim (original — used over images)
+// ---------------------------------------------------------------------------
+.carousel-arrow--scrim {
+  padding: var(--space-2);                          // 8
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.carousel-arrow--scrim:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 1);
+  color: var(--fg-secondary-hover);
+}
+
+.carousel-arrow--scrim:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.carousel-arrow--scrim.carousel-arrow--md {
+  width: 36px;
+  height: 36px;
+
+  .carousel-arrow__icon { font-size: 20px; }
+}
+
+.carousel-arrow--scrim.carousel-arrow--lg {
+  width: 44px;
+  height: 44px;
+
+  .carousel-arrow__icon { font-size: 24px; }
+}
+
+// ---------------------------------------------------------------------------
+// Variant: bordered-chevron / bordered-arrow (testimonial carousels)
+// ---------------------------------------------------------------------------
+.carousel-arrow--bordered-chevron,
+.carousel-arrow--bordered-arrow {
+  border-radius: 9999px;
+  border: 1px solid var(--border-secondary);        // #d5cec7
+  color: var(--fg-quaternary);                      // #9f9185 default glyph
+  background: transparent;
+}
+
+.carousel-arrow--bordered-chevron:hover:not(:disabled),
+.carousel-arrow--bordered-arrow:hover:not(:disabled) {
+  background: var(--bg-primary-hover);              // #e9d09a (gold)
+  color: var(--fg-quaternary-hover, var(--fg-secondary));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.carousel-arrow--bordered-chevron.carousel-arrow--md,
+.carousel-arrow--bordered-arrow.carousel-arrow--md {
+  width: 48px;
+  height: 48px;
+
+  .carousel-arrow__icon { font-size: 20px; }
+}
+
+.carousel-arrow--bordered-chevron.carousel-arrow--lg,
+.carousel-arrow--bordered-arrow.carousel-arrow--lg {
+  width: 56px;
+  height: 56px;
+
+  .carousel-arrow__icon { font-size: 24px; }
+}
+
+// ---------------------------------------------------------------------------
+// Variant: plain (just the arrow glyph, no button chrome)
+// ---------------------------------------------------------------------------
+.carousel-arrow--plain {
+  background: transparent;
+  border: 0;
+  color: var(--fg-quaternary);
+}
+
+.carousel-arrow--plain:hover:not(:disabled) {
+  color: var(--fg-quaternary-hover, var(--fg-secondary));
+}
+
+.carousel-arrow--plain.carousel-arrow--md {
+  width: 40px;
+  height: 20px;
+
+  .carousel-arrow__icon { font-size: 20px; }
+}
+
+.carousel-arrow--plain.carousel-arrow--lg {
+  width: 48px;
+  height: 24px;
+
+  .carousel-arrow__icon { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-arrow { transition: none; }
+  .carousel-arrow:active:not(:disabled) { transform: none; }
+}

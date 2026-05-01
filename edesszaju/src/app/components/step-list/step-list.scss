@@ -1,0 +1,136 @@
+// =============================================================================
+// app-step-list — generated from Figma "Progress steps" frame
+// Composes a series of <app-step> entries with connector lines drawn between
+// adjacent steps. Two directions:
+//
+//   vertical   — children stack top-to-bottom; each step uses
+//                layout="horizontal" (icon-on-left) and the connector is
+//                drawn by <app-step> itself below the icon column.
+//
+//   horizontal — children sit side-by-side; each step uses
+//                layout="vertical" (icon-on-top, text centered below) and
+//                the connector is drawn by the list itself between adjacent
+//                items, aligned to the icon's vertical centre.
+//
+// Connector colour rules per the leading step's status:
+//   complete | current  → brand pink (--bg-brand-solid)
+//   incomplete          → neutral (--bg-quaternary)
+//   incomplete + featured → dashed neutral (--border-primary)
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.step-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Vertical direction — single column, connector handled by <app-step>
+// ---------------------------------------------------------------------------
+.step-list--vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-list--vertical .step-list__item {
+  display: block;
+}
+
+// ---------------------------------------------------------------------------
+// Horizontal direction — flex row, equal-width items, list-owned connector
+// ---------------------------------------------------------------------------
+.step-list--horizontal {
+  --_icon-half: 12px;                   // half of step-icon size (sm = 24)
+  --_connector-min: 24px;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  gap: 0;
+}
+
+.step-list--horizontal.step-list--md {
+  --_icon-half: 16px;                   // half of 32
+}
+
+// Featured icon variant uses larger surface (40 sm / 48 md)
+.step-list--horizontal.step-list--featured {
+  --_icon-half: 20px;
+}
+
+.step-list--horizontal.step-list--featured.step-list--md {
+  --_icon-half: 24px;
+}
+
+.step-list--horizontal .step-list__item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+// Last item — no connector, also no flex-grow so its label doesn't get
+// pushed wide. We let it size to content.
+.step-list--horizontal .step-list__item:last-child {
+  flex: 0 0 auto;
+}
+
+.step-list--horizontal .step-list__step {
+  flex-shrink: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Horizontal connector — flex grows to fill space between icons
+// ---------------------------------------------------------------------------
+.step-list__connector {
+  flex: 1 1 auto;
+  height: 2px;
+  align-self: flex-start;
+  margin-top: var(--_icon-half);
+  min-width: var(--_connector-min);
+  background: var(--bg-quaternary);     // muted default
+  border-radius: 2px;
+}
+
+.step-list__connector--brand {
+  background: var(--bg-brand-solid);    // #d23955
+}
+
+// Featured variant — incomplete connectors are dashed neutral
+.step-list--featured .step-list__connector--muted {
+  background: transparent;
+  background-image: linear-gradient(
+    to right,
+    var(--border-primary) 0,
+    var(--border-primary) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+}
+
+// ---------------------------------------------------------------------------
+// Text-line variant — each step has its own top border, list owns only gap
+// ---------------------------------------------------------------------------
+.step-list--text-line.step-list--horizontal {
+  gap: var(--space-4);                  // 16
+}
+
+.step-list--text-line.step-list--horizontal .step-list__item:last-child {
+  flex: 1 1 0;                          // text-line items keep equal width
+}
+
+.step-list--text-line.step-list--vertical {
+  gap: var(--space-5);                  // 20
+}
+
+.step-list--text-line .step-list__step {
+  display: block;
+  width: 100%;
+}

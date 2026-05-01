@@ -396,38 +396,3 @@
   flex-wrap: wrap;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  text-decoration: none;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  padding: 0.55rem 0.95rem;
-  font: inherit;
-  font-size: var(--text-sm-size);
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
-
-  app-icon {
-    width: 0.95rem;
-    height: 0.95rem;
-  }
-}
-
-.btn-primary {
-  background: var(--primary);
-  color: #fff;
-
-  &:hover { background: var(--primary-dark); }
-}
-
-.btn-secondary {
-  background: #fff;
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-
-  &:hover { background: var(--bg-primary-hover); }
-}

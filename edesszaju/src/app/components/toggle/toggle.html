@@ -1,0 +1,33 @@
+@let cls = rootClass();
+@let id = resolvedId();
+@let aria = ariaLabel();
+@let isChecked = checked();
+@let isDisabled = disabled();
+@let lbl = label();
+@let supp = supportingText();
+
+<label [class]="cls" [attr.for]="id">
+  <span class="toggle__control">
+    <input
+      class="toggle__input"
+      type="checkbox"
+      role="switch"
+      [id]="id"
+      [name]="name()"
+      [value]="value()"
+      [checked]="isChecked"
+      [disabled]="isDisabled"
+      [attr.aria-label]="aria"
+      [attr.aria-checked]="isChecked ? 'true' : 'false'"
+      (change)="onChange($event)" />
+    <span class="toggle__track" aria-hidden="true">
+      <span class="toggle__knob"></span>
+    </span>
+  </span>
+  @if (lbl || supp) {
+    <span class="toggle__text">
+      @if (lbl) { <span class="toggle__label">{{ lbl }}</span> }
+      @if (supp) { <span class="toggle__supporting">{{ supp }}</span> }
+    </span>
+  }
+</label>

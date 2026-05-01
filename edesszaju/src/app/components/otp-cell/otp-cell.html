@@ -1,0 +1,24 @@
+@let cls = rootClass();
+@let id = resolvedId();
+@let aria = ariaLabel();
+
+<div [class]="cls">
+  <input
+    #input
+    class="otp-cell__input"
+    type="text"
+    [id]="id"
+    [value]="value()"
+    [placeholder]="placeholder()"
+    [disabled]="disabled()"
+    [autofocus]="autoFocus() ? true : null"
+    [attr.aria-label]="aria"
+    [attr.maxlength]="maxLength()"
+    [attr.inputmode]="inputMode()"
+    [attr.autocomplete]="inputMode() === 'numeric' ? 'one-time-code' : null"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    (input)="onInput($event)"
+    (keydown)="onKeyDown($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)" />
+</div>

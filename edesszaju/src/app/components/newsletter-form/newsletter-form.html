@@ -1,0 +1,37 @@
+@let cls = rootClass();
+@let ph = placeholder();
+@let btn = buttonLabel();
+@let helper = helperText();
+@let sz = size();
+@let isDisabled = disabled();
+@let isLoading = loading();
+@let val = value();
+
+<form [class]="cls" (submit)="onSubmit($event)" novalidate>
+  <div class="newsletter-form__row">
+    <app-input
+      class="newsletter-form__input"
+      type="email"
+      name="email"
+      autocomplete="email"
+      [placeholder]="ph"
+      [size]="sz"
+      [value]="val"
+      [disabled]="isDisabled"
+      (valueChange)="onInput($event)" />
+
+    <app-button
+      class="newsletter-form__submit"
+      type="submit"
+      variant="primary"
+      [size]="sz"
+      [disabled]="isDisabled"
+      [loading]="isLoading">
+      {{ btn }}
+    </app-button>
+  </div>
+
+  @if (helper) {
+    <p class="newsletter-form__helper">{{ helper }}</p>
+  }
+</form>

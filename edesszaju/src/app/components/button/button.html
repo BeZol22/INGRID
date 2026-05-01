@@ -1,0 +1,75 @@
+@let cls = rootClass();
+@let busy = loading();
+@let only = iconOnly();
+@let iStart = iconStart();
+@let iEnd = iconEnd();
+@let isDisabled = disabled() || busy;
+@let label = ariaLabel();
+@let link = routerLink();
+@let url = href();
+
+@if (link !== null) {
+  <a
+    [routerLink]="link"
+    [class]="cls"
+    [attr.aria-label]="label"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.aria-busy]="busy ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    @if (busy) {
+      <app-spinner class="btn__spinner" />
+    } @else if (iStart) {
+      <app-icon class="btn__icon" [name]="iStart" />
+    }
+    @if (!only) {
+      <span class="btn__label"><ng-content /></span>
+    }
+    @if (!busy && !only && iEnd) {
+      <app-icon class="btn__icon" [name]="iEnd" />
+    }
+  </a>
+} @else if (url !== null) {
+  <a
+    [href]="url"
+    [attr.target]="target()"
+    [attr.rel]="rel()"
+    [class]="cls"
+    [attr.aria-label]="label"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.aria-busy]="busy ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    @if (busy) {
+      <app-spinner class="btn__spinner" />
+    } @else if (iStart) {
+      <app-icon class="btn__icon" [name]="iStart" />
+    }
+    @if (!only) {
+      <span class="btn__label"><ng-content /></span>
+    }
+    @if (!busy && !only && iEnd) {
+      <app-icon class="btn__icon" [name]="iEnd" />
+    }
+  </a>
+} @else {
+  <button
+    [type]="type()"
+    [class]="cls"
+    [disabled]="isDisabled"
+    [attr.aria-label]="label"
+    [attr.aria-busy]="busy ? 'true' : null"
+    (click)="onClick($event)">
+    @if (busy) {
+      <app-spinner class="btn__spinner" />
+    } @else if (iStart) {
+      <app-icon class="btn__icon" [name]="iStart" />
+    }
+    @if (!only) {
+      <span class="btn__label"><ng-content /></span>
+    }
+    @if (!busy && !only && iEnd) {
+      <app-icon class="btn__icon" [name]="iEnd" />
+    }
+  </button>
+}

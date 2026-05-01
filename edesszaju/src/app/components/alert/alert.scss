@@ -1,0 +1,194 @@
+// =============================================================================
+// app-alert — generated from Figma "Alert / Banner" frame
+// Inline page banner / alert. Visually shares the same chrome as app-toast
+// (cream surface, rounded card, subtle border, shadow-xs) but offers two
+// layout variants and two action styles to cover the Figma matrix.
+//
+// Layouts:
+//   stacked — title + description vertical; footer below
+//   inline  — title and description on the same row; actions pushed right
+//
+// Action styles:
+//   links   — text-style Dismiss / Action buttons
+//   buttons — full <app-button> primary + secondary (stacked or side by side)
+//
+// Variants: neutral / info / success / warning / error — color the alert icon.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.alert {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);                       // 12 (spacing-lg)
+  width: 100%;
+  padding: var(--space-4);                   // 16 (spacing-xl)
+  background: var(--bg-primary);             // #fff9f4 cream
+  border: 1px solid var(--border-primary);   // #bdb3a9
+  border-radius: 12px;                       // radius-xl
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // shadow-xs
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Inline layout — title + description on a single row, actions pushed right
+// ---------------------------------------------------------------------------
+.alert--inline {
+  align-items: center;
+}
+
+.alert--inline .alert__body {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.alert--inline .alert__text {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);                       // space between title and desc
+}
+
+.alert--inline .alert__title { font-weight: 600; }
+
+// ---------------------------------------------------------------------------
+// Leading slot
+// ---------------------------------------------------------------------------
+.alert__leading {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: flex-start;
+
+  &:empty { display: none; }
+}
+
+.alert__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--fg-quaternary);
+
+  svg { width: 16px; height: 16px; display: block; }
+}
+
+// Per-variant alert color
+.alert--info .alert__icon     { color: #2563eb; }
+.alert--success .alert__icon  { color: var(--fg-success-primary); }
+.alert--warning .alert__icon  { color: var(--fg-warning-primary); }
+.alert--error .alert__icon    { color: var(--fg-error-primary); }
+
+// ---------------------------------------------------------------------------
+// Body
+// ---------------------------------------------------------------------------
+.alert__body {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);                       // 12 between text and actions
+}
+
+.alert__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);                       // 4 between title and desc
+}
+
+.alert__title {
+  margin: 0;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-secondary);              // #3f3731
+}
+
+.alert__description {
+  margin: 0;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);               // #544a42
+}
+
+// ---------------------------------------------------------------------------
+// Stacked actions (links) — two text buttons in a row
+// Stacked actions (buttons) — two full app-button elements stacked
+// ---------------------------------------------------------------------------
+.alert__actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);                       // 12
+}
+
+.alert--stacked.alert--actions-buttons .alert__actions {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);                       // 8 between stacked buttons
+}
+
+// ---------------------------------------------------------------------------
+// Inline actions — pushed to the trailing edge of the alert
+// ---------------------------------------------------------------------------
+.alert__inline-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);                       // 12 between dismiss and action
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+// ---------------------------------------------------------------------------
+// Text-link buttons (Dismiss / Action)
+// ---------------------------------------------------------------------------
+.alert__dismiss,
+.alert__action {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+
+  &:focus { outline: none; }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.alert__dismiss {
+  color: var(--text-tertiary);
+
+  &:hover { color: var(--text-secondary-hover); }
+}
+
+.alert__action {
+  color: var(--text-brand-secondary);
+
+  &:hover { color: var(--text-brand-secondary-hover); }
+}
+
+// ---------------------------------------------------------------------------
+// Close X — top-right
+// ---------------------------------------------------------------------------
+.alert__close {
+  flex-shrink: 0;
+  margin-top: -2px;
+}

@@ -1,0 +1,55 @@
+// =============================================================================
+// app-help-icon — generated from Figma "Help icon" frame
+// 16×16 question-mark icon button that opens an app-tooltip on hover/focus.
+// Convenience wrapper — uses the existing app-tooltip primitive underneath.
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.help-icon {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--fg-quaternary);                 // #9f9185
+  cursor: help;
+  transition: color 0.12s ease, box-shadow 0.12s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(:disabled) {
+    color: var(--fg-quaternary-hover);          // #827468
+  }
+
+  &:focus-visible {
+    color: var(--fg-quaternary-hover);
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 4px var(--focus-ring);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.help-icon__glyph {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .help-icon { transition: none; }
+}

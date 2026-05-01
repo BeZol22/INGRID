@@ -1,0 +1,253 @@
+// =============================================================================
+// app-pagination — generated from Figma "Pagination" master frame
+// Composite that arranges already-built primitives (app-pagination-item,
+// app-pagination-button, app-button, app-select) into the 10 layouts shown
+// in the Figma frame.
+//
+// Layouts:
+//   page-default          — text-link Prev | numbers | text-link Next
+//   page-minimal          — same, centered
+//   card-default          — same, wrapped in top-bordered card row
+//   card-advanced         — outlined-button Prev | numbers | outlined Next
+//   card-advanced-center  — same, centered
+//   card-minimal-left     — Page X of Y + page-size select | text Prev/Next
+//   card-minimal-center   — same, centered
+//   card-minimal-right    — same, mirrored (status on the right)
+//   card-buttons-left     — << < label > >> joined toolbar
+//   card-buttons-right    — same, right-aligned
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-family: var(--font-body);
+}
+
+// Card-bordered layouts — top hairline matches Figma
+.pagination--card {
+  border-top: 1px solid var(--border-secondary);
+  padding: var(--space-3) var(--space-6);          // 12 / 24
+}
+
+.pagination--center {
+  justify-content: center;
+}
+
+// ---------------------------------------------------------------------------
+// Numbered list
+// ---------------------------------------------------------------------------
+.pagination__numbers {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);                             // 4
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pagination__numbers > li {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  color: var(--text-quaternary);                   // #695d53
+  user-select: none;
+}
+
+// ---------------------------------------------------------------------------
+// Text-link prev/next (page-default, page-minimal, card-default)
+// ---------------------------------------------------------------------------
+.pagination__link {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);                             // 8
+  padding: var(--space-2) var(--space-1);          // 8 / 4 — keep arrow flush left/right
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-secondary);                    // #3f3731
+  cursor: pointer;
+  border-radius: var(--space-1);
+  transition: color 0.15s ease, background-color 0.15s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(:disabled) {
+    color: var(--text-secondary-hover, var(--text-primary));
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 4px var(--focus-ring);
+  }
+
+  &:disabled {
+    color: var(--text-quaternary);
+    cursor: not-allowed;
+  }
+}
+
+.pagination__link-icon {
+  font-size: 20px;
+  line-height: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Card-minimal layout (Page X of Y + select + text-link prev/next)
+// ---------------------------------------------------------------------------
+.pagination__minimal {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);                             // 20
+  width: 100%;
+}
+
+.pagination__minimal--left {
+  justify-content: flex-start;
+
+  .pagination__minimal-actions { margin-left: auto; }
+}
+
+.pagination__minimal--right {
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+
+  .pagination__minimal-actions { margin-right: auto; }
+}
+
+.pagination__minimal--center {
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.pagination__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);                             // 12 between label and select
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pagination__status-text {
+  display: inline-flex;
+  align-items: center;
+}
+
+.pagination__minimal-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);                             // 8
+}
+
+// Outlined link-style buttons used by the minimal layout's Prev/Next
+.pagination__link-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--space-2);
+  background: var(--bg-primary);                   // #fff9f4
+  font-family: inherit;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(:disabled) {
+    background: var(--bg-primary-hover);            // #e9d09a (gold)
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 6px var(--focus-ring);
+  }
+
+  &:disabled {
+    color: var(--text-quaternary);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Page-size select option — slot child for <app-select>
+// ---------------------------------------------------------------------------
+.pagination__ps-option {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-align: left;
+
+  &:hover { background: var(--bg-primary-hover); }
+}
+
+// ---------------------------------------------------------------------------
+// Joined-toolbar group (card-buttons-left / card-buttons-right)
+// app-pagination-button already draws the right-border between cells.
+// ---------------------------------------------------------------------------
+.pagination--card-buttons-left { justify-content: flex-start; }
+.pagination--card-buttons-right { justify-content: flex-end; }
+
+.pagination__group {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0;
+  border-radius: var(--space-2);
+  overflow: hidden;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  // The label sits between the button pairs
+  > .pagination__group-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--space-3);
+    font-size: var(--text-sm-size);
+    line-height: var(--text-sm-lh);
+    font-weight: 500;
+    color: var(--text-secondary);
+    border-right: 1px solid var(--border-primary);
+  }
+}

@@ -1,0 +1,31 @@
+@let cls = rootClass();
+@let v = variant();
+@let sz = size();
+@let layout = childLayout();
+@let horizontal = isHorizontal();
+@let items = steps();
+@let textLine = isTextLine();
+
+<ol [class]="cls">
+  @for (item of items; track $index; let last = $last) {
+    <li class="step-list__item">
+      <app-step
+        class="step-list__step"
+        [variant]="v"
+        [status]="item.status"
+        [size]="sz"
+        [layout]="layout"
+        [connector]="!horizontal && !last && !textLine"
+        [title]="item.title"
+        [supportingText]="item.description ?? null"
+        [step]="item.step ?? ($index + 1)"
+        [icon]="item.icon ?? 'user-01'" />
+
+      @if (horizontal && !last && !textLine) {
+        <span
+          class="step-list__connector {{ connectorClassForStatus(item.status) }}"
+          aria-hidden="true"></span>
+      }
+    </li>
+  }
+</ol>

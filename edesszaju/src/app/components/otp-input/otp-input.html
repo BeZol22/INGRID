@@ -1,0 +1,37 @@
+@let cls = rootClass();
+@let lbl = label();
+@let h = hint();
+@let err = error();
+@let isError = hasError();
+@let sepIndex = separatorAfter();
+@let showSep = showSeparator();
+
+<div [class]="cls" (paste)="onPaste($event)">
+  @if (lbl) {
+    <span class="otp-input__label">{{ lbl }}</span>
+  }
+
+  <div class="otp-input__row" role="group" [attr.aria-label]="lbl || 'Verification code'">
+    @for (i of indices(); track i) {
+      <app-otp-cell
+        [size]="size()"
+        [value]="cellValue(i)"
+        [disabled]="disabled()"
+        [error]="isError"
+        [autoFocus]="i === 0 && autoFocus()"
+        [ariaLabel]="'Számjegy ' + (i + 1)"
+        (valueChange)="onCellChange(i, $event)"
+        (keyDown)="onCellKeyDown(i, $event)" />
+
+      @if (showSep && i === sepIndex) {
+        <span class="otp-input__separator" aria-hidden="true">–</span>
+      }
+    }
+  </div>
+
+  @if (err) {
+    <span class="otp-input__msg otp-input__msg--error" [id]="id + '-msg'">{{ err }}</span>
+  } @else if (h) {
+    <span class="otp-input__msg" [id]="id + '-msg'">{{ h }}</span>
+  }
+</div>

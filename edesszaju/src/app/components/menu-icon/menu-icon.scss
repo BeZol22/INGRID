@@ -1,0 +1,105 @@
+// =============================================================================
+// app-menu-icon — generated from Figma "Dropdown menu item / Inset icon" frame
+// 16×16 leading slot for menu items. 7 type variants:
+//   spacer | icon | check | checkbox | dot | avatar | integration
+// Avatar / integration overflow the 16px slot (rendered at 20px, centered).
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.menu-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--fg-quaternary);  // #9f9185 — default tint for icons & glyphs
+}
+
+// ---------------------------------------------------------------------------
+// type=spacer — empty 16×16 (used to keep alignment with sibling rows)
+// type=icon — generic line glyph
+// ---------------------------------------------------------------------------
+.menu-icon__icon {
+  font-size: 16px;
+  display: inline-flex;
+  line-height: 0;
+}
+
+// ---------------------------------------------------------------------------
+// type=check — selected/active marker
+// ---------------------------------------------------------------------------
+.menu-icon__check {
+  width: 12px;
+  height: 12px;
+  color: var(--fg-brand-primary);   // #d23955
+}
+
+// ---------------------------------------------------------------------------
+// type=checkbox — small inline indicator (visual only — not interactive)
+// ---------------------------------------------------------------------------
+.menu-icon__checkbox {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xs);
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 12px;
+    height: 12px;
+    color: var(--fg-white);
+  }
+
+  &.is-checked {
+    background: var(--bg-brand-solid);
+    border-color: var(--bg-brand-solid);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// type=dot — small status / bullet indicator
+// ---------------------------------------------------------------------------
+.menu-icon__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--fg-success-secondary);   // #22c55e — sensible default
+}
+
+// ---------------------------------------------------------------------------
+// type=avatar — 20×20 round image, centered, overflows 16px slot
+// ---------------------------------------------------------------------------
+.menu-icon__avatar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  border: 0.5px solid rgba(0, 0, 0, 0.16);
+  background: var(--bg-tertiary);
+}
+
+// ---------------------------------------------------------------------------
+// type=integration — 20×20 square brand logo, centered, overflows slot
+// ---------------------------------------------------------------------------
+.menu-icon__integration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+}

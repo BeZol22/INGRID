@@ -1,0 +1,264 @@
+// =============================================================================
+// app-search-bar — generated from Figma "Search bar" + "Navigation search bar"
+// frames. Connected search input + submit button. Input takes the left portion
+// with a left-rounded surface; the submit button sits flush on the right.
+//
+// Sizes:
+//   sm — text-sm 14, padding 8/12 (input) + 8/12 (button)
+//   md — text-md 16, padding 10/14 (input) + 10/14 (button)  ← default
+//   lg — text-md 16, padding 10/14 (input) + 10/16 (button)
+//
+// Button variants:
+//   primary   — filled brand-pink with white text (hero search)
+//   secondary — bordered cream surface with dark text (navigation search)
+//
+// States:
+//   default   — 1px border-primary outline
+//   focused   — 2px border-brand outline (focused-within)
+//   error     — 1px border-error_subtle (or 2px border-error when focused);
+//               trailing alert-circle icon + error message below
+//   loading   — trailing spinner inside the input
+//   disabled  — 50% opacity, no submit
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);                            // 6 between row + msg
+  width: 100%;
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Row — input + button connected
+// ---------------------------------------------------------------------------
+.search-bar__row {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  border-radius: var(--space-2);                    // 8 (radius-md)
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);      // shadow-xs drop
+}
+
+// ---------------------------------------------------------------------------
+// Field — input + leading/trailing slot wrapper. Acts as the bordered shell
+// so the focus-within state can affect the whole left side.
+// ---------------------------------------------------------------------------
+.search-bar__field {
+  --_pad-y: 10px;
+  --_pad-x: 14px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);                              // 8
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--_pad-y) var(--_pad-x);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--space-2) 0 0 var(--space-2); // round left only
+  border-right-width: 0;                            // shared edge with button
+  cursor: text;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.search-bar__field:focus-within {
+  border: 2px solid var(--border-brand, #e56e82);
+  border-right-width: 0;
+  padding: calc(var(--_pad-y) - 1px) calc(var(--_pad-x) - 1px);
+}
+
+// Sizes (input padding mirrors Figma sm/md/lg)
+.search-bar--sm .search-bar__field {
+  --_pad-y: var(--space-2);                         // 8
+  --_pad-x: var(--space-3);                         // 12
+}
+
+.search-bar--md .search-bar__field,
+.search-bar--lg .search-bar__field {
+  --_pad-y: 10px;
+  --_pad-x: 14px;
+}
+
+.search-bar--error .search-bar__field {
+  border-color: var(--border-error-subtle, #fca5a5);
+}
+
+.search-bar--error .search-bar__field:focus-within {
+  border-color: var(--border-error, #ef4444);
+}
+
+.search-bar.is-disabled .search-bar__field {
+  background: var(--bg-tertiary, #eae6e2);
+  cursor: not-allowed;
+}
+
+// ---------------------------------------------------------------------------
+// Pieces
+// ---------------------------------------------------------------------------
+.search-bar__leading {
+  display: inline-flex;
+  font-size: 16px;
+  line-height: 0;
+  color: var(--fg-quaternary);
+  flex-shrink: 0;
+}
+
+.search-bar__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-md-size);                   // 16 (default md/lg)
+  line-height: var(--text-md-lh);                   // 24
+  color: var(--text-primary);
+  padding: 0;
+
+  &::placeholder {
+    color: var(--text-placeholder, #695d53);
+  }
+
+  &::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--text-tertiary);
+  }
+}
+
+.search-bar__trailing {
+  display: inline-flex;
+  font-size: 16px;
+  line-height: 0;
+  color: var(--fg-quaternary);
+  flex-shrink: 0;
+}
+
+.search-bar__trailing--error {
+  color: var(--fg-error-secondary, #ef4444);
+}
+
+// sm shrinks input + leading icon to text-sm
+.search-bar--sm .search-bar__input {
+  font-size: var(--text-sm-size);                   // 14
+  line-height: var(--text-sm-lh);                   // 20
+}
+
+.search-bar--sm .search-bar__leading,
+.search-bar--sm .search-bar__trailing {
+  font-size: 14px;
+}
+
+// ---------------------------------------------------------------------------
+// Submit button — flush with input. Two variants:
+//   primary   — filled brand-pink, white text, primary inner shadow (hero)
+//   secondary — bordered cream surface, dark text (navigation)
+// ---------------------------------------------------------------------------
+.search-bar__submit {
+  --_btn-pad-y: var(--space-3);                     // 12 (md/lg default)
+  --_btn-pad-x: 18px;
+  --_btn-fs: var(--text-md-size);
+  --_btn-lh: var(--text-md-lh);
+
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: var(--_btn-pad-y) var(--_btn-pad-x);
+  font-family: inherit;
+  font-size: var(--_btn-fs);
+  line-height: var(--_btn-lh);
+  font-weight: 600;
+  border: 0;
+  border-radius: 0 var(--space-2) var(--space-2) 0; // round right only
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus { outline: none; }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// Sizes
+.search-bar--sm .search-bar__submit {
+  --_btn-pad-y: var(--space-2);                     // 8
+  --_btn-pad-x: var(--space-3);                     // 12
+  --_btn-fs: var(--text-sm-size);
+  --_btn-lh: var(--text-sm-lh);
+}
+
+.search-bar--md .search-bar__submit {
+  --_btn-pad-y: 10px;
+  --_btn-pad-x: 14px;
+  --_btn-fs: var(--text-sm-size);
+  --_btn-lh: var(--text-sm-lh);
+}
+
+.search-bar--lg .search-bar__submit {
+  --_btn-pad-y: 10px;
+  --_btn-pad-x: var(--space-4);                     // 16
+  --_btn-fs: var(--text-md-size);
+  --_btn-lh: var(--text-md-lh);
+}
+
+// Primary (filled brand-pink)
+.search-bar--btn-primary .search-bar__submit {
+  background: var(--bg-brand-solid);                // #d23955
+  color: var(--text-white, #fff);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.search-bar--btn-primary .search-bar__submit:hover:not(:disabled) {
+  background: var(--bg-brand-solid-hover, #98293d);
+}
+
+.search-bar--btn-primary .search-bar__submit:focus-visible {
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.2),
+    0 0 0 2px var(--bg-page),
+    0 0 0 4px var(--focus-ring);
+}
+
+// Secondary (bordered cream — navigation)
+.search-bar--btn-secondary .search-bar__submit {
+  background: var(--bg-primary);                    // #fff9f4
+  color: var(--text-secondary);                     // #3f3731
+  border: 1px solid var(--border-primary);
+  border-left: 0;                                   // shared edge with input
+}
+
+.search-bar--btn-secondary .search-bar__submit:hover:not(:disabled) {
+  background: var(--bg-primary-hover);              // gold (#e9d09a)
+}
+
+.search-bar--btn-secondary .search-bar__submit:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--bg-page),
+    0 0 0 4px var(--focus-ring);
+}
+
+// ---------------------------------------------------------------------------
+// Hint / error message
+// ---------------------------------------------------------------------------
+.search-bar__msg {
+  margin: 0;
+  font-size: var(--text-sm-size);                   // 14
+  line-height: var(--text-sm-lh);                   // 20
+  color: var(--text-tertiary);                      // #544a42
+}
+
+.search-bar__msg--error {
+  color: var(--text-error-primary, #dc2626);
+}

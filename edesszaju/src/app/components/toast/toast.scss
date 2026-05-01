@@ -1,0 +1,192 @@
+// =============================================================================
+// app-toast — generated from Figma "Toast / Notification" frame
+// Standard horizontal toast: leading slot + content (title + description +
+// optional progress bar + footer with dismiss/action) + close button.
+//
+// Variants: neutral / info / success / warning / error — drive the alert
+// icon color when an alert icon is rendered.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+}
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);                       // 12 (spacing-lg)
+  width: 100%;
+  padding: var(--space-4);                   // 16 (spacing-xl)
+  background: var(--bg-primary);             // #fff9f4 cream
+  border: 1px solid rgba(0, 0, 0, 0.1);      // border-secondary_alt
+  border-radius: 12px;                       // radius-xl
+  // shadow-lg
+  box-shadow:
+    0 2px 2px -1px rgba(0, 0, 0, 0.04),
+    0 4px 6px -2px rgba(0, 0, 0, 0.03),
+    0 12px 16px -4px rgba(0, 0, 0, 0.08);
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Leading slot — alert icon OR custom projected content
+// ---------------------------------------------------------------------------
+.toast__leading {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: flex-start;
+
+  &:empty { display: none; }
+}
+
+// Alert circle: 32×32 with subtle border + colored variant icon
+.toast__alert {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background: var(--bg-primary);
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
+}
+
+// Per-variant alert color
+.toast--info .toast__alert     { color: #2563eb; }
+.toast--success .toast__alert  { color: var(--fg-success-primary); }
+.toast--warning .toast__alert  { color: var(--fg-warning-primary); }
+.toast--error .toast__alert    { color: var(--fg-error-primary); }
+
+// ---------------------------------------------------------------------------
+// Body — title + description + progress + footer
+// ---------------------------------------------------------------------------
+.toast__body {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);                       // 12 between text/progress/footer
+}
+
+.toast__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);                       // 4 between title and desc
+}
+
+.toast__title {
+  margin: 0;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--fg-primary);                  // #2b2622
+}
+
+.toast__description {
+  margin: 0;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--fg-secondary);                // #544a42
+}
+
+// ---------------------------------------------------------------------------
+// Progress bar
+// ---------------------------------------------------------------------------
+.toast__progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);                       // 12 between bar and label
+}
+
+.toast__progress-track {
+  flex: 1 1 0;
+  position: relative;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--bg-quaternary);          // #d5cec7
+  overflow: hidden;
+}
+
+.toast__progress-fill {
+  display: block;
+  height: 100%;
+  background: var(--fg-brand-primary);       // #d23955
+  border-radius: 9999px;
+  transition: width 0.2s ease;
+}
+
+.toast__progress-label {
+  flex-shrink: 0;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+// ---------------------------------------------------------------------------
+// Footer — dismiss + action buttons
+// ---------------------------------------------------------------------------
+.toast__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);                       // 12 between buttons
+}
+
+.toast__dismiss,
+.toast__action {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 2px;
+
+  &:focus { outline: none; }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.toast__dismiss {
+  color: var(--text-tertiary);               // #544a42
+
+  &:hover { color: var(--text-secondary-hover); }
+}
+
+.toast__action {
+  color: var(--text-brand-secondary);        // #98293d
+
+  &:hover { color: var(--text-brand-secondary-hover); }
+}
+
+// ---------------------------------------------------------------------------
+// Close button — pulled to the top-right; size matches the visual baseline
+// ---------------------------------------------------------------------------
+.toast__close {
+  flex-shrink: 0;
+  margin-top: -2px;                          // optical align with title baseline
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast__progress-fill { transition: none; }
+}

@@ -1,0 +1,42 @@
+@let cls = rootClass();
+@let txt = label();
+@let sortable = isSortable();
+@let icon = sortIcon();
+@let isDisabled = disabled();
+@let aSort = ariaSort();
+@let helpTxt = helpText();
+@let helpSupp = helpSupportingText();
+@let showHelp = hasHelp();
+
+@if (sortable) {
+  <button
+    type="button"
+    [class]="cls"
+    [disabled]="isDisabled"
+    [attr.aria-sort]="aSort"
+    (click)="onSortClick()">
+    <span class="table-header-label__text">{{ txt }}</span>
+
+    @if (showHelp && helpTxt) {
+      <app-help-icon
+        class="table-header-label__help"
+        [text]="helpTxt"
+        [supportingText]="helpSupp" />
+    }
+
+    @if (icon) {
+      <app-icon class="table-header-label__sort-icon" [name]="icon" />
+    }
+  </button>
+} @else {
+  <span [class]="cls" [attr.aria-sort]="aSort">
+    <span class="table-header-label__text">{{ txt }}</span>
+
+    @if (showHelp && helpTxt) {
+      <app-help-icon
+        class="table-header-label__help"
+        [text]="helpTxt"
+        [supportingText]="helpSupp" />
+    }
+  </span>
+}

@@ -1,0 +1,28 @@
+@let cls = rootClass();
+@let open = isOpen();
+@let supp = supportingText();
+
+<div
+  class="tooltip-host"
+  (mouseenter)="onEnter()"
+  (mouseleave)="onLeave()"
+  (focusin)="onEnter()"
+  (focusout)="onLeave()">
+  <ng-content />
+
+  @if (open) {
+    <div [class]="cls" role="tooltip">
+      <div class="tooltip__bubble">
+        @if (supp) {
+          <span class="tooltip__title">{{ text() }}</span>
+          <span class="tooltip__supporting">{{ supp }}</span>
+        } @else {
+          <span class="tooltip__text">{{ text() }}</span>
+        }
+      </div>
+      @if (arrow()) {
+        <span class="tooltip__arrow" aria-hidden="true"></span>
+      }
+    </div>
+  }
+</div>

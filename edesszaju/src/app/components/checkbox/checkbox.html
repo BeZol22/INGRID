@@ -1,0 +1,47 @@
+@let cls = rootClass();
+@let id = resolvedId();
+@let isCheckbox = type() === 'checkbox';
+@let lbl = label();
+@let supp = supportingText();
+
+<label [class]="cls" [attr.for]="id">
+  <span class="checkbox__control">
+    <input
+      #input
+      class="checkbox__input"
+      [type]="type()"
+      [id]="id"
+      [name]="name()"
+      [value]="value()"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      [attr.aria-label]="ariaLabel()"
+      (change)="onChange($event)" />
+    <span class="checkbox__indicator" aria-hidden="true">
+      @if (isCheckbox && indeterminate()) {
+        <svg class="checkbox__glyph" viewBox="0 0 14 14" fill="none">
+          <path d="M2.91667 7H11.0833"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round" />
+        </svg>
+      } @else if (isCheckbox && checked()) {
+        <svg class="checkbox__glyph" viewBox="0 0 14 14" fill="none">
+          <path d="M11.6667 3.5L5.25 9.91667L2.33333 7"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+      } @else if (!isCheckbox && checked()) {
+        <span class="checkbox__dot"></span>
+      }
+    </span>
+  </span>
+  @if (lbl || supp) {
+    <span class="checkbox__text">
+      @if (lbl) { <span class="checkbox__label">{{ lbl }}</span> }
+      @if (supp) { <span class="checkbox__supporting">{{ supp }}</span> }
+    </span>
+  }
+</label>

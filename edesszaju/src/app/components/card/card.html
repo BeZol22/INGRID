@@ -1,0 +1,30 @@
+@let cls = rootClass();
+@let img = imageUrl();
+@let pos = imagePosition();
+
+<div [class]="cls">
+  @if (img && pos === 'top') {
+    <img class="card__image card__image--top" [src]="img" [alt]="imageAlt()" />
+  }
+
+  <div class="card__inner">
+    @if (img && pos === 'left') {
+      <img class="card__image card__image--left" [src]="img" [alt]="imageAlt()" />
+    }
+
+    <div class="card__body">
+      @if (title()) {
+        <p class="card__title">{{ title() }}</p>
+      }
+      @if (description(); as d) {
+        <p class="card__description">{{ d }}</p>
+      }
+      <div class="card__content">
+        <ng-content />
+      </div>
+      <div class="card__actions">
+        <ng-content select="[actions]" />
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+@let t = type();
+@let isChecked = checked();
+@let isDisabled = disabled();
+@let nm = name();
+@let val = value();
+@let label = ariaLabel();
+
+<div class="table-cell-lead-action">
+  @switch (t) {
+    @case ('checkbox') {
+      <app-checkbox
+        type="checkbox"
+        size="md"
+        [checked]="isChecked"
+        [disabled]="isDisabled"
+        [name]="nm"
+        [value]="val"
+        [ariaLabel]="label"
+        (checkedChange)="onCheckedChange($event)" />
+    }
+    @case ('radio') {
+      <app-checkbox
+        type="radio"
+        size="md"
+        [checked]="isChecked"
+        [disabled]="isDisabled"
+        [name]="nm"
+        [value]="val"
+        [ariaLabel]="label"
+        (checkedChange)="onCheckedChange($event)" />
+    }
+    @case ('toggle') {
+      <app-toggle
+        size="sm"
+        variant="default"
+        [checked]="isChecked"
+        [disabled]="isDisabled"
+        [ariaLabel]="label"
+        (checkedChange)="onCheckedChange($event)" />
+    }
+  }
+</div>

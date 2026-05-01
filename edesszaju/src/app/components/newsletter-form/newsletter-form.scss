@@ -1,0 +1,82 @@
+// =============================================================================
+// app-newsletter-form — generated from Figma "Newsletter CTA section" frame
+// Inline email signup form. Wraps an <app-input type="email"> + an
+// <app-button> submit, with optional helper / privacy-disclaimer text below.
+// Two layouts (inline = side-by-side, stacked = button under input) and two
+// sizes (md / lg).
+//
+// Standalone primitive — pair with <app-cta-section> or <app-hero-section>
+// to build the full Figma marketing-section variants.
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);                              // 12 between row + helper
+  width: 100%;
+  max-width: 480px;                                 // width-sm (Figma default)
+  font-family: var(--font-body);
+}
+
+.newsletter-form--lg {
+  max-width: 560px;                                 // width-md for larger heroes
+}
+
+// ---------------------------------------------------------------------------
+// Row — input + button
+// ---------------------------------------------------------------------------
+.newsletter-form__row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);                              // 12
+  width: 100%;
+}
+
+.newsletter-form__input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.newsletter-form__submit {
+  flex-shrink: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Stacked layout — button drops below input (mobile / narrow contexts)
+// ---------------------------------------------------------------------------
+.newsletter-form--stacked .newsletter-form__row {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.newsletter-form--stacked .newsletter-form__submit,
+.newsletter-form--stacked .newsletter-form__submit ::ng-deep .btn {
+  width: 100%;
+}
+
+// Mobile auto-stack so consumers don't have to pass layout="stacked"
+@media (max-width: 480px) {
+  .newsletter-form--inline .newsletter-form__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .newsletter-form--inline .newsletter-form__submit,
+  .newsletter-form--inline .newsletter-form__submit ::ng-deep .btn {
+    width: 100%;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Helper text
+// ---------------------------------------------------------------------------
+.newsletter-form__helper {
+  margin: 0;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  color: var(--text-tertiary);
+}

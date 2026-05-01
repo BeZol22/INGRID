@@ -1,0 +1,236 @@
+// =============================================================================
+// app-tooltip — generated from Figma "Tooltip" frame
+// Hover/focus tooltip with optional arrow and 4 placements × 3 alignments.
+//
+// Placements: top / bottom / left / right (= which side of the trigger the
+//             bubble sits on)
+// Aligns:     start / center / end (= horizontal alignment for top/bottom,
+//             vertical alignment for left/right)
+//
+// Trigger lives in <ng-content>. The bubble appears on mouseenter/focusin
+// after `delay` ms and disappears on mouseleave/focusout.
+// =============================================================================
+
+:host {
+  display: contents;                         // tooltip wrapper is layout-transparent
+}
+
+.tooltip-host {
+  position: relative;
+  display: inline-block;                     // local stacking + positioning context
+}
+
+// ---------------------------------------------------------------------------
+// Tooltip wrapper — positioned absolutely relative to the trigger host.
+// `--_offset` is the gap between trigger edge and bubble (matches Figma 6px arrow).
+// ---------------------------------------------------------------------------
+.tooltip {
+  --_offset: 8px;
+  --_bg: var(--bg-primary-solid);            // #562914 dark brown
+  --_arrow-size: 6px;
+
+  position: absolute;
+  z-index: 50;
+  display: inline-flex;
+  pointer-events: none;
+  animation: tooltip-in 0.12s ease-out both;
+}
+
+// ---------------------------------------------------------------------------
+// Placement — drives the geometry: where the tooltip sits relative to host
+// ---------------------------------------------------------------------------
+.tooltip--top {
+  bottom: calc(100% + var(--_offset));
+  flex-direction: column;
+}
+
+.tooltip--bottom {
+  top: calc(100% + var(--_offset));
+  flex-direction: column-reverse;
+}
+
+.tooltip--left {
+  right: calc(100% + var(--_offset));
+  flex-direction: row;
+}
+
+.tooltip--right {
+  left: calc(100% + var(--_offset));
+  flex-direction: row-reverse;
+}
+
+// ---------------------------------------------------------------------------
+// Alignment — for top/bottom: horizontal; for left/right: vertical
+// ---------------------------------------------------------------------------
+.tooltip--top.tooltip--align-center,
+.tooltip--bottom.tooltip--align-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip--top.tooltip--align-start,
+.tooltip--bottom.tooltip--align-start {
+  left: 0;
+}
+
+.tooltip--top.tooltip--align-end,
+.tooltip--bottom.tooltip--align-end {
+  right: 0;
+}
+
+.tooltip--left.tooltip--align-center,
+.tooltip--right.tooltip--align-center {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tooltip--left.tooltip--align-start,
+.tooltip--right.tooltip--align-start {
+  top: 0;
+}
+
+.tooltip--left.tooltip--align-end,
+.tooltip--right.tooltip--align-end {
+  bottom: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Bubble — the dark surface containing the text
+// ---------------------------------------------------------------------------
+.tooltip__bubble {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);                     // 2 (spacing-xxs)
+  padding: var(--space-2) var(--space-3);    // 8 / 12 (single-line)
+  background: var(--_bg);
+  border-radius: 8px;                        // radius-md
+  // shadow-lg
+  box-shadow:
+    0 2px 2px -1px rgba(0, 0, 0, 0.04),
+    0 4px 6px -2px rgba(0, 0, 0, 0.03),
+    0 12px 16px -4px rgba(0, 0, 0, 0.08);
+  font-family: var(--font-body);
+  text-align: left;
+  max-width: 296px;
+}
+
+// Single-line: no wrap, centered text per Figma
+.tooltip:not(.tooltip--has-supporting) .tooltip__bubble {
+  align-items: center;
+  text-align: center;
+}
+
+// With supporting text: bubble grows wider, tighter padding adjustment
+.tooltip--has-supporting .tooltip__bubble {
+  padding: var(--space-3);                   // 12 all around
+  width: 296px;
+  max-width: 296px;
+}
+
+// ---------------------------------------------------------------------------
+// Text
+// ---------------------------------------------------------------------------
+.tooltip__text,
+.tooltip__title {
+  font-size: var(--text-xs-size);            // 12
+  line-height: var(--text-xs-lh);            // 18
+  font-weight: 600;
+  color: var(--text-white);
+  white-space: nowrap;
+}
+
+.tooltip--has-supporting .tooltip__title {
+  white-space: normal;
+}
+
+.tooltip__supporting {
+  font-size: var(--text-xs-size);
+  line-height: var(--text-xs-lh);
+  font-weight: 500;
+  color: #bdb3a9;                            // tooltip-supporting-text
+  white-space: pre-wrap;
+}
+
+// ---------------------------------------------------------------------------
+// Arrow — CSS triangle, color matches bubble bg
+// ---------------------------------------------------------------------------
+.tooltip__arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+}
+
+// Top placement → arrow points down (tooltip is above the trigger)
+.tooltip--top .tooltip__arrow {
+  border-width: var(--_arrow-size) 8px 0 8px;
+  border-top-color: var(--_bg);
+  align-self: center;
+}
+
+// Bottom placement → arrow points up
+.tooltip--bottom .tooltip__arrow {
+  border-width: 0 8px var(--_arrow-size) 8px;
+  border-bottom-color: var(--_bg);
+  align-self: center;
+}
+
+// Left placement → arrow points right
+.tooltip--left .tooltip__arrow {
+  border-width: 8px 0 8px var(--_arrow-size);
+  border-left-color: var(--_bg);
+  align-self: center;
+}
+
+// Right placement → arrow points left
+.tooltip--right .tooltip__arrow {
+  border-width: 8px var(--_arrow-size) 8px 0;
+  border-right-color: var(--_bg);
+  align-self: center;
+}
+
+// Per-alignment arrow position offset for top/bottom placements
+.tooltip--top.tooltip--align-start .tooltip__arrow,
+.tooltip--bottom.tooltip--align-start .tooltip__arrow {
+  align-self: flex-start;
+  margin-left: var(--space-3);
+}
+
+.tooltip--top.tooltip--align-end .tooltip__arrow,
+.tooltip--bottom.tooltip--align-end .tooltip__arrow {
+  align-self: flex-end;
+  margin-right: var(--space-3);
+}
+
+// ---------------------------------------------------------------------------
+// Animation
+// ---------------------------------------------------------------------------
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+    transform-origin: center;
+  }
+  to { opacity: 1; }
+}
+
+// Ensure transforms used for centering aren't overridden by the animation
+.tooltip--align-center.tooltip--top,
+.tooltip--align-center.tooltip--bottom { animation-name: tooltip-in-x; }
+
+.tooltip--align-center.tooltip--left,
+.tooltip--align-center.tooltip--right { animation-name: tooltip-in-y; }
+
+@keyframes tooltip-in-x {
+  from { opacity: 0; transform: translateX(-50%) translateY(2px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes tooltip-in-y {
+  from { opacity: 0; transform: translateY(-50%) translateX(2px); }
+  to { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip { animation: none; }
+}

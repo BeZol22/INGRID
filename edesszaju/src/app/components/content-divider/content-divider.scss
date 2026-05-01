@@ -1,0 +1,78 @@
+// =============================================================================
+// app-content-divider — generated from Figma "Content divider" frame
+// Section divider with optional centered content. Variants:
+//   single-line     — divider — content — divider
+//   dual-line       — top hairline + content + bottom hairline
+//   background-fill — cream surface band, content centered, no lines
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.content-divider {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Single line — divider | content | divider
+// ---------------------------------------------------------------------------
+.content-divider--single-line {
+  flex-direction: row;
+  gap: var(--space-2);                         // 8 between content and lines
+
+  .content-divider__line {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 1px;
+    background: var(--border-secondary);       // #d5cec7
+  }
+
+  // Lines hide when there's no content (full-width line scenario)
+  .content-divider__content:empty + .content-divider__line { display: none; }
+  .content-divider__line:has(+ .content-divider__content:empty) { display: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Dual line — top border + content + bottom border (vertical stack)
+// ---------------------------------------------------------------------------
+.content-divider--dual-line {
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);                         // 8 between top line and content
+  padding: var(--space-3) 0;                   // 12 vertical breathing room
+  border-top: 1px solid var(--border-secondary);
+  border-bottom: 1px solid var(--border-secondary);
+
+  // Lines aren't rendered as inline children in dual-line — they're the
+  // outer borders. Hide the inline ones to avoid extra space.
+  .content-divider__line { display: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Background fill — cream surface, content centered, no lines
+// ---------------------------------------------------------------------------
+.content-divider--background-fill {
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-2) 0;                   // 8 vertical
+  background: var(--bg-secondary);             // cream surface
+  border-radius: 8px;                          // radius-md
+
+  .content-divider__line { display: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Content slot — collapses cleanly when empty
+// ---------------------------------------------------------------------------
+.content-divider__content {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  &:empty { display: none; }
+}

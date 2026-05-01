@@ -1,0 +1,42 @@
+@let cls = rootClass();
+@let id = resolvedId();
+@let lbl = label();
+@let h = hint();
+@let err = error();
+@let isError = hasError();
+
+<div [class]="cls">
+  @if (lbl) {
+    <label class="textarea__label" [attr.for]="id">
+      {{ lbl }}@if (required()) { <span class="textarea__required" aria-hidden="true">*</span> }
+    </label>
+  }
+
+  <div class="textarea__wrap">
+    <textarea
+      #textarea
+      class="textarea__field"
+      [id]="id"
+      [name]="name()"
+      [value]="value()"
+      [placeholder]="placeholder()"
+      [disabled]="disabled()"
+      [readOnly]="readonly()"
+      [required]="required()"
+      [rows]="rows()"
+      [attr.autocomplete]="autocomplete()"
+      [attr.maxlength]="maxLength()"
+      [attr.minlength]="minLength()"
+      [attr.aria-invalid]="isError ? 'true' : null"
+      [attr.aria-describedby]="(h || err) ? id + '-msg' : null"
+      (input)="onInput($event)"
+      (focus)="onFocus($event)"
+      (blur)="onBlur($event)"></textarea>
+  </div>
+
+  @if (err) {
+    <span class="textarea__msg textarea__msg--error" [id]="id + '-msg'">{{ err }}</span>
+  } @else if (h) {
+    <span class="textarea__msg" [id]="id + '-msg'">{{ h }}</span>
+  }
+</div>

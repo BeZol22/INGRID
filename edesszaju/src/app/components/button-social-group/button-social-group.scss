@@ -1,0 +1,43 @@
+// =============================================================================
+// app-button-social-group — generated from Figma "Buttons/Social button group"
+// 2 layouts (stack / row) × 2 sizes (md / lg).
+// Composes app-button-social children — themes/sizes are passed through.
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.social-group {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+// ---------------------------------------------------------------------------
+// Layout — stack: vertical full-width text buttons
+// ---------------------------------------------------------------------------
+.social-group--stack {
+  flex-direction: column;
+  gap: var(--space-3); // 12
+
+  &.social-group--md { gap: 10px; }
+  &.social-group--lg { gap: var(--space-3); }
+
+  .social-group__item { width: 100%; }
+}
+
+// ---------------------------------------------------------------------------
+// Layout — row: horizontal equal-width icon-only buttons
+// ---------------------------------------------------------------------------
+.social-group--row {
+  flex-direction: row;
+  gap: var(--space-3); // 12
+  align-items: center;
+
+  .social-group__item {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+  }
+}

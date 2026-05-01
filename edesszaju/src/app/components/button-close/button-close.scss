@@ -1,0 +1,88 @@
+// =============================================================================
+// app-button-close — generated from Figma "Buttons/Button close X" frame
+// 3 sizes (sm 36 / md 40 / lg 44), `onDark` modifier for dark surfaces.
+// states: default / hover / focus-visible / disabled
+// =============================================================================
+
+:host {
+  display: inline-flex;
+}
+
+.btn-close {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);            // 8px = spacing-md
+  width: var(--_size, 36px);
+  height: var(--_size, 36px);
+  border: 1px solid transparent;
+  border-radius: 8px;                 // radius-md
+  background: transparent;
+  color: var(--fg-quaternary);        // #9f9185
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: var(--bg-primary-hover); // #e9d09a (gold)
+    color: var(--fg-quaternary-hover);   // #827468
+  }
+
+  &:focus-visible {
+    background: var(--bg-primary);       // #fff9f4
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 6px var(--focus-ring);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.btn-close__icon {
+  font-size: var(--_icon, 20px);
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes — outer square + inner icon glyph
+// ---------------------------------------------------------------------------
+.btn-close--sm { --_size: 36px; --_icon: 20px; }
+.btn-close--md { --_size: 40px; --_icon: 20px; }
+.btn-close--lg { --_size: 44px; --_icon: 24px; }
+
+// ---------------------------------------------------------------------------
+// Modifier — onDark: white icon at 70% opacity, translucent white hover/focus
+// ---------------------------------------------------------------------------
+.btn-close--on-dark {
+  color: var(--fg-white);
+  opacity: 0.7;
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--fg-white);
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--fg-white);
+    // Keep opacity 0.7 on focused per Figma spec
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-close { transition: none; }
+}

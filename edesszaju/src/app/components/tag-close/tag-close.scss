@@ -1,0 +1,69 @@
+// =============================================================================
+// app-tag-close — generated from Figma "Tag close X" frame
+// Tiny dismiss button for tags/chips. Smaller cousin of app-button-close.
+//
+// Sizes: sm (10px X) / md (12px X) / lg (14px X)
+// States: default / hover / focus-visible / disabled
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.tag-close {
+  --_pad: var(--space-0-5);          // 2 (spacing-xxs)
+  --_glyph: 10px;
+
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--_pad);
+  margin: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--fg-quaternary);       // #9f9185
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: var(--bg-primary-hover);   // gold #e9d09a
+    color: var(--fg-quaternary-hover);     // #827468
+  }
+
+  &:focus-visible {
+    background: var(--bg-primary-hover);
+    color: var(--fg-quaternary-hover);
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 4px var(--focus-ring);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Sizes — drive the inner glyph size and outer padding
+// ---------------------------------------------------------------------------
+.tag-close--sm { --_pad: 2px; --_glyph: 10px; }
+.tag-close--md { --_pad: 2px; --_glyph: 12px; }
+.tag-close--lg { --_pad: 3px; --_glyph: 14px; }
+
+.tag-close__glyph {
+  width: var(--_glyph);
+  height: var(--_glyph);
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag-close { transition: none; }
+}

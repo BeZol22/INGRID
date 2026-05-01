@@ -1,0 +1,73 @@
+@let cls = rootClass();
+@let aria = resolvedAriaLabel();
+@let isDisabled = disabled();
+@let link = routerLink();
+@let url = href();
+
+<ng-template #content>
+  <span class="menu-account__inner">
+    <span class="menu-account__avatar-wrap">
+      <span class="menu-account__avatar">
+        @if (avatarUrl(); as src) {
+          <img
+            class="menu-account__avatar-img"
+            [src]="src"
+            [alt]="avatarAlt()" />
+        }
+      </span>
+    </span>
+    <span class="menu-account__text">
+      <span class="menu-account__name">{{ name() }}</span>
+      @if (email(); as e) {
+        <span class="menu-account__email">{{ e }}</span>
+      }
+    </span>
+    <span
+      class="menu-account__radio"
+      [class.is-checked]="selected()"
+      aria-hidden="true">
+      @if (selected()) {
+        <span class="menu-account__radio-dot"></span>
+      }
+    </span>
+  </span>
+</ng-template>
+
+@if (link !== null) {
+  <a
+    [routerLink]="link"
+    [class]="cls"
+    role="menuitemradio"
+    [attr.aria-checked]="selected() ? 'true' : 'false'"
+    [attr.aria-label]="aria"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else if (url !== null) {
+  <a
+    [href]="url"
+    [attr.target]="target()"
+    [attr.rel]="rel()"
+    [class]="cls"
+    role="menuitemradio"
+    [attr.aria-checked]="selected() ? 'true' : 'false'"
+    [attr.aria-label]="aria"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else {
+  <button
+    [type]="type()"
+    [class]="cls"
+    role="menuitemradio"
+    [attr.aria-checked]="selected() ? 'true' : 'false'"
+    [disabled]="isDisabled"
+    [attr.aria-label]="aria"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </button>
+}

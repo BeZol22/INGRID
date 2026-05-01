@@ -1,0 +1,157 @@
+// =============================================================================
+// app-tabs-list — generated from Figma "Horizontal tabs" master frame
+// Composes <app-tab-button> instances into a horizontal tab strip with
+// container-level chrome that varies per list variant.
+//
+// Variant → tab-button + container chrome mapping:
+//   brand     — tab-button "brand"     · no container chrome
+//   gray      — tab-button "gray"      · no container chrome
+//   underline — tab-button "underline" · 1px bottom rail under all tabs
+//   border    — tab-button "white"     · single rounded outer border
+//   minimal   — tab-button "minimal"   · no container chrome
+//
+// Layout:
+//   default   — content-width strip with a small inter-tab gap
+//   fullWidth — each item shares equal width via flex: 1
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.tabs-list {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);                     // 4 (sm default)
+  font-family: var(--font-body);
+}
+
+.tabs-list--md {
+  gap: var(--space-1);                     // tabs-list still uses small gap;
+                                           // tab-button md grows internally
+}
+
+// ---------------------------------------------------------------------------
+// Items
+// ---------------------------------------------------------------------------
+.tabs-list__item {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.tabs-list--full-width {
+  display: flex;
+  width: 100%;
+}
+
+.tabs-list--full-width .tabs-list__item {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.tabs-list--full-width .tabs-list__item app-tab-button,
+.tabs-list--full-width .tabs-list__item ::ng-deep .tab-button {
+  width: 100%;
+  justify-content: center;
+}
+
+// ---------------------------------------------------------------------------
+// Container chrome — underline rail
+// ---------------------------------------------------------------------------
+.tabs-list--underline {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);                     // 8 between underline tabs
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+// Underline tabs in the list don't need their own bottom-padding — the rail
+// supplies the line. The active border-bottom in <app-tab-button> sits at the
+// same baseline.
+.tabs-list--underline .tabs-list__item ::ng-deep .tab-button {
+  margin-bottom: -1px;                     // overlap the rail so the active
+                                           // 2px border replaces the 1px line
+  padding-bottom: var(--space-3);
+}
+
+// ---------------------------------------------------------------------------
+// Container chrome — bordered group ("Button border")
+// ---------------------------------------------------------------------------
+.tabs-list--border {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: var(--space-1);                 // 4 inset
+  border: 1px solid var(--border-primary);
+  border-radius: var(--space-2);           // radius-md 8
+  background: var(--bg-secondary);         // subtle group fill
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.tabs-list--border .tabs-list__item ::ng-deep .tab-button {
+  border-radius: var(--space-1-5);         // 6 (radius-sm) — inner pills
+}
+
+// ---------------------------------------------------------------------------
+// Brand / gray variants — no extra chrome, default gap
+// ---------------------------------------------------------------------------
+.tabs-list--brand,
+.tabs-list--gray,
+.tabs-list--minimal {
+  gap: var(--space-1);                     // 4
+}
+
+// =============================================================================
+// Vertical direction — stack tabs in a column. Container chrome flips axes
+// (underline rail moves from bottom to left, bordered group becomes a column).
+// =============================================================================
+.tabs-list--vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-0-5);                   // 2 — tighter vertical rhythm
+}
+
+.tabs-list--vertical .tabs-list__item {
+  display: flex;
+  width: 100%;
+}
+
+.tabs-list--vertical .tabs-list__item ::ng-deep .tab-button {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+// Vertical underline → tab-button is rendered as "line" (left border).
+// The list draws a faint left rail under all tabs so the inactive ones sit
+// on a visible line; the active 2px brand border overlaps it.
+.tabs-list--vertical.tabs-list--underline {
+  border-bottom: 0;
+  border-left: 1px solid var(--border-secondary);
+  padding-left: 0;
+  gap: 0;
+}
+
+.tabs-list--vertical.tabs-list--underline .tabs-list__item ::ng-deep .tab-button {
+  margin-left: -1px;                       // overlap the rail
+  padding-left: var(--space-3);
+  padding-bottom: var(--space-2);
+}
+
+// Vertical bordered group — stacked pills inside a single bordered column
+.tabs-list--vertical.tabs-list--border {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: var(--space-1);
+}
+
+.tabs-list--vertical.tabs-list--border .tabs-list__item ::ng-deep .tab-button {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+// Full-width in vertical direction is the default behaviour, but be explicit
+.tabs-list--vertical.tabs-list--full-width .tabs-list__item ::ng-deep .tab-button {
+  justify-content: flex-start;
+}

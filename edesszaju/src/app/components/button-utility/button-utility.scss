@@ -1,0 +1,139 @@
+// =============================================================================
+// app-button-utility — generated from Figma "Buttons/Button utility" frame
+// 2 hierarchies (secondary / tertiary), 2 sizes (xs 28 / sm 32),
+// hover tooltip, states: default / hover / focus-visible / disabled.
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  position: relative; // tooltip anchor
+}
+
+.btn-util {
+  appearance: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;                       // spacing-sm
+  border: 1px solid transparent;
+  border-radius: 6px;                 // radius-sm
+  background: transparent;
+  color: var(--fg-quaternary);        // #9f9185
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    color: var(--fg-quaternary-hover); // #827468
+  }
+
+  &:disabled,
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.btn-util__icon {
+  font-size: var(--_icon, 16px);
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes — outer square + inner icon glyph
+// xs: 6 padding + 16 icon = 28×28
+// sm: 6 padding + 20 icon = 32×32
+// ---------------------------------------------------------------------------
+.btn-util--xs { --_icon: 16px; }
+.btn-util--sm { --_icon: 20px; }
+
+// ---------------------------------------------------------------------------
+// Hierarchy — secondary (border + skeumorphic shadow + cream surface)
+// ---------------------------------------------------------------------------
+.btn-util--secondary {
+  background: var(--bg-primary);                 // #fff9f4
+  border-color: var(--border-primary);           // #bdb3a9
+  // shadow-xs-skeuomorphic: drop xs + inner -2 + inner border 1
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.05),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: var(--bg-primary-hover);         // #e9d09a
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.05),
+      0 0 0 2px var(--bg-page),
+      0 0 0 6px var(--focus-ring);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Hierarchy — tertiary (no bg, no border)
+// ---------------------------------------------------------------------------
+.btn-util--tertiary {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: var(--bg-primary-hover);         // #e9d09a
+  }
+
+  &:focus-visible {
+    background: var(--bg-primary);               // #fff9f4
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 6px var(--focus-ring);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Tooltip — appears above the button on hover/focus-visible
+// ---------------------------------------------------------------------------
+.btn-util__tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(2px);
+  padding: var(--space-2) var(--space-3);        // 8 / 12 = spacing-md / lg
+  border-radius: 8px;                            // radius-md
+  background: var(--bg-primary-solid);           // #562914 dark brown
+  color: var(--text-white);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-xs-size);                // 12
+  line-height: var(--text-xs-lh);                // 18
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: var(--shadow-lg);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+  z-index: 10;
+}
+
+.btn-util.has-tooltip {
+  &:hover:not(:disabled):not(.is-disabled) .btn-util__tooltip,
+  &:focus-visible .btn-util__tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-util,
+  .btn-util__tooltip { transition: none; }
+}

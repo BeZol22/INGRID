@@ -2,11 +2,13 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { Router, RouterLink } from '@angular/router';
 import { DataService } from '../../../services/data.service';
 import { CakeShop, PriceRange } from '../../../models';
-import { Icon } from '../../../components/icon';
+import { Icon } from '../../../components/icon/icon';
+import { Button } from '../../../components/button/button';
+import { Checkbox } from '../../../components/checkbox/checkbox';
 
 @Component({
   selector: 'page-admin-shop-edit',
-  imports: [RouterLink, Icon],
+  imports: [RouterLink, Icon, Button, Checkbox],
   templateUrl: './admin-shop-edit.html',
   styleUrl: './admin-shop-edit.scss',
 })

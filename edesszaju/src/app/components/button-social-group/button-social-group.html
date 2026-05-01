@@ -1,0 +1,19 @@
+@let cls = rootClass();
+@let only = iconOnly();
+@let isDisabled = disabled();
+@let s = size();
+@let t = theme();
+
+<div [class]="cls">
+  @for (brand of socials(); track brand) {
+    <app-button-social
+      class="social-group__item"
+      [social]="brand"
+      [theme]="t"
+      [size]="s"
+      [iconOnly]="only"
+      [fullWidth]="!only"
+      [disabled]="isDisabled"
+      (clicked)="onClick(brand, $event)" />
+  }
+</div>

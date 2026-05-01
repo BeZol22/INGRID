@@ -1,0 +1,28 @@
+@let cls = rootClass();
+@let id = resolvedId();
+@let aria = ariaLabel();
+@let isChecked = checked();
+
+<label [class]="cls" [attr.for]="id">
+  <input
+    class="tag-checkbox__input"
+    type="checkbox"
+    [id]="id"
+    [name]="name()"
+    [value]="value()"
+    [checked]="isChecked"
+    [disabled]="disabled()"
+    [attr.aria-label]="aria"
+    (change)="onChange($event)" />
+  <span class="tag-checkbox__indicator" aria-hidden="true">
+    @if (isChecked) {
+      <svg class="tag-checkbox__glyph" viewBox="0 0 14 14" fill="none">
+        <path d="M11.6667 3.5L5.25 9.91667L2.33333 7"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+      </svg>
+    }
+  </span>
+</label>

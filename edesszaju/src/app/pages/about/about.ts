@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Button } from '../../components/button/button';
 
 @Component({
   selector: 'page-about',
-  imports: [RouterLink],
+  imports: [Button],
   templateUrl: './about.html',
   styleUrl: './about.scss',
 })

@@ -1,0 +1,28 @@
+@let cls = rootClass();
+@let items = tabs();
+@let bv = buttonVariant();
+@let sz = size();
+@let active = value();
+@let lbl = ariaLabel();
+
+<div
+  [class]="cls"
+  role="tablist"
+  [attr.aria-label]="lbl"
+  [attr.aria-orientation]="tabListAriaOrientation()"
+  (keydown)="onKeydown($event)">
+  @for (item of items; track item.value) {
+    <span class="tabs-list__item">
+      <app-tab-button
+        [label]="item.label"
+        [variant]="bv"
+        [size]="sz"
+        [current]="item.value === active"
+        [disabled]="!!item.disabled"
+        [icon]="item.icon ?? true"
+        [iconName]="item.iconName ?? null"
+        [badge]="item.badge ?? null"
+        (clicked)="onClick(item)" />
+    </span>
+  }
+</div>

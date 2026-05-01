@@ -1,0 +1,93 @@
+// =============================================================================
+// app-table-header-label — generated from Figma "Table header label" frame
+// Inline column-header label used inside <th> cells. Renders the column name
+// plus an optional help-icon tooltip and an optional sort indicator (sortable
+// / ascending / descending). When the column is interactive (sort != 'none')
+// the host is a real <button> so keyboard activation works out of the box.
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.table-header-label {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);                        // 4 (default)
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-xs-size);             // 12
+  line-height: var(--text-xs-lh);             // 18
+  font-weight: 600;
+  color: var(--text-quaternary);              // #695d53 default
+  cursor: default;
+  text-align: left;
+  transition: color 0.12s ease;
+
+  &:focus { outline: none; }
+}
+
+// When there is no sort indicator and no help icon, drop the gap entirely
+.table-header-label--none:not(.table-header-label--has-help) {
+  gap: 0;
+}
+
+// Sortable header — interactive button with hover/focus affordances
+button.table-header-label {
+  cursor: pointer;
+  border-radius: var(--space-1);
+
+  &:hover:not(:disabled) {
+    color: var(--text-tertiary);              // #544a42
+  }
+
+  &:hover:not(:disabled) .table-header-label__sort-icon {
+    color: var(--fg-quaternary-hover, var(--text-tertiary));
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 4px var(--focus-ring);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Pieces
+// ---------------------------------------------------------------------------
+.table-header-label__text {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.table-header-label__help {
+  flex-shrink: 0;
+  display: inline-flex;
+  font-size: 16px;
+  line-height: 0;
+}
+
+.table-header-label__sort-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 12px;                            // matches Figma 12px sort glyphs
+  line-height: 0;
+  color: var(--fg-quaternary);                // #9f9185
+  transition: color 0.12s ease;
+}
+
+// Active sort direction emphasises the icon
+.table-header-label--asc .table-header-label__sort-icon,
+.table-header-label--desc .table-header-label__sort-icon {
+  color: var(--text-tertiary);
+}

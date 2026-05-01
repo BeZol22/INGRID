@@ -1,0 +1,91 @@
+// =============================================================================
+// app-breadcrumb — generated from Figma "Breadcrumb" frame
+// Container that lays out app-breadcrumb-item children with separators between
+// them. Last item is auto-marked as `current`. Optional middle truncation
+// when the path exceeds `maxVisible` items.
+//
+// Variants:
+//   variant=text   — flat text crumbs (no hover bg)
+//   variant=button — padded button crumbs with gold hover bg
+//   separator=chevron | slash
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+}
+
+.breadcrumb__list {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1);                       // 4 between items + separators
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+// ---------------------------------------------------------------------------
+// Separators
+// ---------------------------------------------------------------------------
+.breadcrumb__separator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--color-neutral-300);           // utility-neutral-300 (#bdb3a9)
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+
+  svg { width: 16px; height: 16px; display: block; }
+}
+
+// ---------------------------------------------------------------------------
+// Ellipsis (… middle truncation indicator)
+// ---------------------------------------------------------------------------
+.breadcrumb__ellipsis {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-1);
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-quaternary);             // #695d53
+  font: inherit;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.12s ease;
+
+  &:hover { color: var(--text-secondary-hover); }
+
+  &:focus { outline: none; }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Button variant — bumps separator gap a touch so chip-style crumbs breathe
+// ---------------------------------------------------------------------------
+.breadcrumb--button .breadcrumb__list { gap: var(--space-0-5); }

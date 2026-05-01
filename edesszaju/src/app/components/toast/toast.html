@@ -1,0 +1,71 @@
+@let cls = rootClass();
+@let p = progressClamped();
+@let dl = dismissLabel();
+@let al = actionLabel();
+
+<div [class]="cls" role="status" aria-live="polite">
+  <div class="toast__leading">
+    @if (hasAlertIcon()) {
+      <span class="toast__alert" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="6.667"
+                  stroke="currentColor"
+                  stroke-width="1.333" />
+          <path d="M8 5.333V8.667"
+                stroke="currentColor"
+                stroke-width="1.333"
+                stroke-linecap="round" />
+          <circle cx="8" cy="11" r="0.667" fill="currentColor" />
+        </svg>
+      </span>
+    } @else {
+      <ng-content select="[leading]" />
+    }
+  </div>
+
+  <div class="toast__body">
+    <div class="toast__text">
+      @if (title()) {
+        <p class="toast__title">{{ title() }}</p>
+      }
+      @if (description(); as d) {
+        <p class="toast__description">{{ d }}</p>
+      }
+      <ng-content />
+    </div>
+
+    @if (p !== null) {
+      <div class="toast__progress" role="progressbar"
+           [attr.aria-valuenow]="p"
+           aria-valuemin="0"
+           aria-valuemax="100">
+        <span class="toast__progress-track">
+          <span class="toast__progress-fill" [style.width.%]="p"></span>
+        </span>
+        <span class="toast__progress-label">{{ p }}% feltöltve…</span>
+      </div>
+    }
+
+    @if (hasFooter()) {
+      <div class="toast__footer">
+        @if (dl) {
+          <button type="button" class="toast__dismiss" (click)="onDismiss()">
+            {{ dl }}
+          </button>
+        }
+        @if (al) {
+          <button type="button" class="toast__action" (click)="onAction()">
+            {{ al }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  @if (closable()) {
+    <app-button-close
+      class="toast__close"
+      size="sm"
+      (clicked)="onClose()" />
+  }
+</div>

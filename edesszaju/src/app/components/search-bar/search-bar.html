@@ -1,0 +1,49 @@
+@let cls = rootClass();
+@let ph = placeholder();
+@let btnLbl = buttonLabel();
+@let hintTxt = hint();
+@let errTxt = error();
+@let isLoading = loading();
+@let isDisabled = disabled();
+@let isError = hasError();
+@let val = currentValue();
+@let nm = name();
+
+<form [class]="cls" (submit)="onSubmit($event)" novalidate>
+  <div class="search-bar__row">
+    <label class="search-bar__field">
+      <app-icon class="search-bar__leading" name="search" aria-hidden="true" />
+
+      <input
+        class="search-bar__input"
+        type="search"
+        [name]="nm"
+        autocomplete="off"
+        [placeholder]="ph"
+        [value]="val"
+        [disabled]="isDisabled"
+        [attr.aria-invalid]="isError ? 'true' : null"
+        [attr.aria-describedby]="(errTxt || hintTxt) ? 'search-bar-msg' : null"
+        (input)="onInput($event)" />
+
+      @if (isError) {
+        <app-icon class="search-bar__trailing search-bar__trailing--error" name="alert-circle" aria-hidden="true" />
+      } @else if (isLoading) {
+        <app-spinner class="search-bar__trailing" />
+      }
+    </label>
+
+    <button
+      class="search-bar__submit"
+      type="submit"
+      [disabled]="isDisabled || isLoading">
+      {{ btnLbl }}
+    </button>
+  </div>
+
+  @if (errTxt) {
+    <p class="search-bar__msg search-bar__msg--error" id="search-bar-msg">{{ errTxt }}</p>
+  } @else if (hintTxt) {
+    <p class="search-bar__msg" id="search-bar-msg">{{ hintTxt }}</p>
+  }
+</form>

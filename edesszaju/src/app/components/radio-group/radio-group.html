@@ -1,0 +1,28 @@
+@let cls = rootClass();
+@let lbl = label();
+@let desc = description();
+@let lblId = labelId();
+@let descId = descriptionId();
+
+<div [class]="cls">
+  @if (lbl || desc) {
+    <div class="radio-group__head">
+      @if (lbl) {
+        <span class="radio-group__label" [id]="lblId">
+          {{ lbl }}@if (required()) { <span class="radio-group__required" aria-hidden="true">*</span> }
+        </span>
+      }
+      @if (desc) {
+        <span class="radio-group__description" [id]="descId">{{ desc }}</span>
+      }
+    </div>
+  }
+
+  <div
+    class="radio-group__items"
+    role="radiogroup"
+    [attr.aria-labelledby]="lbl ? lblId : null"
+    [attr.aria-describedby]="desc ? descId : null">
+    <ng-content />
+  </div>
+</div>

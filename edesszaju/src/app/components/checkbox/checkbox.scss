@@ -1,0 +1,200 @@
+// =============================================================================
+// app-checkbox — generated from Figma "Checkbox base" + labeled variant
+// Visual primitive for both checkbox and radio. Native <input> is hidden but
+// remains keyboard- and screen-reader-accessible; the styled <span> renders
+// the design-system indicator.
+//
+// Layouts:
+//   bare — just the indicator (when `label` and `supportingText` both empty)
+//   labeled — indicator + label + optional supporting text in a flex row
+//
+// Variants: type (checkbox/radio) × size (sm 16 / md 20)
+// States:   default / hover / focus-visible / disabled / checked / indeterminate
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.checkbox {
+  --_size: 16px;
+  --_radius: var(--radius-xs);
+  --_glyph: 10px;
+  --_label-fs: var(--text-sm-size);
+  --_label-lh: var(--text-sm-lh);
+
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);             // spacing-md = 8
+  cursor: pointer;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes — drive the indicator + the text block
+// ---------------------------------------------------------------------------
+.checkbox--sm {
+  --_size: 16px;
+  --_radius: var(--radius-xs);     // 4
+  --_glyph: 10px;
+  --_label-fs: var(--text-sm-size);
+  --_label-lh: var(--text-sm-lh);
+}
+
+.checkbox--md {
+  --_size: 20px;
+  --_radius: 6px;
+  --_glyph: 12px;
+  --_label-fs: var(--text-md-size);
+  --_label-lh: var(--text-md-lh);
+}
+
+// Radio always uses a full-circle radius regardless of size
+.checkbox--radio {
+  --_radius: 9999px;
+}
+
+// ---------------------------------------------------------------------------
+// Control wrapper — contains the native input and the visual indicator
+// (a small relative positioning context so the input can overlay the glyph)
+// ---------------------------------------------------------------------------
+.checkbox__control {
+  position: relative;
+  display: inline-flex;
+  width: var(--_size);
+  height: var(--_size);
+  flex-shrink: 0;
+  // Vertically center the indicator on the first label line
+  // (line-height/2 - half indicator height)
+  margin-top: calc((var(--_label-lh) - var(--_size)) / 2);
+}
+
+.checkbox--sm .checkbox__control,
+.checkbox--md .checkbox__control {
+  // No vertical offset when there's no label
+}
+
+// Bare (no label) — drop the top margin
+.checkbox:not(.checkbox--labeled) .checkbox__control {
+  margin-top: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Native input — visually hidden but covers the indicator for click/focus
+// ---------------------------------------------------------------------------
+.checkbox__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: inherit;
+  z-index: 1;
+
+  &:disabled { cursor: not-allowed; }
+}
+
+// ---------------------------------------------------------------------------
+// Visual indicator (the styled square / circle)
+// ---------------------------------------------------------------------------
+.checkbox__indicator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--_radius);
+  background: transparent;
+  color: var(--fg-white);
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    opacity 0.12s ease;
+}
+
+.checkbox__glyph {
+  width: var(--_glyph);
+  height: var(--_glyph);
+  display: block;
+}
+
+// Radio inner dot
+.checkbox__dot {
+  display: block;
+  width: 37.5%;
+  height: 37.5%;
+  border-radius: 9999px;
+  background: var(--fg-white);
+}
+
+// ---------------------------------------------------------------------------
+// Text block — primary label + optional supporting text
+// ---------------------------------------------------------------------------
+.checkbox__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);                  // 2 = spacing-xxs
+  min-width: 0;
+}
+
+.checkbox__label {
+  font-family: var(--font-body);
+  font-size: var(--_label-fs);
+  line-height: var(--_label-lh);
+  font-weight: 500;
+  color: var(--text-secondary);           // #3f3731
+}
+
+.checkbox__supporting {
+  font-family: var(--font-body);
+  font-size: var(--_label-fs);
+  line-height: var(--_label-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);            // #544a42
+}
+
+// ---------------------------------------------------------------------------
+// Checked / indeterminate — brand-solid bg + white glyph
+// ---------------------------------------------------------------------------
+.checkbox.is-checked .checkbox__indicator,
+.checkbox.is-indeterminate .checkbox__indicator {
+  background: var(--bg-brand-solid);
+  border-color: var(--bg-brand-solid);
+}
+
+// ---------------------------------------------------------------------------
+// Focus ring — 2px page-bg gap + 4px blue, with bg-page surface when unchecked
+// ---------------------------------------------------------------------------
+.checkbox__input:focus-visible + .checkbox__indicator {
+  box-shadow:
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+.checkbox:not(.is-checked):not(.is-indeterminate) .checkbox__input:focus-visible + .checkbox__indicator {
+  background: var(--bg-page);
+}
+
+// ---------------------------------------------------------------------------
+// Disabled — 50% opacity on the indicator + muted text
+// ---------------------------------------------------------------------------
+.checkbox.is-disabled {
+  cursor: not-allowed;
+
+  .checkbox__indicator { opacity: 0.5; }
+  .checkbox__label,
+  .checkbox__supporting { opacity: 0.5; }
+}
+
+.checkbox.is-disabled:not(.is-checked):not(.is-indeterminate) .checkbox__indicator {
+  background: var(--color-neutral-100);   // bg-tertiary equivalent
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkbox__indicator { transition: none; }
+}

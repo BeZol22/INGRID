@@ -1,0 +1,90 @@
+// =============================================================================
+// app-table — generated from Figma "Table" master frame
+// Card shell that wraps a data table with rounded corners, optional outer
+// border / shadow, and three optional sections (header, body, footer).
+// The actual rows + cells are composed by consumers using <app-table-header-cell>
+// and <app-table-cell> inside the default slot.
+//
+// Dividers axis (Figma):
+//   line         — each cell renders its own bottom separator (default —
+//                  matches the existing <app-table-cell> behaviour)
+//   alternating  — applies a class consumers can hook into to tint every
+//                  other row; cell separators stay drawn for clarity
+//
+// Slots:
+//   <ng-content select="[header]" />  — title bar with filters/actions
+//   <ng-content />                    — header row + body rows
+//   <ng-content select="[footer]" />  — pagination strip
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.table-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);                // #fff9f4
+  font-family: var(--font-body);
+  overflow: hidden;                             // clip cell separators at the
+                                                // rounded corners
+}
+
+.table-card--bordered {
+  border: 1px solid var(--border-secondary);    // #d5cec7
+}
+
+.table-card--shadow {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);  // shadow-xs
+}
+
+.table-card--radius-md  { border-radius: var(--space-2); }   // 8
+.table-card--radius-lg  { border-radius: var(--space-3); }   // 12
+.table-card--radius-none { border-radius: 0; }
+
+// ---------------------------------------------------------------------------
+// Sections — hide empty header/footer so consumers can omit them
+// ---------------------------------------------------------------------------
+.table-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);       // 20 / 24
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.table-card__header:empty {
+  display: none;
+}
+
+.table-card__body {
+  display: block;
+  // Body has no padding — cells provide their own. The horizontal layout
+  // (CSS-Grid columns, flex rows, etc.) is the consumer's choice.
+}
+
+.table-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-6);       // 12 / 24
+  border-top: 1px solid var(--border-secondary);
+}
+
+.table-card__footer:empty {
+  display: none;
+}
+
+// ---------------------------------------------------------------------------
+// Alternating-fill rows — applies a tint to even-positioned descendants the
+// consumer marks with `.table-row` (or any element they choose). Cell-level
+// styling is unchanged so the visual still matches the Figma "alternating
+// fills" variant.
+// ---------------------------------------------------------------------------
+.table-card--alternating .table-card__body {
+  // Hook for consumers — wrap rows in a class like `.table-row` and the
+  // tint will alternate. We don't try to enforce structure here.
+  ::ng-deep .table-row:nth-child(even) {
+    background: var(--bg-secondary);            // #fff9f4 / alt
+  }
+}

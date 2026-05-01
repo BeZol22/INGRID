@@ -1,0 +1,15 @@
+@let cls = rootClass();
+
+<section [class]="cls">
+  <div class="cta-section__container">
+    <div class="cta-section__content">
+      <ng-content select="[overline]" />
+      <ng-content select="[heading]" />
+      <ng-content select="[description]" />
+      <ng-content select="[actions]" />
+      <ng-content />
+    </div>
+
+    <ng-content select="[trailing]" />
+  </div>
+</section>

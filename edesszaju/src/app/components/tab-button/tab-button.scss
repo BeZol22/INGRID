@@ -1,0 +1,236 @@
+// =============================================================================
+// app-tab-button — generated from Figma "Tab button" master frame
+// Single button used in tab strips and filter rails. Six visual variants share
+// a common chrome — the difference is where the active emphasis sits:
+//
+//   brand     — selected fills with brand-50 (#fdf5f6), text brand-secondary
+//   gray      — selected fills with gold (#e9d09a)
+//   white     — selected fills with cream + small drop shadow
+//   minimal   — selected fills with cream + 1px border + xs shadow (only
+//               variant with a border on the selected state)
+//   underline — flat; selected gets a 2px brand bottom border
+//   line      — flat; selected gets a 2px brand left border (vertical tabs)
+//
+// Sizes:
+//   sm — 32–36 tall, 16px icon, gap 4
+//   md — 36–44 tall, 20px icon, gap 6
+//
+// Composition:
+//   [optional leading dot/icon] [label] [optional badge]
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.tab-button {
+  --_dot-size: 8px;
+  --_icon-size: 16px;
+  --_gap: var(--space-1);                            // 4 (sm)
+  --_pad-y: var(--space-2);                          // 8
+  --_pad-x: var(--space-3);                          // 12
+  --_radius: var(--space-1-5);                       // 6 (radius-sm)
+
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_gap);
+  padding: var(--_pad-y) var(--_pad-x);
+  border: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);                    // 14
+  line-height: var(--text-sm-lh);                    // 20
+  font-weight: 600;
+  color: var(--text-quaternary);                     // #695d53 (inactive)
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--_radius);
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(.is-disabled):not(.is-current) {
+    color: var(--text-tertiary);                     // #544a42 darker
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 4px var(--focus-ring);
+  }
+
+  &.is-disabled,
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.tab-button--md {
+  --_icon-size: 20px;
+  --_gap: var(--space-1-5);                          // 6
+  --_pad-y: var(--space-3);                          // 12
+  --_pad-x: var(--space-4);                          // 16
+}
+
+// ---------------------------------------------------------------------------
+// Pieces
+// ---------------------------------------------------------------------------
+.tab-button__dot {
+  display: inline-block;
+  width: var(--_dot-size);
+  height: var(--_dot-size);
+  border-radius: 9999px;
+  border: 1.5px solid currentColor;
+  flex-shrink: 0;
+  background: transparent;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.tab-button__icon {
+  display: inline-flex;
+  font-size: var(--_icon-size);
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.tab-button__label {
+  white-space: nowrap;
+}
+
+.tab-button__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  padding: 0 var(--space-1-5);                       // 6
+  height: 20px;
+  border: 1px solid var(--color-neutral-200, #d5cec7);
+  border-radius: var(--space-1-5);                   // radius-sm 6
+  background: var(--color-neutral-50, #f4f2f0);
+  color: var(--text-quaternary);
+  font-size: var(--text-xs-size);                    // 12
+  line-height: 1;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Variant: brand — selected fills with brand-50 + brand-secondary text
+// ---------------------------------------------------------------------------
+.tab-button--brand.is-current {
+  background: var(--bg-brand-primary-alt, #fdf5f6);
+  color: var(--text-brand-secondary, #98293d);
+
+  .tab-button__dot { background: currentColor; border-color: currentColor; }
+
+  .tab-button__badge {
+    background: #fdf5f6;
+    border-color: #f8d6dc;
+    color: #98293d;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Variant: gray — selected fills with gold-cream
+// ---------------------------------------------------------------------------
+.tab-button--gray.is-current {
+  background: var(--bg-primary-hover);               // #e9d09a (gold)
+  color: var(--text-secondary);
+
+  .tab-button__dot { background: currentColor; border-color: currentColor; }
+}
+
+// ---------------------------------------------------------------------------
+// Variant: white — selected gets a card-like shadow
+// ---------------------------------------------------------------------------
+.tab-button--white.is-current {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  box-shadow:
+    0 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1);
+
+  .tab-button__dot { background: currentColor; border-color: currentColor; }
+}
+
+// ---------------------------------------------------------------------------
+// Variant: minimal — selected gets border + xs shadow
+// ---------------------------------------------------------------------------
+.tab-button--minimal {
+  --_radius: var(--space-2);                         // radius-md 8
+}
+
+.tab-button--minimal.is-current {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  .tab-button__dot { background: currentColor; border-color: currentColor; }
+}
+
+// ---------------------------------------------------------------------------
+// Variant: underline — bottom border on selected
+// ---------------------------------------------------------------------------
+.tab-button--underline {
+  --_radius: 0;
+  padding-bottom: var(--space-3);                    // extra room for the rule
+  border-bottom: 2px solid transparent;
+}
+
+.tab-button--underline.is-current {
+  color: var(--text-brand-secondary, #98293d);
+  border-bottom-color: var(--fg-brand-primary);      // #d23955
+
+  .tab-button__dot { background: currentColor; border-color: currentColor; }
+
+  .tab-button__badge {
+    background: #fdf5f6;
+    border-color: #f8d6dc;
+    color: #98293d;
+    border-radius: 9999px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Variant: line — left border on selected (vertical tabs)
+// ---------------------------------------------------------------------------
+.tab-button--line {
+  --_radius: 0;
+  padding-left: var(--space-3);
+  border-left: 2px solid transparent;
+}
+
+.tab-button--line.is-current {
+  color: var(--text-brand-secondary, #98293d);
+  border-left-color: var(--fg-brand-primary);
+
+  .tab-button__dot { background: currentColor; border-color: currentColor; }
+
+  .tab-button__badge {
+    background: #fdf5f6;
+    border-color: #f8d6dc;
+    color: #98293d;
+    border-radius: 9999px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Brand-coloured badge variant for `brand`/`underline`/`line` (pink pill)
+// ---------------------------------------------------------------------------
+.tab-button--brand .tab-button__badge,
+.tab-button--underline .tab-button__badge,
+.tab-button--line .tab-button__badge {
+  border-radius: 9999px;
+}

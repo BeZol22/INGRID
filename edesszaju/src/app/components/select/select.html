@@ -1,0 +1,77 @@
+@let cls = rootClass();
+@let id = resolvedId();
+@let lbl = label();
+@let h = hint();
+@let err = error();
+@let isError = hasError();
+@let leadingIcon = icon();
+@let isOpen = this.isOpen();
+@let displayed = this.displayed();
+@let isSearchable = searchable();
+
+<div [class]="cls">
+  @if (lbl) {
+    <label class="select__label" [attr.for]="id">
+      {{ lbl }}@if (required()) { <span class="select__required" aria-hidden="true">*</span> }
+    </label>
+  }
+
+  <div class="select__trigger" (click)="onTriggerClick($event)">
+    @if (leadingIcon) {
+      <app-icon class="select__icon" [name]="leadingIcon" />
+    }
+
+    @if (isSearchable) {
+      <input
+        class="select__search"
+        type="text"
+        [id]="id"
+        [value]="searchValue()"
+        [placeholder]="searchPlaceholder()"
+        [disabled]="disabled()"
+        [attr.aria-expanded]="isOpen ? 'true' : 'false'"
+        [attr.aria-invalid]="isError ? 'true' : null"
+        [attr.aria-haspopup]="'listbox'"
+        role="combobox"
+        autocomplete="off"
+        (input)="onSearchInput($event)" />
+    } @else {
+      <button
+        class="select__value"
+        type="button"
+        [id]="id"
+        [disabled]="disabled()"
+        [attr.aria-expanded]="isOpen ? 'true' : 'false'"
+        [attr.aria-haspopup]="'listbox'"
+        [attr.aria-invalid]="isError ? 'true' : null">
+        @if (displayed) {
+          <span class="select__display">{{ displayed }}</span>
+        } @else {
+          <span class="select__placeholder">{{ placeholder() }}</span>
+        }
+      </button>
+    }
+
+    <span class="select__chevron" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none">
+        <polyline points="4 6 8 10 12 6"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+      </svg>
+    </span>
+  </div>
+
+  @if (isOpen) {
+    <div class="select__panel" role="listbox" (click)="onPanelClick($event)">
+      <ng-content />
+    </div>
+  }
+
+  @if (err) {
+    <span class="select__msg select__msg--error" [id]="id + '-msg'">{{ err }}</span>
+  } @else if (h) {
+    <span class="select__msg" [id]="id + '-msg'">{{ h }}</span>
+  }
+</div>

@@ -1,0 +1,29 @@
+@let cls = rootClass();
+@let sz = size();
+@let glyph = type();
+@let label = labelText();
+@let visibleText = showText();
+@let dotList = dots();
+@let connected = connector();
+
+<div [class]="cls" role="group" [attr.aria-label]="label">
+  @if (visibleText) {
+    <span class="step-progress__text" aria-hidden="true">{{ label }}</span>
+  }
+
+  <div class="step-progress__dots">
+    @for (d of dotList; track d.index; let last = $last) {
+      <app-step-icon
+        class="step-progress__dot"
+        [size]="sz"
+        [type]="glyph"
+        [status]="d.status"
+        [step]="d.index" />
+      @if (connected && !last) {
+        <span
+          class="step-progress__line step-progress__line--{{ d.status }}"
+          aria-hidden="true"></span>
+      }
+    }
+  </div>
+</div>

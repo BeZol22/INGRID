@@ -1,0 +1,168 @@
+// =============================================================================
+// app-otp-cell — generated from Figma "Mega input field base" frame
+// Single-character cell for OTP / verification-code inputs.
+//
+// Sizes: sm (64×64) / md (80×80) / lg (96×96)
+// States: placeholder (default) / filled / focused / disabled / error
+//
+// Renders a real native <input maxlength="1"> styled as the cell so we get
+// keyboard, paste, IME, screen reader, and `autocomplete="one-time-code"`
+// (which lets iOS / Safari surface SMS codes) for free.
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.otp-cell {
+  --_size: 80px;
+  --_radius: 12px;                   // radius-xl
+  --_pad-y: var(--space-2);          // 8
+  --_pad-x: var(--space-2);          // 8
+  --_fs: 48px;                       // display-lg
+  --_lh: 60px;
+  --_letter: -0.96px;                // -2% of 48
+
+  position: relative;
+  display: inline-flex;
+  width: var(--_size);
+  height: var(--_size);
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.otp-cell--sm {
+  --_size: 64px;
+  --_radius: 10px;                   // radius-lg
+  --_pad-y: var(--space-0-5);        // 2 = spacing-xxs
+  --_pad-x: var(--space-2);          // 8
+  --_fs: 48px;
+  --_lh: 60px;
+  --_letter: -0.96px;
+}
+
+.otp-cell--md {
+  --_size: 80px;
+  --_radius: 12px;                   // radius-xl
+  --_pad-y: var(--space-2);          // 8
+  --_pad-x: var(--space-2);          // 8
+  --_fs: 48px;
+  --_lh: 60px;
+  --_letter: -0.96px;
+}
+
+.otp-cell--lg {
+  --_size: 96px;
+  --_radius: 12px;
+  --_pad-y: var(--space-3);          // 12
+  --_pad-x: var(--space-2);          // 8
+  --_fs: 60px;                       // display-xl
+  --_lh: 72px;
+  --_letter: -1.2px;
+}
+
+// ---------------------------------------------------------------------------
+// The styled cell IS the <input> — no wrapper layering needed
+// ---------------------------------------------------------------------------
+.otp-cell__input {
+  width: 100%;
+  height: 100%;
+  padding: var(--_pad-y) var(--_pad-x);
+  margin: 0;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--_radius);
+  background: var(--bg-primary);
+  color: var(--text-placeholder);    // shows for placeholder
+  font-family: var(--font-display);  // Literata
+  font-weight: 500;
+  font-size: var(--_fs);
+  line-height: var(--_lh);
+  letter-spacing: var(--_letter);
+  text-align: center;
+  caret-color: var(--bg-brand-solid);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition:
+    border-color 0.12s ease,
+    color 0.12s ease,
+    box-shadow 0.12s ease,
+    opacity 0.12s ease;
+
+  &::placeholder {
+    color: var(--text-placeholder);
+    opacity: 0.4;
+  }
+
+  // Strip the iOS/Chrome auto-fill highlight + the search/number spinners
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+
+  &:focus { outline: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Filled — 2px brand border + brand text color
+// ---------------------------------------------------------------------------
+.otp-cell.is-filled .otp-cell__input {
+  border: 2px solid var(--border-brand);            // #e56e82
+  color: var(--text-brand-tertiary);                // #d23955
+  // Compensate the box-sizing shift from 1→2px border so glyph stays centered
+  padding: calc(var(--_pad-y) - 1px) calc(var(--_pad-x) - 1px);
+}
+
+// ---------------------------------------------------------------------------
+// Focused — 2px brand border + 4px blue ring + 2px page-bg gap
+// ---------------------------------------------------------------------------
+.otp-cell:not(.is-disabled) .otp-cell__input:focus-visible {
+  border: 2px solid var(--border-brand);
+  padding: calc(var(--_pad-y) - 1px) calc(var(--_pad-x) - 1px);
+  color: var(--text-brand-tertiary);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+// ---------------------------------------------------------------------------
+// Error — 1px error-subtle border + error text color
+// ---------------------------------------------------------------------------
+.otp-cell.is-error .otp-cell__input {
+  border-color: var(--border-error-subtle);          // #fca5a5
+  color: var(--text-error-primary);                  // #dc2626
+}
+
+.otp-cell.is-error.is-filled .otp-cell__input {
+  border-width: 1px;
+  padding: var(--_pad-y) var(--_pad-x);
+}
+
+.otp-cell.is-error:not(.is-disabled) .otp-cell__input:focus-visible {
+  border: 1px solid var(--border-error-subtle);
+  padding: var(--_pad-y) var(--_pad-x);
+  color: var(--text-error-primary);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring-error);
+}
+
+// ---------------------------------------------------------------------------
+// Disabled — 50% opacity, no interaction
+// ---------------------------------------------------------------------------
+.otp-cell.is-disabled {
+  opacity: 0.5;
+
+  .otp-cell__input {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .otp-cell__input { transition: none; }
+}

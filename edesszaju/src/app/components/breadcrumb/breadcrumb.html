@@ -1,0 +1,45 @@
+@let cls = rootClass();
+@let entries = displayItems();
+@let sep = separator();
+
+<nav [class]="cls" [attr.aria-label]="ariaLabel()">
+  <ol class="breadcrumb__list">
+    @for (entry of entries; track $index; let last = $last) {
+      <li class="breadcrumb__item">
+        @if (entry.kind === 'item') {
+          <app-breadcrumb-item
+            [label]="entry.crumb.label ?? null"
+            [icon]="entry.crumb.icon ?? null"
+            [variant]="variant()"
+            [current]="isLast(entry.index)"
+            [routerLink]="entry.crumb.routerLink ?? null"
+            [href]="entry.crumb.href ?? null"
+            [ariaLabel]="entry.crumb.ariaLabel ?? null" />
+        } @else {
+          <button
+            type="button"
+            class="breadcrumb__ellipsis"
+            aria-label="További szintek"
+            (click)="onEllipsis()">
+            …
+          </button>
+        }
+      </li>
+      @if (!last) {
+        <li class="breadcrumb__separator" aria-hidden="true">
+          @if (sep === 'chevron') {
+            <svg viewBox="0 0 16 16" fill="none">
+              <polyline points="6 4 10 8 6 12"
+                        stroke="currentColor"
+                        stroke-width="1.333"
+                        stroke-linecap="round"
+                        stroke-linejoin="round" />
+            </svg>
+          } @else {
+            /
+          }
+        </li>
+      }
+    }
+  </ol>
+</nav>

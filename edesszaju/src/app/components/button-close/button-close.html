@@ -1,0 +1,38 @@
+@let cls = rootClass();
+@let label = ariaLabel();
+@let isDisabled = disabled();
+@let link = routerLink();
+@let url = href();
+
+@if (link !== null) {
+  <a
+    [routerLink]="link"
+    [class]="cls"
+    [attr.aria-label]="label"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <app-icon class="btn-close__icon" name="close" />
+  </a>
+} @else if (url !== null) {
+  <a
+    [href]="url"
+    [attr.target]="target()"
+    [attr.rel]="rel()"
+    [class]="cls"
+    [attr.aria-label]="label"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <app-icon class="btn-close__icon" name="close" />
+  </a>
+} @else {
+  <button
+    [type]="type()"
+    [class]="cls"
+    [disabled]="isDisabled"
+    [attr.aria-label]="label"
+    (click)="onClick($event)">
+    <app-icon class="btn-close__icon" name="close" />
+  </button>
+}

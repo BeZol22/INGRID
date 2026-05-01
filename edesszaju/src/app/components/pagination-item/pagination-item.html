@@ -1,0 +1,44 @@
+@let cls = rootClass();
+@let aria = resolvedAriaLabel();
+@let isDisabled = disabled();
+@let isActive = active();
+@let link = routerLink();
+@let url = href();
+
+<ng-template #content>
+  <span class="pagination-item__label">{{ page() }}</span>
+</ng-template>
+
+@if (link !== null) {
+  <a
+    [routerLink]="link"
+    [class]="cls"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isActive ? 'page' : null"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else if (url !== null) {
+  <a
+    [href]="url"
+    [class]="cls"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isActive ? 'page' : null"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else {
+  <button
+    type="button"
+    [class]="cls"
+    [disabled]="isDisabled"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isActive ? 'page' : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </button>
+}

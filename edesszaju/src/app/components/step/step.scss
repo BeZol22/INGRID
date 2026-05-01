@@ -1,0 +1,216 @@
+// =============================================================================
+// app-step — generated from Figma "Step base" frame
+// One row in a multi-step flow (onboarding, checkout, publishing wizard).
+// Composes app-step-icon for icon/number variants, draws an inline featured
+// icon (user glyph in a rounded surface), or renders a "text line" variant
+// with a coloured top border instead of an icon.
+//
+// Axes:
+//   variant — icon | number | featured | text-line
+//   status  — incomplete | current | complete
+//   size    — sm | md
+//   layout  — horizontal (icon left) | vertical (icon on top, text centered)
+//   connector (boolean) — only in horizontal layout, drawn under the icon
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.step {
+  --_text-fs: var(--text-sm-size);
+  --_text-lh: var(--text-sm-lh);
+  --_text-pt: var(--space-0-5);                    // 2 — vertical alignment of text vs icon
+  --_text-pb: var(--space-6);                      // 24 — pad below to leave room for connector
+  --_icon-size: 24px;                              // step-icon size
+  --_featured-size: 40px;
+  --_featured-radius: 8px;                         // radius-md
+  --_featured-icon: 20px;
+  --_connector-color: var(--bg-quaternary);        // #d5cec7 default (incomplete)
+  --_connector-style: solid;
+  --_text-line-pt: var(--space-3);                 // 12 — top padding for the bordered card
+  --_text-line-border-color: var(--bg-quaternary);
+
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);                             // 12
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.step--md {
+  --_text-fs: var(--text-md-size);
+  --_text-lh: var(--text-md-lh);
+  --_text-pt: var(--space-1);                      // 4
+  --_text-pb: var(--space-8);                      // 32
+  --_icon-size: 32px;
+  --_featured-size: 48px;
+  --_featured-radius: 10px;                        // radius-lg
+  --_featured-icon: 24px;
+  --_text-line-pt: var(--space-4);                 // 16
+}
+
+// ---------------------------------------------------------------------------
+// Layouts
+// ---------------------------------------------------------------------------
+.step--horizontal {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.step--vertical {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);                             // 8
+}
+
+// ---------------------------------------------------------------------------
+// Icon column (carries the connector when horizontal)
+// ---------------------------------------------------------------------------
+.step__icon-col {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.step--vertical .step__icon-col {
+  align-items: center;
+}
+
+// ---------------------------------------------------------------------------
+// Step-icon wrapper (sm/md scale via --_icon-size)
+// ---------------------------------------------------------------------------
+.step__step-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Featured icon (rounded square with skeumorphic shadow)
+// ---------------------------------------------------------------------------
+.step__featured {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_featured-size);
+  height: var(--_featured-size);
+  border-radius: var(--_featured-radius);
+  background: var(--bg-primary);                   // #fff9f4
+  border: 1px solid var(--border-primary);         // #bdb3a9
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.05),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.05),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+  color: var(--fg-quaternary);                     // #9f9185 — muted user glyph
+  flex-shrink: 0;
+}
+
+.step__featured-icon {
+  display: inline-flex;
+  font-size: var(--_featured-icon);
+  line-height: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Connector — 2px line below the icon, fills remaining vertical space
+// ---------------------------------------------------------------------------
+.step__connector {
+  display: inline-block;
+  width: 2px;
+  flex: 1 1 auto;
+  min-height: 16px;
+  margin-top: var(--space-1);                      // 4
+  background: var(--_connector-color);
+  align-self: stretch;
+}
+
+// Dashed connector for the featured incomplete variant
+.step--featured.step--incomplete .step__connector {
+  background: transparent;
+  background-image: linear-gradient(
+    to bottom,
+    var(--border-primary) 0,
+    var(--border-primary) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  background-size: 2px 8px;
+  background-repeat: repeat-y;
+}
+
+// Brand connector for current/complete (any variant)
+.step--current .step__connector,
+.step--complete .step__connector {
+  background: var(--bg-brand-solid);               // #d23955
+}
+
+// ---------------------------------------------------------------------------
+// Text block
+// ---------------------------------------------------------------------------
+.step__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);                           // 2
+  min-width: 0;
+}
+
+.step--horizontal .step__text {
+  padding-top: var(--_text-pt);
+  padding-bottom: var(--_text-pb);
+}
+
+.step__title {
+  font-size: var(--_text-fs);
+  line-height: var(--_text-lh);
+  font-weight: 600;
+  color: var(--text-secondary);                    // #3f3731
+}
+
+.step__supporting {
+  font-size: var(--_text-fs);
+  line-height: var(--_text-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);                     // #544a42
+}
+
+// ---------------------------------------------------------------------------
+// Status colour overrides
+// ---------------------------------------------------------------------------
+// Incomplete — muted text
+.step--incomplete .step__title {
+  color: var(--text-tertiary);
+}
+.step--incomplete .step__supporting {
+  color: var(--text-quaternary);                   // #695d53
+}
+
+// Current — brand-pink supporting copy ("active" emphasis from Figma)
+.step--current .step__supporting {
+  color: var(--text-brand-tertiary, var(--fg-brand-primary));
+}
+
+// Complete keeps default colours (already secondary/tertiary)
+
+// ---------------------------------------------------------------------------
+// Text-line variant — top border instead of icon
+// ---------------------------------------------------------------------------
+.step--text-line {
+  flex-direction: column;
+  gap: 0;
+  padding-top: var(--_text-line-pt);
+  border-top: 4px solid var(--_text-line-border-color);
+}
+
+.step--text-line.step--current,
+.step--text-line.step--complete {
+  --_text-line-border-color: var(--fg-brand-primary);   // #d23955
+}
+
+.step--text-line .step__text {
+  padding-top: 0;
+  padding-bottom: 0;
+}

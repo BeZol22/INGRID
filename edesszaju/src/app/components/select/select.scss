@@ -1,0 +1,272 @@
+// =============================================================================
+// app-select — generated from Figma "Select" frame
+// Labeled select / combobox primitive: trigger field + popover with projected
+// app-combobox-item options.
+//
+// Sizes: sm (36) / md (40) / lg (44)
+// Types covered: Default + Icon-leading + Search (via `[searchable]`)
+// States: placeholder / default / focused / open / disabled / error
+// (Avatar-leading and Dot-leading are achieved by the consumer rendering an
+//  <app-icon> or custom node into the leading slot via the `[icon]` shorthand
+//  or by extending the trigger inside the consumer's own template.)
+//
+// The Tags type (selected items as removable chips inside the trigger) is a
+// separate component — `app-multi-select` — to ship later when that frame
+// comes through.
+// =============================================================================
+
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.select {
+  --_h: 40px;
+  --_pad-x: var(--space-3);          // 12 (spacing-lg)
+  --_pad-y: 10px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+  --_radius: 8px;
+  --_gap: var(--space-2);            // 8
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);             // 6
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.select--sm {
+  --_h: 36px;
+  --_pad-y: 8px;
+  --_fs: var(--text-sm-size);
+  --_lh: var(--text-sm-lh);
+}
+
+.select--md {
+  --_h: 40px;
+  --_pad-y: 10px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+}
+
+.select--lg {
+  --_h: 44px;
+  --_pad-y: 10px;
+  --_pad-x: var(--space-3-5, 14px);
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+}
+
+// ---------------------------------------------------------------------------
+// Label
+// ---------------------------------------------------------------------------
+.select__label {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.select__required {
+  color: var(--text-brand-tertiary);
+  margin-left: 1px;
+}
+
+// ---------------------------------------------------------------------------
+// Trigger — bordered field that hosts the icon, value, and chevron
+// ---------------------------------------------------------------------------
+.select__trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--_gap);
+  min-height: var(--_h);
+  padding: 0 var(--_pad-x);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--_radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.select.is-disabled .select__trigger {
+  cursor: not-allowed;
+  background: var(--color-neutral-100);
+  opacity: 0.6;
+}
+
+// ---------------------------------------------------------------------------
+// Leading icon
+// ---------------------------------------------------------------------------
+.select__icon {
+  flex-shrink: 0;
+  width: var(--_lh);
+  height: var(--_lh);
+  font-size: var(--text-md-size);
+  color: var(--fg-quaternary);
+}
+
+// ---------------------------------------------------------------------------
+// Value button (default mode) — flat button styled to look like input text
+// ---------------------------------------------------------------------------
+.select__value {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--_pad-y) 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  cursor: inherit;
+  text-align: left;
+  font: inherit;
+  font-size: var(--_fs);
+  line-height: var(--_lh);
+}
+
+.select__display {
+  display: block;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select__placeholder {
+  display: block;
+  color: var(--text-placeholder);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ---------------------------------------------------------------------------
+// Search input (searchable mode)
+// ---------------------------------------------------------------------------
+.select__search {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--_pad-y) 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--_fs);
+  line-height: var(--_lh);
+  color: var(--text-primary);
+  caret-color: var(--bg-brand-solid);
+
+  &::placeholder { color: var(--text-placeholder); }
+}
+
+// ---------------------------------------------------------------------------
+// Chevron — rotates when open
+// ---------------------------------------------------------------------------
+.select__chevron {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--fg-quaternary);
+  transition: transform 0.15s ease;
+
+  svg { width: 16px; height: 16px; }
+}
+
+.select.is-open .select__chevron { transform: rotate(180deg); }
+
+// ---------------------------------------------------------------------------
+// Focus / open — brand border + page-bg gap + blue ring
+// ---------------------------------------------------------------------------
+.select:not(.is-disabled):not(.is-error) .select__trigger:has(.select__value:focus-visible),
+.select:not(.is-disabled):not(.is-error) .select__trigger:has(.select__search:focus-visible),
+.select:not(.is-disabled):not(.is-error).is-open .select__trigger {
+  border-color: var(--border-brand);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+// ---------------------------------------------------------------------------
+// Error
+// ---------------------------------------------------------------------------
+.select.is-error .select__trigger {
+  border-color: var(--border-error-subtle);
+}
+
+.select.is-error:not(.is-disabled) .select__trigger:has(.select__value:focus-visible),
+.select.is-error:not(.is-disabled) .select__trigger:has(.select__search:focus-visible),
+.select.is-error:not(.is-disabled).is-open .select__trigger {
+  border-color: var(--border-error);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring-error);
+}
+
+// ---------------------------------------------------------------------------
+// Popover panel — projected listbox content
+// ---------------------------------------------------------------------------
+.select__panel {
+  position: absolute;
+  top: calc(100% + var(--space-1));   // 4 below the trigger
+  left: 0;
+  right: 0;
+  z-index: 50;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: var(--space-1) 0;
+  background: var(--bg-primary);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow:
+    0 2px 2px -1px rgba(0, 0, 0, 0.04),
+    0 4px 6px -2px rgba(0, 0, 0, 0.03),
+    0 12px 16px -4px rgba(0, 0, 0, 0.08);
+  animation: select-in 0.12s ease-out both;
+}
+
+// Account for label height by anchoring panel relative to the host, not the
+// label. The host is `:host { position: relative }` which makes the panel
+// stack above siblings correctly.
+:host { position: relative; }
+
+@keyframes select-in {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Hint / error message
+// ---------------------------------------------------------------------------
+.select__msg {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+
+.select__msg--error {
+  color: var(--text-error-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .select__trigger,
+  .select__chevron { transition: none; }
+  .select__panel { animation: none; }
+}

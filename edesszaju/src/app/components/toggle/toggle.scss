@@ -1,0 +1,258 @@
+// =============================================================================
+// app-toggle — generated from Figma "Toggle base" + labeled variant
+// Switch / toggle with two style variants and two sizes.
+//
+// Variants:
+//   default — padded track (2px gap between track edge and knob)
+//   slim    — same-height track; knob has a colored border instead of padding
+//
+// Sizes:
+//   sm — track 32–36 × 16–20, knob 16
+//   md — track 40–44 × 20–24, knob 20
+//
+// Layouts:
+//   bare    — just the toggle (when label and supportingText are both empty)
+//   labeled — toggle + label + optional supporting text in a flex row
+//
+// States: default / hover / focus-visible / disabled / checked
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.toggle {
+  --_track-w: 36px;
+  --_track-h: 20px;
+  --_knob: 16px;
+  --_pad: 2px;
+  --_knob-shift: calc(var(--_track-w) - var(--_knob) - var(--_pad) * 2);
+  --_label-fs: var(--text-sm-size);
+  --_label-lh: var(--text-sm-lh);
+
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-3);                          // 12 (spacing-lg)
+  cursor: pointer;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes (default variant — padded)
+// ---------------------------------------------------------------------------
+.toggle--default.toggle--sm {
+  --_track-w: 36px;
+  --_track-h: 20px;
+  --_knob: 16px;
+  --_pad: 2px;
+  --_label-fs: var(--text-sm-size);
+  --_label-lh: var(--text-sm-lh);
+}
+
+.toggle--default.toggle--md {
+  --_track-w: 44px;
+  --_track-h: 24px;
+  --_knob: 20px;
+  --_pad: 2px;
+  --_label-fs: var(--text-md-size);
+  --_label-lh: var(--text-md-lh);
+}
+
+// ---------------------------------------------------------------------------
+// Sizes (slim variant — knob fills the track height with a colored border)
+// ---------------------------------------------------------------------------
+.toggle--slim.toggle--sm {
+  --_track-w: 32px;
+  --_track-h: 16px;
+  --_knob: 16px;
+  --_pad: 0px;
+  --_label-fs: var(--text-sm-size);
+  --_label-lh: var(--text-sm-lh);
+}
+
+.toggle--slim.toggle--md {
+  --_track-w: 40px;
+  --_track-h: 20px;
+  --_knob: 20px;
+  --_pad: 0px;
+  --_label-fs: var(--text-md-size);
+  --_label-lh: var(--text-md-lh);
+}
+
+// ---------------------------------------------------------------------------
+// Control wrapper — track + native input together
+// ---------------------------------------------------------------------------
+.toggle__control {
+  position: relative;
+  display: inline-flex;
+  width: var(--_track-w);
+  height: var(--_track-h);
+  flex-shrink: 0;
+  // Vertically center the track on the first label line so a labeled toggle
+  // visually aligns with the label baseline (similar to checkbox alignment).
+  margin-top: calc((var(--_label-lh) - var(--_track-h)) / 2);
+}
+
+// Bare layout (no label) — drop the top margin
+.toggle:not(.toggle--labeled) .toggle__control {
+  margin-top: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Native input — visually hidden, covers the track for click/focus
+// ---------------------------------------------------------------------------
+.toggle__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: inherit;
+  z-index: 1;
+
+  &:disabled { cursor: not-allowed; }
+}
+
+// ---------------------------------------------------------------------------
+// Track
+// ---------------------------------------------------------------------------
+.toggle__track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: var(--_pad);
+  border-radius: 9999px;
+  background: var(--bg-tertiary);             // #eae6e2 (off)
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+// Default variant — hairline outer border
+.toggle--default .toggle__track {
+  border: 0.5px solid var(--border-secondary);
+  box-sizing: border-box;
+}
+
+// Slim variant — full-weight outer border drawn as inset shadow
+.toggle--slim .toggle__track {
+  box-shadow: inset 0 0 0 1px var(--border-secondary);
+}
+
+// ---------------------------------------------------------------------------
+// Knob
+// ---------------------------------------------------------------------------
+.toggle__knob {
+  flex-shrink: 0;
+  width: var(--_knob);
+  height: var(--_knob);
+  border-radius: 9999px;
+  background: var(--fg-white);
+  box-shadow:
+    0 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transform: translateX(0);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.toggle--slim .toggle__knob {
+  border: 1px solid var(--border-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+// ---------------------------------------------------------------------------
+// Checked — knob slides right; track turns brand
+// ---------------------------------------------------------------------------
+.toggle.is-checked .toggle__track {
+  background: var(--bg-brand-solid);
+}
+
+.toggle.is-checked .toggle__knob {
+  transform: translateX(var(--_knob-shift));
+}
+
+.toggle--slim.is-checked .toggle__knob {
+  border-color: var(--bg-brand-solid);
+}
+
+.toggle--slim.is-checked .toggle__track {
+  box-shadow: none;
+}
+
+// ---------------------------------------------------------------------------
+// Hover
+// ---------------------------------------------------------------------------
+.toggle:hover:not(.is-disabled).is-checked .toggle__track {
+  background: var(--bg-brand-solid-hover);
+}
+
+.toggle--slim:hover:not(.is-disabled).is-checked .toggle__knob {
+  border-color: var(--bg-brand-solid-hover);
+}
+
+// ---------------------------------------------------------------------------
+// Focus-visible
+// ---------------------------------------------------------------------------
+.toggle__input:focus-visible + .toggle__track {
+  box-shadow:
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+.toggle--slim .toggle__input:focus-visible + .toggle__track {
+  box-shadow:
+    inset 0 0 0 1px var(--border-secondary),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+.toggle--slim.is-checked .toggle__input:focus-visible + .toggle__track {
+  box-shadow:
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+// ---------------------------------------------------------------------------
+// Text block — label + optional supporting text on the right
+// ---------------------------------------------------------------------------
+.toggle__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);                      // 2 (spacing-xxs)
+  min-width: 0;
+}
+
+.toggle__label {
+  font-family: var(--font-body);
+  font-size: var(--_label-fs);
+  line-height: var(--_label-lh);
+  font-weight: 500;
+  color: var(--text-secondary);               // #3f3731
+}
+
+.toggle__supporting {
+  font-family: var(--font-body);
+  font-size: var(--_label-fs);
+  line-height: var(--_label-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);                // #544a42
+}
+
+// ---------------------------------------------------------------------------
+// Disabled
+// ---------------------------------------------------------------------------
+.toggle.is-disabled {
+  cursor: not-allowed;
+
+  .toggle__control { opacity: 0.5; }
+  .toggle__label,
+  .toggle__supporting { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle__track,
+  .toggle__knob { transition: none; }
+}

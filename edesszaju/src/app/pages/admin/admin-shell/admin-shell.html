@@ -18,7 +18,7 @@
     </nav>
     <div class="bottom">
       <a routerLink="/" class="back-link"><app-icon name="arrow-left" /> Vissza az oldalra</a>
-      <button class="btn ghost block" type="button" (click)="logout()">Kijelentkezés</button>
+      <app-button variant="secondary" fullWidth class="on-dark" (clicked)="logout()">Kijelentkezés</app-button>
     </div>
   </aside>
   <section class="content">

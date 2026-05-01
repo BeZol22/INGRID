@@ -1,14 +1,15 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DataService } from '../../services/data.service';
-import { ShopCard } from '../../components/shop-card';
-import { PostCard } from '../../components/post-card';
-import { Icon } from '../../components/icon';
+import { ShopCard } from '../../components/shop-card/shop-card';
+import { PostCard } from '../../components/post-card/post-card';
+import { Icon } from '../../components/icon/icon';
+import { Button } from '../../components/button/button';
 import { PriceRange } from '../../models';
 
 @Component({
   selector: 'page-home',
-  imports: [RouterLink, ShopCard, PostCard, Icon],
+  imports: [RouterLink, ShopCard, PostCard, Icon, Button],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

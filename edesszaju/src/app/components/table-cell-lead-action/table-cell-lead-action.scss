@@ -1,0 +1,18 @@
+// =============================================================================
+// app-table-cell-lead-action — generated from Figma "Table cell – Lead action"
+// Thin convenience wrapper for the standard interactive control rendered in
+// the leading cell of a table row. Switches between <app-checkbox> (checkbox
+// or radio mode at md size) and <app-toggle> (default variant, sm size) per
+// the Figma defaults.
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.table-cell-lead-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

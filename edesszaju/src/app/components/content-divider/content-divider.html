@@ -1,0 +1,9 @@
+@let cls = rootClass();
+
+<div [class]="cls" role="separator" [attr.aria-label]="ariaLabel()">
+  <span class="content-divider__line" aria-hidden="true"></span>
+  <span class="content-divider__content">
+    <ng-content />
+  </span>
+  <span class="content-divider__line" aria-hidden="true"></span>
+</div>

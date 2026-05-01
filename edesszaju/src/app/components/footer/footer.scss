@@ -1,0 +1,148 @@
+// =============================================================================
+// app-footer — generated from Figma "Footer" master frame
+// Page footer shell. The Figma frame shows ~80 layouts (Large 01-16, Small
+// 01-04, default + brand themes, desktop + mobile). Those are page-level
+// compositions — consumers build them using this shell + existing primitives.
+// The shell handles cross-cutting chrome: theme background, vertical padding,
+// container max-width, and the auto-bordered bottom row.
+//
+// Slots (rendered in order):
+//   [branding]   — logo + tagline column (top main row)
+//   [columns]    — grid of link columns (consumer supplies the grid)
+//   [newsletter] — newsletter signup form (sits in the right aside on desktop)
+//   [badges]     — app store / download badges
+//   default      — additional inline content
+//   [bottom]     — bottom row content (copyright, legal links). Auto-bordered.
+//   [social]     — social icons row (sits on the right of the bottom row)
+//
+// Sizes:
+//   large — full footer with branding + columns + bottom row
+//   small — bottom row only, no top section
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.footer {
+  --_pad-y: var(--space-12);                       // 48 default
+  --_text: var(--text-tertiary);
+  --_text-muted: var(--text-quaternary);
+
+  width: 100%;
+  padding: var(--_pad-y) var(--space-8);           // 48 / 32
+  background: var(--bg-primary);                   // #fff9f4
+  color: var(--_text);
+  font-family: var(--font-body);
+  font-size: var(--text-md-size);                  // 16
+  line-height: var(--text-md-lh);                  // 24
+
+  @media (max-width: 768px) {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Themes
+// ---------------------------------------------------------------------------
+.footer--theme-brand {
+  background: var(--bg-brand-section, #562914);    // dark brown
+  --_text: var(--text-tertiary-on-brand, #fbebee);
+  --_text-muted: var(--text-primary-on-brand, #ffead5);
+  color: var(--_text);
+
+  ::ng-deep a { color: var(--_text); }
+  ::ng-deep a:hover { color: var(--_text-muted); }
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.footer--small {
+  --_pad-y: var(--space-5);                        // 20
+
+  .footer__main { display: none; }
+  .footer__bottom { border-top: 0; padding-top: 0; }
+}
+
+// ---------------------------------------------------------------------------
+// Container
+// ---------------------------------------------------------------------------
+.footer__container {
+  max-width: 1280px;                               // container-max-width-desktop
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);                             // 32
+}
+
+// ---------------------------------------------------------------------------
+// Main row (large footers): branding + columns + aside
+// ---------------------------------------------------------------------------
+.footer__main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);                             // 32
+  align-items: flex-start;
+}
+
+.footer__branding {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.footer__branding:empty { display: none; }
+
+.footer__columns {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);                             // 32 between groups
+  min-width: 0;
+}
+
+.footer__columns:empty { display: none; }
+
+.footer__aside {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);                             // 12
+  min-width: 0;
+}
+
+.footer__aside:empty { display: none; }
+
+// ---------------------------------------------------------------------------
+// Bottom row (copyright/legal + social) with auto top border
+// ---------------------------------------------------------------------------
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-8);                     // 32
+  border-top: 1px solid var(--border-secondary);
+  font-size: var(--text-md-size);
+  color: var(--_text-muted);
+}
+
+.footer--theme-brand .footer__bottom {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+.footer__social {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);                             // 12
+}
+
+.footer__social:empty { display: none; }
+
+// Mobile — stack the bottom row
+@media (max-width: 600px) {
+  .footer__bottom { flex-direction: column; align-items: flex-start; }
+  .footer__main { flex-direction: column; }
+}

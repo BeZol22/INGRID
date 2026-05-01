@@ -1,0 +1,67 @@
+// =============================================================================
+// app-dropdown-menu — generated from Figma "Dropdown menu" frame
+// Popover container that anchors a panel to a trigger. Composes any of the
+// menu primitives (app-menu-header / app-menu-item / app-menu-account / etc.)
+// inside the default content slot.
+//
+// Layout: panel positioned absolutely below (or above) the trigger.
+// State:  internal `isOpen` signal. Click toggles, outside-click + Escape
+//         + (optional) item click close it.
+// =============================================================================
+
+:host {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu__trigger {
+  display: inline-flex;
+}
+
+.dropdown-menu__panel {
+  --_offset: 4px;
+
+  position: absolute;
+  z-index: 50;
+  min-width: 240px;
+  max-width: min(95vw, 360px);
+  padding: var(--space-1) 0;          // spacing-xs vertical
+  background: var(--bg-primary);
+  border: 1px solid rgba(0, 0, 0, 0.1);    // border-secondary_alt
+  border-radius: 8px;                       // radius-md
+  // shadow-lg per Figma
+  box-shadow:
+    0 2px 2px -1px rgba(0, 0, 0, 0.04),
+    0 4px 6px -2px rgba(0, 0, 0, 0.03),
+    0 12px 16px -4px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  animation: dropdown-menu-in 0.12s ease-out both;
+}
+
+// Placement ----------------------------------------------------------------
+.dropdown-menu__panel--bottom { top: calc(100% + var(--_offset)); }
+.dropdown-menu__panel--top    { bottom: calc(100% + var(--_offset)); }
+
+// Alignment ----------------------------------------------------------------
+.dropdown-menu__panel--start  { left: 0; }
+.dropdown-menu__panel--end    { right: 0; }
+
+// Reset margins on common direct children so the panel padding is consistent
+.dropdown-menu__panel > * + * {
+  // most menu-* components manage their own padding; nothing extra needed
+}
+
+@keyframes dropdown-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-menu__panel { animation: none; }
+}

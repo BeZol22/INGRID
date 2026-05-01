@@ -1,0 +1,75 @@
+// =============================================================================
+// app-pagination-item — generated from Figma "Pagination number base" frame
+// 36×36 page-number button used inside pagination controls.
+//
+// Shapes: square (radius-md) | circle (radius-full)
+// States: default / hover / active (current page) / focused / disabled
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.pagination-item {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: var(--space-2);                   // 8 (spacing-md)
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+  color: var(--text-quaternary);             // #695d53
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease,
+    box-shadow 0.12s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(.is-disabled),
+  &.is-active:not(.is-disabled) {
+    background: var(--bg-primary-hover);     // gold #e9d09a
+    color: var(--text-secondary);            // #3f3731
+  }
+
+  &:focus-visible {
+    background: var(--bg-primary-hover);
+    color: var(--text-secondary);
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 6px var(--focus-ring);
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Shapes
+// ---------------------------------------------------------------------------
+.pagination-item--square { border-radius: 8px; }    // radius-md
+.pagination-item--circle { border-radius: 9999px; } // radius-full
+
+.pagination-item__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pagination-item { transition: none; }
+}

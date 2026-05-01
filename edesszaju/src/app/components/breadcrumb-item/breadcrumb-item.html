@@ -1,0 +1,53 @@
+@let cls = rootClass();
+@let aria = resolvedAriaLabel();
+@let isDisabled = disabled();
+@let isCurrent = current();
+@let link = routerLink();
+@let url = href();
+@let i = icon();
+@let lbl = label();
+
+<ng-template #content>
+  @if (i) {
+    <app-icon class="breadcrumb-item__icon" [name]="i" />
+  }
+  @if (lbl) {
+    <span class="breadcrumb-item__label">{{ lbl }}</span>
+  }
+</ng-template>
+
+@if (link !== null) {
+  <a
+    [routerLink]="link"
+    [class]="cls"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isCurrent ? 'page' : null"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else if (url !== null) {
+  <a
+    [href]="url"
+    [attr.target]="target()"
+    [attr.rel]="rel()"
+    [class]="cls"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isCurrent ? 'page' : null"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else {
+  <button
+    type="button"
+    [class]="cls"
+    [disabled]="isDisabled"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isCurrent ? 'page' : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </button>
+}

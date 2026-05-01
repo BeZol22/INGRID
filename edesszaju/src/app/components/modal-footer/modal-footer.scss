@@ -1,0 +1,132 @@
+// =============================================================================
+// app-modal-footer — generated from Figma "Modal actions" frame
+// Bottom section of a modal dialog with action buttons.
+//
+// Layouts:
+//   horizontal-fill  — buttons side-by-side, each fills half the row
+//   vertical-fill    — buttons stacked vertically, full-width each (mobile UX)
+//   horizontal-right — left: leading content (checkbox / tertiary button)
+//                      right: action buttons aligned to trailing edge
+//
+// Divider toggle adds a 1px hairline at the top of the footer.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.modal-footer {
+  display: block;
+  width: 100%;
+  font-family: var(--font-body);
+}
+
+// Top hairline + breathing room
+.modal-footer--divider {
+  border-top: 1px solid var(--border-secondary);   // #d5cec7
+}
+
+// ---------------------------------------------------------------------------
+// Inner — padding + layout
+// ---------------------------------------------------------------------------
+.modal-footer__inner {
+  display: flex;
+  width: 100%;
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  // 16 top / 24 sides / 24 bottom — shifts to 32 top when no divider
+  gap: var(--space-3);                             // 12 between leading and actions
+}
+
+.modal-footer:not(.modal-footer--divider) .modal-footer__inner {
+  padding-top: var(--space-8);                     // 32
+}
+
+// ---------------------------------------------------------------------------
+// Layout: horizontal-fill — actions row fills the container
+// ---------------------------------------------------------------------------
+.modal-footer--horizontal-fill .modal-footer__inner {
+  flex-direction: column;
+}
+
+.modal-footer--horizontal-fill .modal-footer__leading { display: none; }
+
+.modal-footer--horizontal-fill .modal-footer__actions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-3);
+  width: 100%;
+
+  > * { flex: 1 1 0; min-width: 0; }
+}
+
+// ---------------------------------------------------------------------------
+// Layout: vertical-fill — actions stacked, full-width
+// ---------------------------------------------------------------------------
+.modal-footer--vertical-fill .modal-footer__inner {
+  flex-direction: column;
+}
+
+.modal-footer--vertical-fill .modal-footer__leading { display: none; }
+
+.modal-footer--vertical-fill .modal-footer__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);                             // 8 between stacked buttons
+  width: 100%;
+
+  > * { width: 100%; }
+}
+
+// ---------------------------------------------------------------------------
+// Layout: horizontal-right — leading on left, actions trailing
+// ---------------------------------------------------------------------------
+.modal-footer--horizontal-right .modal-footer__inner {
+  flex-direction: row;
+  align-items: center;
+}
+
+.modal-footer--horizontal-right .modal-footer__leading {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);                             // 12 between checkbox and tertiary
+
+  &:empty { display: none; }
+}
+
+.modal-footer--horizontal-right .modal-footer__actions {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-3);                             // 12 between cancel and confirm
+  margin-left: auto;
+}
+
+// ---------------------------------------------------------------------------
+// Mobile-friendly tweak — collapse padding on narrow viewports
+// ---------------------------------------------------------------------------
+@media (max-width: 480px) {
+  .modal-footer__inner {
+    padding: var(--space-4);                       // 16 all around
+  }
+
+  .modal-footer:not(.modal-footer--divider) .modal-footer__inner {
+    padding-top: var(--space-5);                   // 20
+  }
+
+  // On narrow viewports, horizontal-right collapses to vertical
+  .modal-footer--horizontal-right .modal-footer__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .modal-footer--horizontal-right .modal-footer__actions {
+    margin-left: 0;
+    width: 100%;
+
+    > * { flex: 1 1 0; min-width: 0; }
+  }
+}

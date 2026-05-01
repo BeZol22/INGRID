@@ -2,11 +2,12 @@ import { Component, computed, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../../services/data.service';
-import { Icon } from '../../../components/icon';
+import { Icon } from '../../../components/icon/icon';
+import { Button } from '../../../components/button/button';
 
 @Component({
   selector: 'page-admin-dashboard',
-  imports: [RouterLink, DatePipe, Icon],
+  imports: [RouterLink, DatePipe, Icon, Button],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.scss',
 })

@@ -1,0 +1,116 @@
+// =============================================================================
+// app-tag-checkbox — generated from Figma "Tag checkbox" frame
+// Tiny checkbox embedded inside tags/chips. Smaller cousin of app-checkbox.
+//
+// Sizes: sm (14×14) / md (16×16) / lg (18×18)
+// States: default / hover / focused / disabled / checked / checked+hover
+// Notable: when checked, hover darkens the surface to bg-brand-solid_hover.
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.tag-checkbox {
+  --_size: 14px;
+  --_glyph: 10px;
+
+  position: relative;
+  display: inline-flex;
+  width: var(--_size);
+  height: var(--_size);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.tag-checkbox--sm { --_size: 14px; --_glyph: 10px; }
+.tag-checkbox--md { --_size: 16px; --_glyph: 12px; }
+.tag-checkbox--lg { --_size: 18px; --_glyph: 14px; }
+
+// ---------------------------------------------------------------------------
+// Native input — visually hidden but covers the indicator
+// ---------------------------------------------------------------------------
+.tag-checkbox__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: inherit;
+  z-index: 1;
+
+  &:disabled { cursor: not-allowed; }
+}
+
+// ---------------------------------------------------------------------------
+// Visual indicator
+// ---------------------------------------------------------------------------
+.tag-checkbox__indicator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xs);
+  background: var(--bg-primary);
+  color: var(--fg-white);
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    opacity 0.12s ease;
+}
+
+.tag-checkbox__glyph {
+  width: var(--_glyph);
+  height: var(--_glyph);
+  display: block;
+}
+
+// ---------------------------------------------------------------------------
+// Checked — brand-solid surface + white check
+// ---------------------------------------------------------------------------
+.tag-checkbox.is-checked .tag-checkbox__indicator {
+  background: var(--bg-brand-solid);
+  border-color: var(--bg-brand-solid);
+}
+
+// Hover when checked — darken to bg-brand-solid_hover (per Figma)
+.tag-checkbox.is-checked:not(.is-disabled):hover .tag-checkbox__indicator {
+  background: var(--bg-brand-solid-hover);
+  border-color: var(--bg-brand-solid-hover);
+}
+
+// ---------------------------------------------------------------------------
+// Focus ring — 2px page-bg gap + 4px blue
+// ---------------------------------------------------------------------------
+.tag-checkbox__input:focus-visible + .tag-checkbox__indicator {
+  box-shadow:
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+// ---------------------------------------------------------------------------
+// Disabled — 50% opacity; unchecked-disabled gets the muted surface
+// ---------------------------------------------------------------------------
+.tag-checkbox.is-disabled {
+  cursor: not-allowed;
+
+  .tag-checkbox__indicator { opacity: 0.5; }
+}
+
+.tag-checkbox.is-disabled:not(.is-checked) .tag-checkbox__indicator {
+  background: var(--color-neutral-100);   // bg-tertiary equivalent
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag-checkbox__indicator { transition: none; }
+}

@@ -1,0 +1,61 @@
+// =============================================================================
+// app-pagination-dot — generated from Figma "Pagination dot indicator" frame
+// Carousel/slide indicator. Two shapes (dot or line) and two sizes; current
+// state fills with brand color.
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.pagination-dot {
+  appearance: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: var(--bg-quaternary);          // #d5cec7 (default)
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(:disabled) {
+    transform: scale(1.15);
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 4px var(--focus-ring);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Shapes × sizes
+// ---------------------------------------------------------------------------
+.pagination-dot--dot.pagination-dot--md  { width: 8px;  height: 8px; }
+.pagination-dot--dot.pagination-dot--lg  { width: 10px; height: 10px; }
+.pagination-dot--line.pagination-dot--md { width: 40px; height: 6px; }
+.pagination-dot--line.pagination-dot--lg { width: 40px; height: 8px; }
+
+// ---------------------------------------------------------------------------
+// Current — brand fill
+// ---------------------------------------------------------------------------
+.pagination-dot.is-current {
+  background: var(--fg-brand-primary);       // #d23955
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pagination-dot { transition: none; }
+  .pagination-dot:hover:not(:disabled) { transform: none; }
+}

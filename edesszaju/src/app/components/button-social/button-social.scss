@@ -1,0 +1,213 @@
+// =============================================================================
+// app-button-social — generated from Figma "Buttons/Social button" frame
+// 6 brands × 3 themes (brand/color/gray) × 2 sizes (md/lg) × text/icon-only
+// states: default / hover / focus-visible / disabled
+// =============================================================================
+
+:host {
+  display: inline-flex;
+}
+
+.btn-social {
+  --_radius: 8px;            // radius-md
+  --_focus-ring: var(--focus-ring);
+
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--_gap, var(--space-2));
+  padding: var(--_py, 0) var(--_px, 0);
+  min-height: var(--_h, auto);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--_radius);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--_fs, var(--text-sm-size));
+  line-height: var(--_lh, var(--text-sm-lh));
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+  // shadow-xs-skeumorphic: drop xs + 2 inner shadows
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.05),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+
+  &:focus { outline: none; }
+
+  &:focus-visible {
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.05),
+      0 0 0 2px var(--bg-page),
+      0 0 0 6px var(--_focus-ring);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: var(--bg-primary-hover);
+    color: var(--text-secondary-hover);
+  }
+}
+
+.btn-social__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_icon, 20px);
+  height: var(--_icon, 20px);
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+.btn-social__label {
+  display: inline-block;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.btn-social--md {
+  --_py: 10px;
+  --_px: 14px;
+  --_h: 40px;
+  --_fs: var(--text-sm-size);
+  --_lh: var(--text-sm-lh);
+  --_gap: var(--space-2);    // 8
+  --_icon: 20px;
+}
+
+.btn-social--lg {
+  --_py: 10px;
+  --_px: var(--space-4);     // 16
+  --_h: 44px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+  --_gap: var(--space-3);    // 12
+  --_icon: 24px;
+}
+
+// Icon-only — square
+.btn-social--icon-only {
+  padding: 0;
+  width: var(--_h);
+  min-width: var(--_h);
+  aspect-ratio: 1 / 1;
+
+  .btn-social__label { display: none; }
+}
+
+// Full width — fills the host's available width (used by social button group)
+:host:has(.btn-social--full),
+:host.is-full {
+  display: block;
+  width: 100%;
+}
+.btn-social--full { width: 100%; }
+
+// ---------------------------------------------------------------------------
+// Theme=color — white surface, full-color brand icon (default look for most)
+// Theme=gray  — white surface, monochrome brand icon
+// Theme=brand — bg = brand color (where applicable), white text + white icon
+// ---------------------------------------------------------------------------
+
+// Gray: desaturate the brand icon
+.btn-social--theme-gray .btn-social__icon {
+  filter: grayscale(1);
+  opacity: 0.7;
+}
+
+// Helper: shared "filled" treatment for brand-color themed buttons
+@mixin filled($bg, $bgHover, $text: #fff) {
+  background: $bg;
+  border-color: $bg;
+  color: $text;
+
+  // Make multi-color brand icons render white-on-color
+  .btn-social__icon { filter: brightness(0) invert(1); }
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: $bgHover;
+    border-color: $bgHover;
+    color: $text;
+
+    .btn-social__icon { filter: brightness(0) invert(1); }
+  }
+}
+
+// Per-brand "Brand" theme overrides
+.btn-social--theme-brand {
+  // Google's brand identity is the colored G on white — same as Color theme
+  // (no override needed; default styles handle it)
+
+  &.btn-social--social-facebook { @include filled(#1877F2, #166FE5); }
+  &.btn-social--social-apple    { @include filled(#000000, #1a1a1a); }
+  &.btn-social--social-twitter  { @include filled(#000000, #1a1a1a); }
+  &.btn-social--social-figma    { @include filled(#1E1E1E, #2a2a2a); }
+  &.btn-social--social-dribbble { @include filled(#EA4C89, #d83a7c); }
+
+  // For Figma in brand theme, keep its colored logo (don't whiten via filter)
+  &.btn-social--social-figma .btn-social__icon { filter: none; }
+
+  &:focus-visible {
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.05),
+      0 0 0 2px var(--bg-page),
+      0 0 0 6px var(--_focus-ring);
+  }
+}
+
+// Apple/Twitter use currentColor for their icon paths (single-shape SVGs)
+.btn-social--social-apple .btn-social__icon,
+.btn-social--social-twitter .btn-social__icon {
+  color: var(--text-secondary);
+}
+
+.btn-social--theme-brand.btn-social--social-apple .btn-social__icon,
+.btn-social--theme-brand.btn-social--social-twitter .btn-social__icon {
+  color: #fff;
+  filter: none; // already white via currentColor
+}
+
+.btn-social--theme-gray.btn-social--social-apple .btn-social__icon,
+.btn-social--theme-gray.btn-social--social-twitter .btn-social__icon {
+  color: var(--fg-quaternary);
+  filter: none; // grayscale would do nothing on currentColor paths
+  opacity: 1;
+}
+
+// Dribbble icon also uses currentColor — match it
+.btn-social--social-dribbble .btn-social__icon { color: #EA4C89; }
+.btn-social--theme-brand.btn-social--social-dribbble .btn-social__icon {
+  color: #fff;
+  filter: none;
+}
+.btn-social--theme-gray.btn-social--social-dribbble .btn-social__icon {
+  color: var(--fg-quaternary);
+  filter: none;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-social { transition: none; }
+}

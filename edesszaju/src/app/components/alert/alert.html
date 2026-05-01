@@ -1,0 +1,88 @@
+@let cls = rootClass();
+@let dl = dismissLabel();
+@let al = actionLabel();
+@let isLinks = actions() === 'links';
+@let inline = layout() === 'inline';
+
+<div [class]="cls" role="status" aria-live="polite">
+  <div class="alert__leading">
+    @if (hasAlertIcon()) {
+      <span class="alert__icon" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="6.667"
+                  stroke="currentColor"
+                  stroke-width="1.333" />
+          <path d="M8 5.333V8.667"
+                stroke="currentColor"
+                stroke-width="1.333"
+                stroke-linecap="round" />
+          <circle cx="8" cy="11" r="0.667" fill="currentColor" />
+        </svg>
+      </span>
+    } @else {
+      <ng-content select="[leading]" />
+    }
+  </div>
+
+  <div class="alert__body">
+    <div class="alert__text">
+      @if (title()) {
+        <p class="alert__title">{{ title() }}</p>
+      }
+      @if (description(); as d) {
+        <p class="alert__description">{{ d }}</p>
+      }
+      <ng-content />
+    </div>
+
+    @if (hasFooter() && (isLinks || !inline)) {
+      <div class="alert__actions">
+        @if (isLinks) {
+          @if (dl) {
+            <button type="button" class="alert__dismiss" (click)="onDismiss()">
+              {{ dl }}
+            </button>
+          }
+          @if (al) {
+            <button type="button" class="alert__action" (click)="onAction()">
+              {{ al }}
+            </button>
+          }
+        } @else {
+          @if (al) {
+            <app-button variant="primary" size="sm" fullWidth (clicked)="onAction()">
+              {{ al }}
+            </app-button>
+          }
+          @if (dl) {
+            <app-button variant="secondary" size="sm" fullWidth (clicked)="onDismiss()">
+              {{ dl }}
+            </app-button>
+          }
+        }
+      </div>
+    }
+  </div>
+
+  @if (hasFooter() && inline && isLinks) {
+    <div class="alert__inline-actions">
+      @if (dl) {
+        <button type="button" class="alert__dismiss" (click)="onDismiss()">
+          {{ dl }}
+        </button>
+      }
+      @if (al) {
+        <app-button variant="primary" size="sm" (clicked)="onAction()">
+          {{ al }}
+        </app-button>
+      }
+    </div>
+  }
+
+  @if (closable()) {
+    <app-button-close
+      class="alert__close"
+      size="sm"
+      (clicked)="onClose()" />
+  }
+</div>

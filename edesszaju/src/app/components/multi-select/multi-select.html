@@ -1,0 +1,104 @@
+@let cls = rootClass();
+@let id = autoId;
+@let lbl = label();
+@let h = hint();
+@let err = error();
+@let isError = hasError();
+@let isOpen = this.isOpen();
+@let isEmpty = empty();
+
+<div [class]="cls">
+  @if (lbl) {
+    <label class="multi-select__label" [attr.for]="id">
+      {{ lbl }}@if (required()) { <span class="multi-select__required" aria-hidden="true">*</span> }
+    </label>
+  }
+
+  <button
+    class="multi-select__trigger"
+    type="button"
+    [id]="id"
+    [disabled]="disabled()"
+    [attr.aria-expanded]="isOpen ? 'true' : 'false'"
+    [attr.aria-haspopup]="'listbox'"
+    [attr.aria-invalid]="isError ? 'true' : null"
+    (click)="onTriggerClick($event)">
+    <span class="multi-select__value">
+      @if (summary(); as s) {
+        <span class="multi-select__count">{{ s }}</span>
+        @if (selectedSecondary(); as sec) {
+          <span class="multi-select__secondary">{{ sec }}</span>
+        }
+      } @else {
+        <span class="multi-select__placeholder">{{ placeholder() }}</span>
+      }
+    </span>
+    <span class="multi-select__chevron" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none">
+        <polyline points="4 6 8 10 12 6"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+      </svg>
+    </span>
+  </button>
+
+  @if (isOpen) {
+    <div class="multi-select__panel" role="listbox" aria-multiselectable="true">
+      <label class="multi-select__search">
+        <app-icon class="multi-select__search-icon" name="search" />
+        <input
+          class="multi-select__search-input"
+          type="search"
+          [value]="searchValue()"
+          [placeholder]="searchPlaceholder()"
+          autocomplete="off"
+          (input)="onSearchInput($event)" />
+      </label>
+
+      @if (isEmpty) {
+        <div class="multi-select__empty">
+          <span class="multi-select__empty-icon" aria-hidden="true">
+            <app-icon name="search" />
+          </span>
+          <p class="multi-select__empty-title">{{ emptyTitle() }}</p>
+          <p class="multi-select__empty-hint">{{ emptyHint() }}</p>
+          <button
+            class="multi-select__clear-search"
+            type="button"
+            (click)="onClearSearch()">
+            {{ clearSearchLabel() }}
+          </button>
+        </div>
+      } @else {
+        <div class="multi-select__items">
+          <ng-content />
+        </div>
+      }
+
+      @if (showFooter()) {
+        <div class="multi-select__footer">
+          <app-button
+            variant="secondary"
+            size="sm"
+            (clicked)="onReset()">
+            {{ resetLabel() }}
+          </app-button>
+          <app-button
+            variant="secondary"
+            size="sm"
+            (clicked)="onSelectAll()">
+            {{ selectAllLabel() }}
+          </app-button>
+        </div>
+      }
+    </div>
+  }
+
+  @if (err) {
+    <span class="multi-select__msg multi-select__msg--error" [id]="id + '-msg'">{{ err }}</span>
+  } @else if (h) {
+    <span class="multi-select__msg" [id]="id + '-msg'">{{ h }}</span>
+  }
+</div>

@@ -1,0 +1,143 @@
+// =============================================================================
+// app-menu-item — generated from Figma "Dropdown menu list item" frame
+// A single row inside a dropdown menu. Polymorphic root (<button>/<a>).
+// Slots: leading icon (via [icon] shorthand or [leading] content projection),
+//        label, optional shortcut text, optional chevron-right.
+// Variant: divider (renders just a hairline separator).
+// States: default / hover / active (open submenu) / disabled.
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1px var(--space-1-5);    // py: 1, px: spacing-sm (6)
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+
+  &:focus { outline: none; }
+}
+
+.menu-item__inner {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);              // 4 = spacing-xs
+  padding: var(--space-2) var(--space-1-5) var(--space-2) 10px;
+                                    // py 8, pr 6, pl 10
+  border-radius: 6px;               // radius-sm
+  overflow: hidden;
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease;
+}
+
+// ---------------------------------------------------------------------------
+// Leading slot (16×16) + label
+// ---------------------------------------------------------------------------
+.menu-item__leading {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-right: var(--space-1);     // 4 - the inner gap is 4 between leading
+                                    // and label (Figma "Icon and text" gap=8
+                                    // includes the 16px slot's own padding)
+}
+
+// Match Figma's 8px gap between the icon slot and the label by adjusting
+// margin instead of relying on the parent's gap (which is 4).
+.menu-item__leading + .menu-item__label {
+  margin-left: var(--space-1);      // 4 + parent's 4 = 8 between glyph & text
+}
+
+.menu-item__label {
+  flex: 1 1 0;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ---------------------------------------------------------------------------
+// Trailing — keyboard shortcut text + chevron
+// ---------------------------------------------------------------------------
+.menu-item__shortcut {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding-right: var(--space-1);    // 4
+}
+
+.menu-item__shortcut-text {
+  font-family: var(--font-body);
+  font-size: var(--text-xs-size);
+  line-height: var(--text-xs-lh);
+  font-weight: 500;
+  color: var(--text-quaternary);
+  white-space: nowrap;
+}
+
+.menu-item__chevron {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  color: var(--fg-quaternary);
+  transform: rotate(-90deg);        // chevron-down → chevron-right
+}
+
+// ---------------------------------------------------------------------------
+// States — hover / active (open submenu)
+// ---------------------------------------------------------------------------
+.menu-item:hover:not(.is-disabled) .menu-item__inner,
+.menu-item.is-active:not(.is-disabled) .menu-item__inner {
+  background: var(--bg-primary-hover);     // gold #e9d09a
+}
+
+.menu-item:hover:not(.is-disabled) .menu-item__label,
+.menu-item.is-active:not(.is-disabled) .menu-item__label {
+  color: var(--text-secondary-hover);      // #2b2622
+}
+
+// ---------------------------------------------------------------------------
+// Disabled
+// ---------------------------------------------------------------------------
+.menu-item.is-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+
+  .menu-item__inner { opacity: 0.5; }
+}
+
+// ---------------------------------------------------------------------------
+// Divider variant — hairline separator, py-1 (4px) padding above/below
+// ---------------------------------------------------------------------------
+.menu-item--divider {
+  width: 100%;
+  height: 1px;
+  margin: var(--space-1) 0;
+  background: var(--border-secondary);     // #d5cec7
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-item__inner { transition: none; }
+}

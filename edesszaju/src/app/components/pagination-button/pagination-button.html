@@ -1,0 +1,57 @@
+@let cls = rootClass();
+@let aria = resolvedAriaLabel();
+@let isDisabled = disabled();
+@let isActive = active();
+@let link = routerLink();
+@let url = href();
+@let t = type();
+@let i = resolvedIcon();
+@let lbl = label() ?? (t === 'leading-icon' ? 'Previous' : t === 'trailing-icon' ? 'Next' : null);
+
+<ng-template #content>
+  @if (t === 'leading-icon' || t === 'icon-only') {
+    <app-icon class="pagination-button__icon" [name]="i" />
+  }
+  @if (t === 'number') {
+    <span class="pagination-button__label">{{ page() }}</span>
+  } @else if (lbl && t !== 'icon-only') {
+    <span class="pagination-button__label">{{ lbl }}</span>
+  }
+  @if (t === 'trailing-icon') {
+    <app-icon class="pagination-button__icon" [name]="i" />
+  }
+</ng-template>
+
+@if (link !== null) {
+  <a
+    [routerLink]="link"
+    [class]="cls"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isActive ? 'page' : null"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else if (url !== null) {
+  <a
+    [href]="url"
+    [class]="cls"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isActive ? 'page' : null"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else {
+  <button
+    type="button"
+    [class]="cls"
+    [disabled]="isDisabled"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isActive ? 'page' : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </button>
+}

@@ -1,0 +1,42 @@
+@let cls = rootClass();
+@let lbl = label();
+@let isDisabled = disabled();
+@let link = routerLink();
+@let url = href();
+@let tip = showTooltip() && !isDisabled ? lbl : null;
+
+@if (link !== null) {
+  <a
+    [routerLink]="link"
+    [class]="cls"
+    [attr.aria-label]="lbl"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <app-icon class="btn-util__icon" [name]="icon()" />
+    @if (tip) { <span class="btn-util__tooltip" role="tooltip">{{ tip }}</span> }
+  </a>
+} @else if (url !== null) {
+  <a
+    [href]="url"
+    [attr.target]="target()"
+    [attr.rel]="rel()"
+    [class]="cls"
+    [attr.aria-label]="lbl"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <app-icon class="btn-util__icon" [name]="icon()" />
+    @if (tip) { <span class="btn-util__tooltip" role="tooltip">{{ tip }}</span> }
+  </a>
+} @else {
+  <button
+    [type]="type()"
+    [class]="cls"
+    [disabled]="isDisabled"
+    [attr.aria-label]="lbl"
+    (click)="onClick($event)">
+    <app-icon class="btn-util__icon" [name]="icon()" />
+    @if (tip) { <span class="btn-util__tooltip" role="tooltip">{{ tip }}</span> }
+  </button>
+}

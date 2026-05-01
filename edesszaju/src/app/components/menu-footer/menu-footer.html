@@ -1,0 +1,31 @@
+@let cls = rootClass();
+@let t = type();
+
+<div [class]="cls">
+  @switch (t) {
+    @case ('button') {
+      <app-button
+        variant="secondary"
+        size="md"
+        fullWidth
+        [iconStart]="icon()"
+        [disabled]="disabled()"
+        [type]="buttonType()"
+        [routerLink]="routerLink()"
+        [href]="href()"
+        [target]="target()"
+        [rel]="rel()"
+        (clicked)="onButtonClick($event)">
+        {{ label() }}
+      </app-button>
+    }
+    @case ('text') {
+      @if (leftText(); as l) {
+        <span class="menu-footer__text">{{ l }}</span>
+      }
+      @if (rightText(); as r) {
+        <span class="menu-footer__text">{{ r }}</span>
+      }
+    }
+  }
+</div>

@@ -1,0 +1,32 @@
+@let cls = rootClass();
+@let icon = featuredIcon();
+
+<div [class]="cls">
+  <div class="modal-header__content">
+    @if (icon) {
+      <span class="modal-header__featured-icon" aria-hidden="true">
+        <app-icon [name]="icon" />
+      </span>
+    } @else {
+      <ng-content select="[icon]" />
+    }
+
+    <div class="modal-header__text">
+      @if (title()) {
+        <h2 class="modal-header__title">{{ title() }}</h2>
+      }
+      @if (description(); as d) {
+        <p class="modal-header__description">{{ d }}</p>
+      }
+      <ng-content />
+    </div>
+  </div>
+
+  @if (closable()) {
+    <app-button-close
+      class="modal-header__close"
+      size="md"
+      [ariaLabel]="closeAriaLabel()"
+      (clicked)="onClose()" />
+  }
+</div>

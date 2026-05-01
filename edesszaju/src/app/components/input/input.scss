@@ -1,0 +1,206 @@
+// =============================================================================
+// app-input — generated from Figma "Input field" frame (default + leading
+// variants). Base text input primitive: label + leading icon/text + hint/error.
+//
+// Sizes: sm (36) / md (40) / lg (44) input height
+// States: placeholder / focused / filled / disabled / error
+//
+// Specialized types from the Figma frame (password reveal, date picker,
+// dropdown, file upload, tags, payment, OTP group, number counter,
+// trailing button) are intentionally separate components — they'll plug into
+// or wrap this primitive when those frames come up.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.input {
+  --_h: 40px;
+  --_pad-x: var(--space-3);          // 12 (spacing-lg)
+  --_pad-y: 10px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+  --_radius: 8px;
+  --_gap: var(--space-2);            // 8 between icon/leading text and field
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);             // 6 between label, wrap, hint
+  width: 100%;
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.input--sm {
+  --_h: 36px;
+  --_pad-y: 8px;
+  --_pad-x: var(--space-3);          // 12
+  --_fs: var(--text-sm-size);
+  --_lh: var(--text-sm-lh);
+}
+
+.input--md {
+  --_h: 40px;
+  --_pad-y: 10px;
+  --_pad-x: var(--space-3);          // 12
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+}
+
+.input--lg {
+  --_h: 44px;
+  --_pad-y: 10px;
+  --_pad-x: var(--space-3-5, 14px);  // 14 — derived
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+}
+
+// ---------------------------------------------------------------------------
+// Label
+// ---------------------------------------------------------------------------
+.input__label {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+  color: var(--text-secondary);      // #3f3731
+  cursor: pointer;
+}
+
+.input__required {
+  color: var(--text-brand-tertiary);
+  margin-left: 1px;
+}
+
+// ---------------------------------------------------------------------------
+// Wrapper that provides the bordered surface
+// ---------------------------------------------------------------------------
+.input__wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--_gap);
+  min-height: var(--_h);
+  padding: 0 var(--_pad-x);
+  background: var(--bg-primary);     // #fff9f4
+  border: 1px solid var(--border-primary);
+  border-radius: var(--_radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+// ---------------------------------------------------------------------------
+// Leading icon / text
+// ---------------------------------------------------------------------------
+.input__icon {
+  flex-shrink: 0;
+  width: var(--_lh);
+  height: var(--_lh);
+  font-size: var(--text-md-size);
+  color: var(--fg-quaternary);       // #9f9185
+}
+
+.input__leading-text {
+  flex-shrink: 0;
+  font-size: var(--_fs);
+  line-height: var(--_lh);
+  color: var(--text-tertiary);       // #544a42
+}
+
+// ---------------------------------------------------------------------------
+// Native input
+// ---------------------------------------------------------------------------
+.input__field {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--_pad-y) 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: var(--_fs);
+  line-height: var(--_lh);
+  color: var(--text-primary);        // #562914 brown
+  caret-color: var(--bg-brand-solid);
+
+  &::placeholder {
+    color: var(--text-placeholder);  // #695d53
+  }
+
+  // strip number spinners
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-decoration {
+    display: none;
+  }
+
+  &[type='number'] { -moz-appearance: textfield; }
+}
+
+// ---------------------------------------------------------------------------
+// Focus — brand border + page-bg gap + blue focus ring
+// ---------------------------------------------------------------------------
+.input:not(.is-disabled):not(.is-error) .input__wrap:has(.input__field:focus-visible) {
+  border-color: var(--border-brand);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+}
+
+// ---------------------------------------------------------------------------
+// Error — error border + error focus ring
+// ---------------------------------------------------------------------------
+.input.is-error .input__wrap {
+  border-color: var(--border-error-subtle);     // #fca5a5
+}
+
+.input.is-error:not(.is-disabled) .input__wrap:has(.input__field:focus-visible) {
+  border-color: var(--border-error);            // #ef4444
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring-error);
+}
+
+// ---------------------------------------------------------------------------
+// Disabled
+// ---------------------------------------------------------------------------
+.input.is-disabled {
+  .input__label { cursor: not-allowed; opacity: 0.6; }
+  .input__wrap {
+    opacity: 0.6;
+    background: var(--color-neutral-100);
+    cursor: not-allowed;
+  }
+  .input__field { cursor: not-allowed; }
+}
+
+// ---------------------------------------------------------------------------
+// Hint / error message line
+// ---------------------------------------------------------------------------
+.input__msg {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+
+.input__msg--error {
+  color: var(--text-error-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input__wrap { transition: none; }
+}

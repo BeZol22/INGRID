@@ -1,0 +1,152 @@
+// =============================================================================
+// app-modal-header — generated from Figma "Modal header" frame
+// Top section of a modal dialog: featured icon + title + description + close X.
+//
+// Alignments:
+//   left       — icon above text, both left-aligned
+//   center     — icon above text, both centered
+//   horizontal — icon to the left of text (inline)
+//
+// Optional divider hairline at the bottom + 20px breathing room above it.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.modal-header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--font-body);
+  padding: var(--space-6);                   // 24 (spacing-3xl) all around
+}
+
+// ---------------------------------------------------------------------------
+// Content row — icon + text
+// ---------------------------------------------------------------------------
+.modal-header__content {
+  display: flex;
+  gap: var(--space-4);                       // 16 (spacing-xl) between icon & text
+  width: 100%;
+}
+
+// Left aligned: icon above text, both left-aligned
+.modal-header--left .modal-header__content {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+// Center aligned: icon above text, both centered
+.modal-header--center .modal-header__content {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.modal-header--center .modal-header__text { align-items: center; }
+
+// Horizontal: icon left of text
+.modal-header--horizontal .modal-header__content {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+// ---------------------------------------------------------------------------
+// Featured icon — 40×40 chip with subtle border + shadow
+// ---------------------------------------------------------------------------
+.modal-header__featured-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;                        // radius-md
+  background: var(--bg-primary);
+  // Skeuomorphic shadow stack from Figma (drop xs + 2 inner shadows)
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.05),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+  color: var(--fg-secondary);                // #544a42
+
+  app-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Text — title + description
+// ---------------------------------------------------------------------------
+.modal-header__text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);                     // 2 (spacing-xxs)
+  width: 100%;
+}
+
+.modal-header__title {
+  margin: 0;
+  font-size: var(--text-md-size);
+  line-height: var(--text-md-lh);
+  font-weight: 600;
+  color: var(--text-primary);                // #562914 brown
+}
+
+.modal-header__description {
+  margin: 0;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);               // #544a42
+}
+
+// ---------------------------------------------------------------------------
+// Close button — absolutely positioned in top-right
+// ---------------------------------------------------------------------------
+.modal-header__close {
+  position: absolute;
+  top: var(--space-4);                       // 16
+  right: var(--space-4);
+}
+
+// ---------------------------------------------------------------------------
+// Optional bottom padding + divider
+// ---------------------------------------------------------------------------
+.modal-header--pad-bottom { padding-bottom: var(--space-6); }
+
+.modal-header--divider {
+  padding-bottom: 0;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: var(--border-secondary);     // #d5cec7
+    margin-top: var(--space-5);              // 20 breathing room above divider
+    width: 100%;
+  }
+}
+
+.modal-header--divider.modal-header--pad-bottom { padding-bottom: 0; }
+
+// ---------------------------------------------------------------------------
+// Mobile-friendly tweak — when narrow viewport, tighten padding
+// ---------------------------------------------------------------------------
+@media (max-width: 480px) {
+  .modal-header {
+    padding: var(--space-5) var(--space-4);  // 20 / 16
+  }
+  .modal-header__close {
+    top: var(--space-3);
+    right: var(--space-3);
+  }
+}

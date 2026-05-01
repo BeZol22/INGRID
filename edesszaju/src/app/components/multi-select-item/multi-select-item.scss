@@ -1,0 +1,161 @@
+// =============================================================================
+// app-multi-select-item — generated from Figma "Multi-select menu item" frame
+// Compact row with a leading checkbox indicator + title + inline supporting
+// text. Designed for multi-select dropdowns.
+//
+// Sizes: sm / md (16px checkbox) / lg (20px checkbox)
+// States: default / hover / active (keyboard-highlighted) / checked / disabled
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.multi-select-item {
+  --_pad-x: var(--space-1);          // 4 outer
+  --_inner-pad: var(--space-2);      // 8 inner
+  --_box-size: 16px;
+  --_box-radius: var(--radius-xs);   // 4
+  --_glyph: 12px;
+  --_fs: var(--text-sm-size);
+  --_lh: var(--text-sm-lh);
+  --_gap: var(--space-1-5);          // 6 between title and supporting
+
+  display: flex;
+  width: 100%;
+  padding: 1px var(--_pad-x);
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+  font-family: var(--font-body);
+
+  &:focus { outline: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.multi-select-item--sm {
+  --_pad-x: var(--space-1);          // 4
+  --_inner-pad: var(--space-2);      // 8
+  --_box-size: 16px;
+  --_glyph: 12px;
+  --_fs: var(--text-sm-size);
+  --_lh: var(--text-sm-lh);
+}
+
+.multi-select-item--md {
+  --_pad-x: var(--space-1-5);        // 6
+  --_inner-pad: var(--space-2);      // 8
+  --_box-size: 16px;
+  --_glyph: 12px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+}
+
+.multi-select-item--lg {
+  --_pad-x: var(--space-1-5);        // 6
+  --_inner-pad: 10px;                // 10
+  --_box-size: 20px;
+  --_box-radius: 6px;                // radius-sm in Figma
+  --_glyph: 14px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+}
+
+// ---------------------------------------------------------------------------
+// Inner content surface — this is what flips to gold on hover
+// ---------------------------------------------------------------------------
+.multi-select-item__inner {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);                // 8 between checkbox and text
+  padding: var(--_inner-pad);
+  border-radius: 6px;                 // radius-sm
+  overflow: hidden;
+  transition: background-color 0.12s ease;
+}
+
+// Hover / active highlight
+.multi-select-item:hover:not(.is-disabled) .multi-select-item__inner,
+.multi-select-item.is-active:not(.is-disabled) .multi-select-item__inner {
+  background: var(--bg-primary-hover);    // gold #e9d09a
+}
+
+// ---------------------------------------------------------------------------
+// Visual checkbox indicator (passive — the row is the click target)
+// ---------------------------------------------------------------------------
+.multi-select-item__checkbox {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_box-size);
+  height: var(--_box-size);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--_box-radius);
+  background: transparent;
+  color: var(--fg-white);
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.multi-select-item__checkbox.is-checked {
+  background: var(--bg-brand-solid);
+  border-color: var(--bg-brand-solid);
+}
+
+.multi-select-item__glyph {
+  width: var(--_glyph);
+  height: var(--_glyph);
+  display: block;
+}
+
+// ---------------------------------------------------------------------------
+// Text — title + supporting text inline (Figma's `Design 10 users` pattern)
+// ---------------------------------------------------------------------------
+.multi-select-item__text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--_gap);
+  overflow: hidden;
+  font-size: var(--_fs);
+  line-height: var(--_lh);
+  white-space: nowrap;
+}
+
+.multi-select-item__title {
+  font-weight: 500;
+  color: var(--text-primary);          // #562914
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.multi-select-item__supporting {
+  font-weight: 400;
+  color: var(--text-tertiary);         // #544a42
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ---------------------------------------------------------------------------
+// Disabled
+// ---------------------------------------------------------------------------
+.multi-select-item.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .multi-select-item__inner,
+  .multi-select-item__checkbox { transition: none; }
+}

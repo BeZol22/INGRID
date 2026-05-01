@@ -1,0 +1,393 @@
+// =============================================================================
+// app-button — generated from Figma "Buttons" frame
+// 4 variants (primary / secondary / tertiary / link)
+// 5 sizes    (sm / md / lg / xl / 2xl)
+// states     default / hover / focus-visible / active / disabled / loading
+// =============================================================================
+
+:host {
+  display: inline-flex;
+}
+
+.btn {
+  --_radius: 8px;            // radius-md
+  --_focus-gap: var(--bg-page);
+  --_focus-ring: var(--focus-ring);
+
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--_gap, var(--space-1));
+  padding: var(--_py, 0) var(--_px, 0);
+  min-height: var(--_h, auto);
+  border: 1px solid transparent;
+  border-radius: var(--_radius);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--_fs, var(--text-sm-size));
+  line-height: var(--_lh, var(--text-sm-lh));
+  letter-spacing: 0;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+  box-shadow: var(--shadow-xs);
+
+  &:focus { outline: none; }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--_focus-gap),
+      0 0 0 6px var(--_focus-ring),
+      var(--shadow-xs);
+  }
+
+  &:disabled,
+  &.is-disabled,
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &.is-loading { cursor: progress; }
+
+  &:active:not(:disabled):not(.is-disabled) {
+    transform: translateY(1px);
+  }
+}
+
+.btn__icon {
+  display: inline-flex;
+  font-size: var(--_icon, 1em);
+  flex-shrink: 0;
+}
+
+.btn__label {
+  display: inline-block;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes — text + padding + height + icon-gap
+// ---------------------------------------------------------------------------
+.btn--sm {
+  --_py: var(--space-2);   // 8
+  --_px: var(--space-3);   // 12
+  --_h: 32px;
+  --_fs: var(--text-sm-size);
+  --_lh: var(--text-sm-lh);
+  --_gap: var(--space-1);  // 4
+  --_icon: 16px;
+}
+
+.btn--md {
+  --_py: 10px;
+  --_px: 14px;
+  --_h: 36px;
+  --_fs: var(--text-sm-size);
+  --_lh: var(--text-sm-lh);
+  --_gap: var(--space-1);  // 4
+  --_icon: 16px;
+}
+
+.btn--lg {
+  --_py: 10px;
+  --_px: var(--space-4);   // 16
+  --_h: 40px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+  --_gap: var(--space-1-5);// 6
+  --_icon: 18px;
+}
+
+.btn--xl {
+  --_py: var(--space-3);   // 12
+  --_px: 18px;
+  --_h: 44px;
+  --_fs: var(--text-md-size);
+  --_lh: var(--text-md-lh);
+  --_gap: var(--space-1-5);// 6
+  --_icon: 20px;
+}
+
+.btn--2xl {
+  --_py: var(--space-4);   // 16
+  --_px: 22px;
+  --_h: 60px;
+  --_fs: var(--text-lg-size);
+  --_lh: var(--text-lg-lh);
+  --_gap: 10px;
+  --_icon: 22px;
+}
+
+// Icon-only — collapse to a square
+.btn--icon-only {
+  --_px: var(--_py);
+  padding-inline: var(--_py);
+  aspect-ratio: 1 / 1;
+  min-width: var(--_h);
+
+  .btn__label { display: none; }
+}
+
+.btn--full { width: 100%; }
+
+// ---------------------------------------------------------------------------
+// Variant — primary (solid brand)
+// ---------------------------------------------------------------------------
+.btn--primary {
+  background: var(--bg-brand-solid);
+  border-color: var(--bg-brand-solid);
+  color: var(--text-white);
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: var(--bg-brand-solid-hover);
+    border-color: var(--bg-brand-solid-hover);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    background: var(--color-brand-pink-300);
+    border-color: var(--color-brand-pink-300);
+    color: var(--text-white);
+    box-shadow: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Variant — secondary (cream/white surface with border)
+// ---------------------------------------------------------------------------
+.btn--secondary {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+  color: var(--text-secondary);
+
+  .btn__icon { color: var(--fg-quaternary); }
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: var(--bg-primary-hover);
+    color: var(--text-secondary-hover);
+
+    .btn__icon { color: var(--fg-quaternary-hover); }
+  }
+
+  &:disabled,
+  &.is-disabled {
+    background: var(--bg-primary);
+    color: var(--color-neutral-400);
+    border-color: var(--border-secondary);
+    box-shadow: none;
+
+    .btn__icon { color: var(--color-neutral-300); }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Variant — tertiary (transparent, text + icon only, no border)
+// ---------------------------------------------------------------------------
+.btn--tertiary {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-tertiary);
+  box-shadow: none;
+
+  .btn__icon { color: var(--fg-quaternary); }
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    background: var(--bg-primary-hover);
+    color: var(--text-tertiary-hover);
+
+    .btn__icon { color: var(--fg-quaternary-hover); }
+  }
+
+  &:disabled,
+  &.is-disabled {
+    color: var(--color-neutral-400);
+    .btn__icon { color: var(--color-neutral-300); }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Variant — link (text only, brand-coloured, underline on hover)
+// ---------------------------------------------------------------------------
+.btn--link {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-brand-secondary);
+  box-shadow: none;
+  padding-inline: 0;
+  min-height: 0;
+
+  .btn__icon { color: var(--fg-brand-secondary_alt, var(--fg-brand-secondary)); }
+
+  &:hover:not(:disabled):not(.is-disabled) {
+    color: var(--text-brand-secondary-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    .btn__icon { color: var(--fg-brand-secondary-hover); }
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--_focus-gap),
+      0 0 0 6px var(--_focus-ring);
+  }
+
+  &:disabled,
+  &.is-disabled {
+    color: var(--color-brand-pink-300);
+    .btn__icon { color: var(--color-brand-pink-300); }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Color modifier — destructive: re-paints all 4 hierarchies in error/red and
+// switches the focus ring to the red variant. Combine with .btn--<variant>.
+// (Mirrors Figma "Buttons/Button destructive" frame.)
+// ---------------------------------------------------------------------------
+.btn--destructive {
+  --_focus-ring: var(--focus-ring-error);
+
+  // Hierarchy=Primary — solid red
+  &.btn--primary {
+    background: var(--bg-error-solid);
+    border-color: var(--bg-error-solid);
+    color: var(--text-white);
+
+    .btn__icon { color: var(--fg-white); }
+
+    &:hover:not(:disabled):not(.is-disabled) {
+      background: var(--bg-error-solid-hover);
+      border-color: var(--bg-error-solid-hover);
+    }
+
+    &:disabled,
+    &.is-disabled {
+      background: var(--color-red-300);
+      border-color: var(--color-red-300);
+      color: var(--text-white);
+      box-shadow: none;
+    }
+  }
+
+  // Hierarchy=Secondary — light surface, red text + subtle red border
+  &.btn--secondary {
+    background: var(--bg-primary);
+    border-color: var(--border-error-subtle);
+    color: var(--text-error-primary);
+
+    .btn__icon { color: var(--fg-error-secondary); }
+
+    &:hover:not(:disabled):not(.is-disabled) {
+      background: var(--bg-error-primary);
+      color: var(--text-error-primary-hover);
+      border-color: var(--border-error-subtle);
+
+      .btn__icon { color: var(--fg-error-primary); }
+    }
+
+    &:disabled,
+    &.is-disabled {
+      background: var(--bg-primary);
+      color: var(--color-red-300);
+      border-color: var(--color-red-200);
+      box-shadow: none;
+
+      .btn__icon { color: var(--color-red-300); }
+    }
+  }
+
+  // Hierarchy=Tertiary — transparent, red text, soft red bg on hover
+  &.btn--tertiary {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-error-primary);
+    box-shadow: none;
+
+    .btn__icon { color: var(--fg-error-secondary); }
+
+    &:hover:not(:disabled):not(.is-disabled) {
+      background: var(--bg-error-primary);
+      color: var(--text-error-primary-hover);
+
+      .btn__icon { color: var(--fg-error-primary); }
+    }
+
+    &:disabled,
+    &.is-disabled {
+      color: var(--color-red-300);
+      .btn__icon { color: var(--color-red-300); }
+    }
+  }
+
+  // Hierarchy=Link — text only, red, underline on hover
+  &.btn--link {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-error-primary);
+    box-shadow: none;
+
+    .btn__icon { color: var(--fg-error-secondary); }
+
+    &:hover:not(:disabled):not(.is-disabled) {
+      color: var(--text-error-primary-hover);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+
+      .btn__icon { color: var(--fg-error-primary); }
+    }
+
+    &:disabled,
+    &.is-disabled {
+      color: var(--color-red-300);
+      .btn__icon { color: var(--color-red-300); }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Modifier — :host(.on-dark): variants flipped for dark surfaces
+// (e.g. admin sidebar, dark footer). Apply via class="on-dark".
+// ---------------------------------------------------------------------------
+:host(.on-dark) {
+  .btn--secondary,
+  .btn--tertiary {
+    background: transparent;
+    color: var(--text-white);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: none;
+
+    .btn__icon { color: rgba(255, 255, 255, 0.7); }
+
+    &:hover:not(:disabled):not(.is-disabled) {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-white);
+      border-color: rgba(255, 255, 255, 0.28);
+
+      .btn__icon { color: var(--text-white); }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Loading spinner — <app-spinner> embedded in the loading state.
+// We pipe the per-size icon glyph size into the spinner via `--_size` so the
+// loader visually matches the icon it replaces.
+// ---------------------------------------------------------------------------
+.btn__spinner {
+  --_size: var(--_icon, 1em);
+  color: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}

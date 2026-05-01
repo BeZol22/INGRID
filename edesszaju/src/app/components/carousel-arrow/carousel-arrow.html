@@ -1,0 +1,13 @@
+@let cls = rootClass();
+@let label = resolvedAriaLabel();
+@let icon = iconName();
+@let isDisabled = disabled();
+
+<button
+  type="button"
+  [class]="cls"
+  [disabled]="isDisabled"
+  [attr.aria-label]="label"
+  (click)="onClick($event)">
+  <app-icon [name]="icon" class="carousel-arrow__icon" />
+</button>

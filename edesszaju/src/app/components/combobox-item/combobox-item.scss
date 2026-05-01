@@ -1,0 +1,106 @@
+// =============================================================================
+// app-combobox-item — generated from Figma "Combobox dropdown item" frame
+// Compact selectable row for combobox / searchable-select dropdowns.
+// Layout: leading slot | title + subtitle inline | trailing checkmark.
+// States: default / hover / active (keyboard-highlighted) / selected / disabled
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.combobox-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);                // 8 (spacing-md) between leading and text
+  width: 100%;
+  padding: var(--space-1-5) var(--space-2);  // 6 / 8
+  margin: 0;
+  border: 0;
+  border-radius: 6px;                 // radius-sm
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+  font-family: var(--font-body);
+  transition: background-color 0.12s ease;
+
+  &:focus { outline: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Leading slot (16-20px square, optional)
+// ---------------------------------------------------------------------------
+.combobox-item__leading {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  // collapse the slot when empty so the title hugs the left padding
+  &:empty { display: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Text — title + optional subtitle inline (separated by spacing-xs)
+// ---------------------------------------------------------------------------
+.combobox-item__text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);                // 4 (spacing-xs)
+  overflow: hidden;
+}
+
+.combobox-item__title {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+  color: var(--text-primary);         // #562914 brown
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.combobox-item__subtitle {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);        // #544a42
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ---------------------------------------------------------------------------
+// Trailing check (only when selected)
+// ---------------------------------------------------------------------------
+.combobox-item__check {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: var(--fg-brand-primary);     // #d23955
+}
+
+// ---------------------------------------------------------------------------
+// Hover / keyboard-highlighted state
+// ---------------------------------------------------------------------------
+.combobox-item:hover:not(.is-disabled),
+.combobox-item.is-active:not(.is-disabled) {
+  background: var(--bg-primary-hover);   // gold cream #e9d09a
+}
+
+// ---------------------------------------------------------------------------
+// Disabled
+// ---------------------------------------------------------------------------
+.combobox-item.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .combobox-item { transition: none; }
+}

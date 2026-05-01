@@ -1,0 +1,24 @@
+@let cls = rootClass();
+@let aria = ariaLabel();
+@let labelledBy = ariaLabelledBy();
+@let describedBy = ariaDescribedBy();
+
+@if (open()) {
+  <div [class]="cls">
+    <div
+      class="modal__backdrop"
+      aria-hidden="true"
+      (click)="onBackdropClick($event)"></div>
+
+    <div
+      #dialog
+      class="modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="aria"
+      [attr.aria-labelledby]="labelledBy"
+      [attr.aria-describedby]="describedBy">
+      <ng-content />
+    </div>
+  </div>
+}

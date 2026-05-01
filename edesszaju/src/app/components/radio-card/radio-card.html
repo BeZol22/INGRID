@@ -1,0 +1,51 @@
+@let cls = rootClass();
+@let id = resolvedId();
+@let aria = ariaLabel();
+@let isCheckbox = indicator() === 'checkbox';
+@let isChecked = checked();
+@let isDisabled = disabled();
+
+<label [class]="cls" [attr.for]="id">
+  <input
+    class="radio-card__input"
+    [type]="isCheckbox ? 'checkbox' : 'radio'"
+    [id]="id"
+    [name]="name()"
+    [value]="value()"
+    [checked]="isChecked"
+    [disabled]="isDisabled"
+    [attr.aria-label]="aria"
+    (change)="onChange($event)" />
+
+  <span class="radio-card__leading">
+    <ng-content select="[leading]" />
+  </span>
+
+  <span class="radio-card__text">
+    <span class="radio-card__title">{{ title() }}</span>
+    @if (description(); as d) {
+      <span class="radio-card__description">{{ d }}</span>
+    }
+    <ng-content />
+  </span>
+
+  <span class="radio-card__trailing">
+    <ng-content select="[trailing]" />
+  </span>
+
+  <span class="radio-card__indicator" aria-hidden="true">
+    @if (isCheckbox) {
+      @if (isChecked) {
+        <svg class="radio-card__glyph" viewBox="0 0 14 14" fill="none">
+          <path d="M11.6667 3.5L5.25 9.91667L2.33333 7"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+      }
+    } @else if (isChecked) {
+      <span class="radio-card__dot"></span>
+    }
+  </span>
+</label>

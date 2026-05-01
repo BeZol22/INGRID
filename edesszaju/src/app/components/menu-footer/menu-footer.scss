@@ -1,0 +1,39 @@
+// =============================================================================
+// app-menu-footer — generated from Figma "Dropdown menu footer" frame
+// 2 variants: button (full-width secondary CTA) / text (justified copy line)
+// Both share a top hairline so they sit cleanly beneath the menu items.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.menu-footer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-top: 1px solid var(--border-secondary);
+}
+
+// Button variant — 12px padding all around (per Figma)
+.menu-footer--button {
+  padding: var(--space-3);             // spacing-lg = 12
+
+  app-button { width: 100%; }
+}
+
+// Text variant — 12px vertical, 16px horizontal; left/right justified
+.menu-footer--text {
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);   // 12 / 16
+}
+
+.menu-footer__text {
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-quaternary);            // #695d53
+  white-space: nowrap;
+}

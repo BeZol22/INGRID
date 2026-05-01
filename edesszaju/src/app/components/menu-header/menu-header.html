@@ -1,0 +1,55 @@
+@let cls = rootClass();
+@let t = type();
+
+<div [class]="cls">
+  @switch (t) {
+    @case ('avatar') {
+      <div class="menu-header__avatar-block">
+        <div class="menu-header__avatar">
+          @if (avatarUrl(); as src) {
+            <img
+              class="menu-header__avatar-img"
+              [src]="src"
+              [alt]="avatarAlt()" />
+          }
+          @if (status(); as s) {
+            <span
+              class="menu-header__status"
+              [attr.data-status]="s"
+              aria-hidden="true"></span>
+          }
+        </div>
+        <div class="menu-header__text">
+          <span class="menu-header__title">{{ title() }}</span>
+          @if (subtitle(); as st) {
+            <span class="menu-header__subtitle">{{ st }}</span>
+          }
+        </div>
+      </div>
+    }
+    @case ('heading') {
+      <div class="menu-header__text">
+        <span class="menu-header__title">{{ title() }}</span>
+        @if (subtitle(); as st) {
+          <span class="menu-header__subtitle">{{ st }}</span>
+        }
+      </div>
+    }
+    @case ('subheading') {
+      <span class="menu-header__subheading">{{ title() }}</span>
+    }
+    @case ('search') {
+      <form class="menu-header__form" (submit)="onSubmit($event)">
+        <label class="menu-header__search">
+          <app-icon class="menu-header__search-icon" name="search" />
+          <input
+            class="menu-header__search-input"
+            type="search"
+            [value]="value()"
+            [placeholder]="placeholder()"
+            (input)="onInput($event)" />
+        </label>
+      </form>
+    }
+  }
+</div>

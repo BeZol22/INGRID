@@ -3,7 +3,7 @@
     <h1>Blog cikkek</h1>
     <p class="muted">{{ filtered().length }} / {{ data.posts().length }} cikk</p>
   </div>
-  <a class="btn" routerLink="/admin/blog/uj"><app-icon name="plus" /> Új cikk</a>
+  <app-button variant="primary" iconStart="plus" routerLink="/admin/blog/uj">Új cikk</app-button>
 </header>
 
 <div class="toolbar">
@@ -50,9 +50,9 @@
             </td>
             <td class="muted">{{ p.publishedAt | date: 'mediumDate' : '' : 'hu' }}</td>
             <td class="actions">
-              <a class="btn ghost sm" [routerLink]="['/admin/blog', p.id]">Szerkeszt</a>
-              <button class="btn ghost sm" type="button" (click)="duplicate(p.id)">Másol</button>
-              <button class="btn danger sm" type="button" (click)="remove(p)">Töröl</button>
+              <app-button variant="secondary" size="sm" [routerLink]="['/admin/blog', p.id]">Szerkeszt</app-button>
+              <app-button variant="secondary" size="sm" (clicked)="duplicate(p.id)">Másol</app-button>
+              <app-button variant="primary" color="destructive" size="sm" (clicked)="remove(p)">Töröl</app-button>
             </td>
           </tr>
         }

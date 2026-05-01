@@ -1,0 +1,76 @@
+// =============================================================================
+// app-table-cell — generated from Figma "Table cell" master frame
+// Generic body-cell wrapper. Handles cell-level concerns (padding, height,
+// row separator, hover/selected tint, alignment) and projects whatever
+// content the consumer needs — text, avatar, badge, tag, action buttons,
+// progress bar, etc. via slotted children.
+//
+// Heights from Figma: sm 64px / md 72px (taller than header cells).
+//
+// Conventions:
+//   <ng-content select="[leading]" />  — optional leading slot, used when a
+//                                        cell starts with a checkbox/avatar
+//   <ng-content />                     — main content
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.table-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);                              // 12 between leading + content
+  height: 64px;
+  background: var(--bg-primary);                    // #fff9f4
+  border-bottom: 1px solid var(--border-secondary); // row separator
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+  transition: background-color 0.12s ease;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.table-cell--sm {
+  height: 64px;
+  padding: var(--space-4) var(--space-5);           // 16 / 20
+}
+
+.table-cell--md {
+  height: 72px;
+  padding: var(--space-4) var(--space-6);           // 16 / 24
+}
+
+// ---------------------------------------------------------------------------
+// Alignment (applies to the projected content slot)
+// ---------------------------------------------------------------------------
+.table-cell--align-start  { justify-content: flex-start;  text-align: left; }
+.table-cell--align-center { justify-content: center;      text-align: center; }
+.table-cell--align-end    { justify-content: flex-end;    text-align: right; }
+
+// ---------------------------------------------------------------------------
+// Hover / selected — row tint
+// ---------------------------------------------------------------------------
+.table-cell:hover,
+.table-cell.is-selected {
+  background: var(--bg-secondary);                  // #fff9f4 / #fdf5f6 alt
+}
+
+// ---------------------------------------------------------------------------
+// Slots
+// ---------------------------------------------------------------------------
+.table-cell__leading {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.table-cell__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);                              // default gap between
+                                                    // multiple inline pieces
+                                                    // (e.g. value + trend tag)
+  min-width: 0;
+}

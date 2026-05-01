@@ -83,14 +83,6 @@ nav {
   margin-top: auto;
   display: grid;
   gap: 0.5rem;
-
-  .btn.ghost {
-    background: transparent;
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.18);
-
-    &:hover { background: rgba(255, 255, 255, 0.08); }
-  }
 }
 
 .back-link {

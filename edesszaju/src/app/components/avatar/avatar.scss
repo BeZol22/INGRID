@@ -1,0 +1,132 @@
+// =============================================================================
+// app-avatar — generated from Figma "Avatar" frame
+// Circular profile image with optional initials fallback, an outer border
+// chrome variant, and a status indicator dot (online green / offline gray).
+//
+// Sizes match Figma's standard avatar scale:
+//   xxs 16 · xs 24 · sm 32 · md 40 · lg 48 · xl 56
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.avatar {
+  --_size: 40px;                                   // md
+  --_status-size: 12px;
+  --_status-border: 1.5px;
+  --_initials-fs: var(--text-md-size);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_size);
+  height: var(--_size);
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.avatar--xxs { --_size: 16px; --_status-size: 6px;  --_initials-fs: 9px; }
+.avatar--xs  { --_size: 24px; --_status-size: 8px;  --_initials-fs: var(--text-xs-size); }
+.avatar--sm  { --_size: 32px; --_status-size: 10px; --_initials-fs: var(--text-sm-size); }
+.avatar--md  { --_size: 40px; --_status-size: 12px; --_initials-fs: var(--text-md-size); }
+.avatar--lg  { --_size: 48px; --_status-size: 14px; --_initials-fs: var(--text-lg-size); }
+.avatar--xl  { --_size: 56px; --_status-size: 16px; --_initials-fs: var(--text-xl-size); }
+
+// ---------------------------------------------------------------------------
+// Inner wrapping — image clip + 0.5px translucent inner border
+// ---------------------------------------------------------------------------
+.avatar__wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 9999px;
+  border: 0.5px solid rgba(0, 0, 0, 0.16);
+  background: var(--bg-tertiary);                  // empty-state surface
+}
+
+.avatar__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.avatar__initials {
+  font-family: var(--font-body);
+  font-size: var(--_initials-fs);
+  line-height: 1;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+// ---------------------------------------------------------------------------
+// Bordered variant — outer page-bg ring with a small drop shadow + extra
+// inset border. Matches Figma `border = true`.
+// ---------------------------------------------------------------------------
+.avatar__outer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 1px;
+  border-radius: 9999px;
+  background: var(--bg-page);
+  border: 0.75px solid var(--border-secondary-alt, rgba(0, 0, 0, 0.1));
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.avatar__outer .avatar__wrap {
+  border: 1px solid var(--fg-white);
+  outline: 0.5px solid rgba(0, 0, 0, 0.16);
+  outline-offset: -0.5px;
+}
+
+.avatar__inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.avatar__inner .avatar__img {
+  width: 100%;
+  height: 100%;
+}
+
+// ---------------------------------------------------------------------------
+// Status indicator — bottom-right colored dot with page-bg ring
+// ---------------------------------------------------------------------------
+.avatar__status {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: var(--_status-size);
+  height: var(--_status-size);
+  border-radius: 9999px;
+  border: var(--_status-border) solid var(--bg-page);
+  box-sizing: content-box;
+  background: var(--color-neutral-300, #bdb3a9);   // offline default
+}
+
+.avatar--status-online .avatar__status {
+  background: var(--fg-success-secondary, #22c55e);
+}
+
+.avatar--status-offline .avatar__status {
+  background: var(--fg-quaternary, #9f9185);
+}

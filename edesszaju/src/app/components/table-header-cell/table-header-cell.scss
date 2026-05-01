@@ -1,0 +1,67 @@
+// =============================================================================
+// app-table-header-cell — generated from Figma "Table header cell" frame
+// Header-row cell composing an optional leading checkbox and an optional
+// <app-table-header-label>. Uses host-level padding/border so the component
+// can sit directly inside a CSS-Grid based table layout.
+//
+// Sizes (height x px):
+//   sm — 40, padding 8 vertical / 20 horizontal
+//   md — 44, padding 12 vertical / 24 horizontal
+//
+// An "empty" cell (no label, no checkbox) collapses to a fixed 68px width
+// so it can serve as a narrow row-action column.
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.table-header-cell {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--bg-primary);                    // #fff9f4
+  border-bottom: 1px solid var(--border-secondary); // #d5cec7
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.table-header-cell--sm {
+  height: 40px;
+  max-height: 40px;
+  padding: var(--space-2) var(--space-5);          // 8 / 20
+}
+
+.table-header-cell--md {
+  height: 44px;
+  max-height: 44px;
+  padding: var(--space-3) var(--space-6);          // 12 / 24
+}
+
+// Gap is added only when the cell has both a checkbox and a label
+.table-header-cell:has(.table-header-cell__checkbox):has(.table-header-cell__label) {
+  gap: var(--space-3);                              // 12
+}
+
+// ---------------------------------------------------------------------------
+// Empty cell (e.g. a narrow column reserved for row-actions)
+// ---------------------------------------------------------------------------
+.table-header-cell--empty {
+  width: 68px;
+  padding: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Pieces
+// ---------------------------------------------------------------------------
+.table-header-cell__checkbox {
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+.table-header-cell__label {
+  display: inline-flex;
+  flex-shrink: 0;
+}

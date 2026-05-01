@@ -4,7 +4,7 @@
     <h1>{{ existing() ? 'Cukrászda szerkesztése' : 'Új cukrászda' }}</h1>
   </div>
   @if (existing(); as e) {
-    <button class="btn danger" type="button" (click)="remove(e)">Törlés</button>
+    <app-button variant="primary" color="destructive" (clicked)="remove(e)">Törlés</app-button>
   }
 </header>
 
@@ -90,20 +90,18 @@
         (input)="website.set(asInput($event).value)" />
     </div>
     <div class="field full">
-      <label class="check">
-        <input
-          type="checkbox"
-          [checked]="featured()"
-          (change)="featured.set(asInput($event).checked)" />
-        Kiemelt cukrászda a főoldalon
-      </label>
+      <app-checkbox
+        size="md"
+        [checked]="featured()"
+        (checkedChange)="featured.set($event)"
+        label="Kiemelt cukrászda a főoldalon" />
     </div>
   </div>
 
   <footer class="form-foot">
-    <a routerLink="/admin/cukraszdak" class="btn ghost">Mégse</a>
-    <button class="btn" type="submit" [disabled]="!canSave()">
+    <app-button variant="secondary" routerLink="/admin/cukraszdak">Mégse</app-button>
+    <app-button variant="primary" type="submit" [disabled]="!canSave()">
       {{ existing() ? 'Mentés' : 'Létrehozás' }}
-    </button>
+    </app-button>
   </footer>
 </form>

@@ -1,0 +1,124 @@
+// =============================================================================
+// app-card — generated from Figma "Notification / content card" frame
+// General-purpose content card with optional image (top or left), title +
+// description, custom middle content, and a footer with inline or stacked
+// action buttons.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--bg-primary);              // #fff9f4
+  border: 1px solid var(--border-primary);    // #bdb3a9
+  border-radius: 12px;                        // radius-xl
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);  // shadow-xs
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Image handling
+// ---------------------------------------------------------------------------
+.card__image {
+  display: block;
+  object-fit: cover;
+}
+
+.card__image--top {
+  width: 100%;
+  height: 160px;                              // standard hero strip height
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.card__image--left {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+// ---------------------------------------------------------------------------
+// Inner wrapper — handles image-left flex layout
+// ---------------------------------------------------------------------------
+.card__inner {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 0;
+  padding: var(--space-4);                    // 16 (spacing-xl)
+  gap: var(--space-3);                        // 12 between image and body
+}
+
+.card--image-left.card--has-image .card__inner {
+  flex-direction: row;
+}
+
+.card--image-top.card--has-image .card__inner,
+.card--image-none .card__inner {
+  flex-direction: column;
+}
+
+// ---------------------------------------------------------------------------
+// Body — title + description + content + actions stacked vertically
+// ---------------------------------------------------------------------------
+.card__body {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);                        // 8 between title/desc/content
+}
+
+.card__title {
+  margin: 0;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-primary);                 // #562914 brown
+}
+
+.card__description {
+  margin: 0;
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);                // #544a42
+}
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  &:empty { display: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Actions footer — inline (side-by-side) or stacked (full-width vertical)
+// ---------------------------------------------------------------------------
+.card__actions {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);                        // 8 between buttons
+  margin-top: var(--space-1);                 // 4 above the actions
+
+  &:empty { display: none; }
+}
+
+.card--actions-inline .card__actions {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card--actions-stacked .card__actions {
+  flex-direction: column;
+
+  > * { width: 100%; }
+}

@@ -1,0 +1,111 @@
+// =============================================================================
+// app-pagination-button — generated from Figma "Pagination button group base"
+// frame. A single cell of a joined-toolbar pagination row. Cells share borders
+// with neighbours; the parent container provides the outer border + radius.
+//
+// Cell types:
+//   number        — page number "1"
+//   leading-icon  — ← Previous
+//   trailing-icon — Next →
+//   icon-only     — →
+// States: default / hover / active (current page) / focused / disabled
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.pagination-button {
+  appearance: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: var(--space-2);                   // 8 (default for icon/number)
+  margin: 0;
+  border: 0;
+  border-right: 1px solid var(--border-primary);
+  background: var(--bg-page);                // #f5ebd9 (track)
+  font: inherit;
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-secondary);              // #3f3731 (default)
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease,
+    box-shadow 0.12s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(.is-disabled),
+  &.is-active:not(.is-disabled) {
+    background: var(--bg-primary-hover);     // gold #e9d09a
+    color: var(--text-secondary-hover);      // #2b2622
+  }
+
+  &:focus-visible {
+    background: var(--bg-primary-hover);
+    color: var(--text-secondary-hover);
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 6px var(--focus-ring);
+    z-index: 1;                              // raise above neighbour borders
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Type-specific layout
+// ---------------------------------------------------------------------------
+.pagination-button--number {
+  min-width: 36px;
+  color: var(--text-quaternary);             // #695d53 (lighter when default)
+
+  &:hover:not(.is-disabled),
+  &.is-active:not(.is-disabled),
+  &:focus-visible {
+    color: var(--text-secondary-hover);
+  }
+}
+
+.pagination-button--leading-icon,
+.pagination-button--trailing-icon {
+  gap: var(--space-1);                       // 4 between icon and label
+  padding: var(--space-2) var(--space-3);    // 8 / 12
+}
+
+.pagination-button--icon-only {
+  // Inherits default 8px padding; min 36×36 enforced via min-height
+  min-width: 36px;
+}
+
+// ---------------------------------------------------------------------------
+// Icon + label children
+// ---------------------------------------------------------------------------
+.pagination-button__icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.pagination-button__label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-0-5);               // 2 (matches Figma text-padding)
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pagination-button { transition: none; }
+}

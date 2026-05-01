@@ -1,0 +1,18 @@
+@let open = isOpen();
+
+<div class="context-menu__target" (contextmenu)="onContextMenu($event)">
+  <ng-content select="[target]" />
+</div>
+
+@if (open) {
+  <div
+    #panel
+    class="context-menu__panel"
+    [style]="panelStyle()"
+    [style.--_x.px]="x()"
+    [style.--_y.px]="y()"
+    role="menu"
+    (click)="onPanelClick($event)">
+    <ng-content />
+  </div>
+}

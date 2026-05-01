@@ -1,0 +1,142 @@
+// =============================================================================
+// app-cta-section — generated from Figma "CTA section" master frame
+// Marketing-section shell. Provides the chrome (theme background, vertical
+// padding, max-width container, alignment) and named slots for composable
+// content. The Figma frame shows ~30 compositions (Simple centered/left,
+// Card, Split image, iPhone/Screen mockups, Abstract images, Quote split,
+// at default and brand themes) — those are page-level layouts that
+// consumers compose using this shell + existing primitives.
+//
+// Slots (in render order):
+//   [overline]    — small badge or supporting label
+//   [heading]     — main display heading
+//   [description] — subtitle copy
+//   [actions]     — CTA button row
+//   default       — additional inline content
+//   [trailing]    — sibling block (image/mockup/logos) outside the text column
+// =============================================================================
+
+:host {
+  display: block;
+}
+
+.cta-section {
+  --_pad-y: var(--space-16);                       // 64 default
+  --_max-width: 768px;                             // width-xl
+
+  width: 100%;
+  padding: var(--_pad-y) var(--space-8);           // 64 / 32 (container-padding-desktop)
+  background: var(--bg-primary);
+  color: var(--text-primary);                      // #562914 brown
+  font-family: var(--font-body);
+
+  @media (max-width: 768px) {
+    --_pad-y: var(--space-12);                     // 48 mobile
+    padding-left: var(--space-4);                  // 16 (container-padding-mobile)
+    padding-right: var(--space-4);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Themes
+// ---------------------------------------------------------------------------
+.cta-section--theme-brand {
+  background: var(--bg-brand-section, #562914);    // dark brown
+  color: var(--text-primary-on-brand, #ffead5);    // warm cream
+
+  ::ng-deep [heading] { color: inherit; }
+  ::ng-deep [description] { color: var(--text-tertiary-on-brand, #fbebee); }
+}
+
+// ---------------------------------------------------------------------------
+// Card variant — rounded inner panel sitting on the page background
+// ---------------------------------------------------------------------------
+.cta-section--card {
+  background: transparent;
+  padding: 0;
+}
+
+.cta-section--card .cta-section__container {
+  background: var(--bg-primary);
+  border-radius: var(--space-4);                   // 16 (radius-2xl)
+  padding: var(--space-12) var(--space-8);         // 48 / 32
+}
+
+.cta-section--card.cta-section--theme-brand .cta-section__container {
+  background: var(--bg-brand-section, #562914);
+  color: var(--text-primary-on-brand, #ffead5);
+}
+
+// ---------------------------------------------------------------------------
+// Container — limits content width and centers it
+// ---------------------------------------------------------------------------
+.cta-section__container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);                             // 32
+  width: 100%;
+  max-width: 1280px;                               // container-max-width-desktop
+  margin: 0 auto;
+  align-items: center;
+}
+
+// Content column max-widths (Figma axes)
+.cta-section--max-sm  .cta-section__content { max-width: 480px; }
+.cta-section--max-md  .cta-section__content { max-width: 560px; }
+.cta-section--max-lg  .cta-section__content { max-width: 640px; }
+.cta-section--max-xl  .cta-section__content { max-width: 768px; }
+.cta-section--max-full .cta-section__content { max-width: none; flex: 1 1 auto; }
+
+// ---------------------------------------------------------------------------
+// Content column — vertical stack of overline / heading / description / actions
+// ---------------------------------------------------------------------------
+.cta-section__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);                             // 20 (spacing-2xl)
+  width: 100%;
+}
+
+// Alignment
+.cta-section--align-center {
+  text-align: center;
+
+  .cta-section__container { justify-content: center; }
+  .cta-section__content { margin-inline: auto; align-items: center; }
+}
+
+.cta-section--align-left {
+  text-align: left;
+
+  .cta-section__container { justify-content: flex-start; }
+  .cta-section__content { align-items: flex-start; }
+}
+
+// ---------------------------------------------------------------------------
+// Slot conventions — keep typography decisions out of the shell. Consumers
+// pass headings + paragraphs with display fonts already applied.
+// ---------------------------------------------------------------------------
+::ng-deep .cta-section [heading] {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--display-md-size, 36px);
+  line-height: var(--display-md-lh, 44px);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+::ng-deep .cta-section [description] {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-xl-size, 20px);
+  line-height: var(--text-xl-lh, 30px);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+::ng-deep .cta-section [actions] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}

@@ -1,0 +1,135 @@
+// =============================================================================
+// app-button-group-item — generated from Figma "Button group base" frame
+// Single button used inside a segmented button group (toolbars, formatting
+// strips, view toggles). Always toggleable — exposes `aria-pressed`. Designed
+// to be composed into a connected group where adjacent items share borders.
+//
+// Icon modes:
+//   none    — text only
+//   leading — text with a leading icon (defaults to a hollow circle ring)
+//   dot     — text with a leading 8px filled green dot (e.g. status pill)
+//   only    — icon only (square hit area, label promoted to aria-label)
+//
+// Sizes:
+//   sm — 32 tall, 12px padding, text-sm
+//   md — 36 tall, 16px padding, text-sm
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.button-group-item {
+  --_pad-y: var(--space-2);                         // 8 (sm)
+  --_pad-x: var(--space-3);                         // 12 (sm)
+  --_dot-size: 8px;
+  --_icon-size: 16px;
+  --_radius: var(--space-1-5);                      // 6 (radius-sm)
+
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);                              // 8 between leading / label
+  padding: var(--_pad-y) var(--_pad-x);
+  border: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-secondary);                     // #3f3731
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--_radius);
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease,
+    box-shadow 0.12s ease;
+
+  &:focus { outline: none; }
+
+  &:hover:not(.is-disabled):not(.is-current) {
+    background: var(--bg-primary-hover);            // #e9d09a (gold)
+    color: var(--text-secondary-hover, var(--text-secondary));
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--bg-page),
+      0 0 0 4px var(--focus-ring);
+  }
+
+  &.is-current {
+    background: var(--bg-primary-hover);            // selected = pressed = gold
+  }
+
+  &.is-disabled,
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--text-quaternary);
+    pointer-events: none;
+
+    .button-group-item__ring {
+      border-color: var(--fg-quaternary);
+      opacity: 0.5;
+    }
+
+    .button-group-item__dot {
+      opacity: 0.5;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.button-group-item--md {
+  --_pad-y: var(--space-2);
+  --_pad-x: var(--space-4);                         // 16
+  --_icon-size: 20px;
+}
+
+// ---------------------------------------------------------------------------
+// Icon-only — square hit area, drop the gap
+// ---------------------------------------------------------------------------
+.button-group-item--icon-only {
+  gap: 0;
+  padding: var(--_pad-y);
+  aspect-ratio: 1;
+  justify-content: center;
+}
+
+// ---------------------------------------------------------------------------
+// Pieces
+// ---------------------------------------------------------------------------
+.button-group-item__label {
+  white-space: nowrap;
+}
+
+.button-group-item__icon {
+  display: inline-flex;
+  font-size: var(--_icon-size);
+  line-height: 0;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.button-group-item__ring {
+  display: inline-block;
+  width: var(--_dot-size);
+  height: var(--_dot-size);
+  border-radius: 9999px;
+  border: 1.5px solid var(--fg-quaternary);
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.button-group-item__dot {
+  display: inline-block;
+  width: var(--_dot-size);
+  height: var(--_dot-size);
+  border-radius: 9999px;
+  background: var(--fg-success-secondary);          // #22c55e
+  flex-shrink: 0;
+}

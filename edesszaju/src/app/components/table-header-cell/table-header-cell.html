@@ -1,0 +1,35 @@
+@let cls = rootClass();
+@let lbl = label();
+@let s = sort();
+@let helpTxt = helpText();
+@let helpSupp = helpSupportingText();
+@let showCheckbox = checkbox();
+@let isChecked = checked();
+@let isIndet = indeterminate();
+@let isDisabled = disabled();
+@let cbAria = checkboxAriaLabel();
+
+<div [class]="cls" role="columnheader">
+  @if (showCheckbox) {
+    <app-checkbox
+      class="table-header-cell__checkbox"
+      type="checkbox"
+      size="md"
+      [checked]="isChecked"
+      [indeterminate]="isIndet"
+      [disabled]="isDisabled"
+      [ariaLabel]="cbAria"
+      (checkedChange)="onCheckedChange($event)" />
+  }
+
+  @if (lbl) {
+    <app-table-header-label
+      class="table-header-cell__label"
+      [label]="lbl"
+      [sort]="s"
+      [helpText]="helpTxt"
+      [helpSupportingText]="helpSupp"
+      [disabled]="isDisabled"
+      (sortChange)="onSortChange($event)" />
+  }
+</div>

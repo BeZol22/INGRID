@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { PostCard } from '../../components/post-card';
+import { PostCard } from '../../components/post-card/post-card';
 
 @Component({
   selector: 'page-blog-list',

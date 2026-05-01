@@ -2,14 +2,15 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DataService } from '../../services/data.service';
-import { ShopCard } from '../../components/shop-card';
+import { ShopCard } from '../../components/shop-card/shop-card';
+import { Button } from '../../components/button/button';
 import { PriceRange } from '../../models';
 
 type SortKey = 'rating' | 'name' | 'newest';
 
 @Component({
   selector: 'page-shops-list',
-  imports: [ShopCard],
+  imports: [ShopCard, Button],
   templateUrl: './shops-list.html',
   styleUrl: './shops-list.scss',
 })

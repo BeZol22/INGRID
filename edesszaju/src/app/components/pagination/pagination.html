@@ -1,0 +1,213 @@
+@let cls = rootClass();
+@let layoutKey = layout();
+@let current = currentPage();
+@let canPrev = hasPrev();
+@let canNext = hasNext();
+@let prevLabel = previousLabel();
+@let nxtLabel = nextLabel();
+@let pageText = pageLabelText();
+@let cellList = cells();
+@let pageShape = shape();
+@let psOptions = pageSizeOptions();
+@let psValue = pageSize();
+@let psDisplay = currentPageSizeLabel();
+
+<nav [class]="cls" aria-label="Pagination">
+  @switch (layoutKey) {
+    @case ('page-default') {
+      <ng-container *ngTemplateOutlet="rowWithLinks" />
+    }
+    @case ('page-minimal') {
+      <ng-container *ngTemplateOutlet="rowWithLinks" />
+    }
+    @case ('card-default') {
+      <ng-container *ngTemplateOutlet="rowWithLinks" />
+    }
+
+    @case ('card-advanced') {
+      <ng-container *ngTemplateOutlet="rowWithButtons" />
+    }
+    @case ('card-advanced-center') {
+      <ng-container *ngTemplateOutlet="rowWithButtons" />
+    }
+
+    @case ('card-minimal-left') {
+      <ng-container *ngTemplateOutlet="rowMinimal; context: { side: 'left' }" />
+    }
+    @case ('card-minimal-center') {
+      <ng-container *ngTemplateOutlet="rowMinimal; context: { side: 'center' }" />
+    }
+    @case ('card-minimal-right') {
+      <ng-container *ngTemplateOutlet="rowMinimal; context: { side: 'right' }" />
+    }
+
+    @case ('card-buttons-left') {
+      <ng-container *ngTemplateOutlet="rowButtonGroup" />
+    }
+    @case ('card-buttons-right') {
+      <ng-container *ngTemplateOutlet="rowButtonGroup" />
+    }
+  }
+</nav>
+
+<!-- ============================================================
+     Layout: text-link prev / numbers / text-link next
+     ============================================================ -->
+<ng-template #rowWithLinks>
+  <button
+    type="button"
+    class="pagination__link"
+    [disabled]="!canPrev"
+    (click)="onPrev()">
+    <app-icon name="arrow-left" class="pagination__link-icon" />
+    <span>{{ prevLabel }}</span>
+  </button>
+
+  <ol class="pagination__numbers">
+    @for (cell of cellList; track $index) {
+      <li>
+        @if (cell === 'ellipsis') {
+          <span class="pagination__ellipsis" aria-hidden="true">…</span>
+        } @else {
+          <app-pagination-item
+            [page]="cell"
+            [shape]="pageShape"
+            [active]="cell === current"
+            [ariaLabel]="'Go to page ' + cell"
+            (clicked)="goTo(cell)" />
+        }
+      </li>
+    }
+  </ol>
+
+  <button
+    type="button"
+    class="pagination__link"
+    [disabled]="!canNext"
+    (click)="onNext()">
+    <span>{{ nxtLabel }}</span>
+    <app-icon name="arrow-right" class="pagination__link-icon" />
+  </button>
+</ng-template>
+
+<!-- ============================================================
+     Layout: outlined button prev / numbers / outlined button next
+     ============================================================ -->
+<ng-template #rowWithButtons>
+  <app-button
+    variant="secondary"
+    color="brand"
+    size="md"
+    iconStart="arrow-left"
+    [disabled]="!canPrev"
+    (clicked)="onPrev()">
+    {{ prevLabel }}
+  </app-button>
+
+  <ol class="pagination__numbers">
+    @for (cell of cellList; track $index) {
+      <li>
+        @if (cell === 'ellipsis') {
+          <span class="pagination__ellipsis" aria-hidden="true">…</span>
+        } @else {
+          <app-pagination-item
+            [page]="cell"
+            [shape]="pageShape"
+            [active]="cell === current"
+            [ariaLabel]="'Go to page ' + cell"
+            (clicked)="goTo(cell)" />
+        }
+      </li>
+    }
+  </ol>
+
+  <app-button
+    variant="secondary"
+    color="brand"
+    size="md"
+    iconEnd="arrow-right"
+    [disabled]="!canNext"
+    (clicked)="onNext()">
+    {{ nxtLabel }}
+  </app-button>
+</ng-template>
+
+<!-- ============================================================
+     Layout: "Page X of Y" + page-size select + prev/next text-links
+     side = 'left' | 'center' | 'right'
+     ============================================================ -->
+<ng-template #rowMinimal let-side="side">
+  <div class="pagination__minimal pagination__minimal--{{ side }}">
+    <div class="pagination__status">
+      <span class="pagination__status-text">{{ pageText }}</span>
+      @if (psOptions.length) {
+        <app-select
+          size="sm"
+          [value]="psValue != null ? psValue.toString() : null"
+          [displayValue]="psDisplay"
+          (valueChange)="onPageSizeChange($event)">
+          @for (option of psOptions; track option) {
+            <button
+              type="button"
+              class="pagination__ps-option"
+              (click)="onPageSizeChange(option.toString())">
+              {{ option }} {{ pageSizeUnit() }}
+            </button>
+          }
+        </app-select>
+      }
+    </div>
+
+    <div class="pagination__minimal-actions">
+      <button
+        type="button"
+        class="pagination__link-btn"
+        [disabled]="!canPrev"
+        (click)="onPrev()">
+        {{ prevLabel }}
+      </button>
+      <button
+        type="button"
+        class="pagination__link-btn"
+        [disabled]="!canNext"
+        (click)="onNext()">
+        {{ nxtLabel }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- ============================================================
+     Layout: joined-toolbar << < page-label > >>
+     ============================================================ -->
+<ng-template #rowButtonGroup>
+  <div class="pagination__group">
+    <app-pagination-button
+      type="icon-only"
+      icon="chevron-left-double"
+      ariaLabel="First page"
+      [disabled]="!canPrev"
+      (clicked)="onFirst()" />
+    <app-pagination-button
+      type="icon-only"
+      icon="chevron-left"
+      ariaLabel="Previous page"
+      [disabled]="!canPrev"
+      (clicked)="onPrev()" />
+
+    <span class="pagination__group-label">{{ pageText }}</span>
+
+    <app-pagination-button
+      type="icon-only"
+      icon="chevron-right"
+      ariaLabel="Next page"
+      [disabled]="!canNext"
+      (clicked)="onNext()" />
+    <app-pagination-button
+      type="icon-only"
+      icon="chevron-right-double"
+      ariaLabel="Last page"
+      [disabled]="!canNext"
+      (clicked)="onLast()" />
+  </div>
+</ng-template>

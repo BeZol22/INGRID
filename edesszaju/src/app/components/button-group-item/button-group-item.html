@@ -1,0 +1,61 @@
+@let cls = rootClass();
+@let txt = label();
+@let isDisabled = disabled();
+@let isCurrent = current();
+@let aria = ariaLabel();
+@let glyph = iconName();
+@let iconOnly = isIconOnly();
+@let dot = hasLeadingDot();
+@let lead = hasLeadingIcon();
+@let link = routerLink();
+@let url = href();
+
+@if (link !== null) {
+  <a
+    [routerLink]="link"
+    [class]="cls"
+    [attr.aria-label]="aria ?? (iconOnly ? txt : null)"
+    [attr.aria-pressed]="isCurrent ? 'true' : 'false'"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else if (url !== null) {
+  <a
+    [attr.href]="isDisabled ? null : url"
+    [class]="cls"
+    [attr.aria-label]="aria ?? (iconOnly ? txt : null)"
+    [attr.aria-pressed]="isCurrent ? 'true' : 'false'"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else {
+  <button
+    type="button"
+    [class]="cls"
+    [disabled]="isDisabled"
+    [attr.aria-label]="aria ?? (iconOnly ? txt : null)"
+    [attr.aria-pressed]="isCurrent ? 'true' : 'false'"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </button>
+}
+
+<ng-template #content>
+  @if (dot) {
+    <span class="button-group-item__dot" aria-hidden="true"></span>
+  } @else if (lead) {
+    @if (glyph) {
+      <app-icon class="button-group-item__icon" [name]="glyph" />
+    } @else {
+      <span class="button-group-item__ring" aria-hidden="true"></span>
+    }
+  }
+
+  @if (!iconOnly) {
+    <span class="button-group-item__label">{{ txt }}</span>
+  }
+</ng-template>

@@ -1,0 +1,40 @@
+// =============================================================================
+// app-spinner — generated from Figma "Buttons/Button loading icon" frame
+// Reusable two-tone loading ring. Inherits color from `currentColor`, so it
+// adopts whatever text color the surrounding context uses.
+//
+// Sizes: sm (20px), md (24px). The size can also be overridden by setting the
+// `--_size` CSS custom property on the host (used by app-button to track the
+// per-button-size icon glyph size).
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.spinner {
+  display: inline-block;
+  // `--_size` is an explicit override (set by parents like app-button so the
+  // spinner tracks the host icon size). When unset, fall back to `--_default`
+  // which the size class supplies.
+  width: var(--_size, var(--_default, 20px));
+  height: var(--_size, var(--_default, 20px));
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-spin 0.7s linear infinite;
+  opacity: 0.85;
+}
+
+.spinner--sm { --_default: 20px; }
+.spinner--md { --_default: 24px; }
+
+@keyframes spinner-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation-duration: 1.6s; }
+}

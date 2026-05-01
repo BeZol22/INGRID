@@ -2,7 +2,8 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DataService } from '../../services/data.service';
-import { Icon } from '../../components/icon';
+import { Icon } from '../../components/icon/icon';
+import { Button } from '../../components/button/button';
 import { CakeShop } from '../../models';
 
 type GeoStatus = 'idle' | 'loading' | 'ok' | 'denied' | 'unavailable';
@@ -17,7 +18,7 @@ const CITY_FALLBACK: Record<string, Coords> = {
 
 @Component({
   selector: 'page-shops-map',
-  imports: [RouterLink, Icon],
+  imports: [RouterLink, Icon, Button],
   templateUrl: './shops-map.html',
   styleUrl: './shops-map.scss',
 })

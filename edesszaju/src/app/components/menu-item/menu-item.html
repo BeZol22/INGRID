@@ -1,0 +1,69 @@
+@let cls = rootClass();
+@let isDivider = divider();
+@let isDisabled = disabled();
+@let aria = ariaLabel() ?? label();
+@let link = routerLink();
+@let url = href();
+@let iconName = icon();
+@let sc = shortcut();
+
+@if (isDivider) {
+  <div class="menu-item menu-item--divider" role="separator" aria-hidden="true"></div>
+} @else {
+  <ng-template #content>
+    <span class="menu-item__inner">
+      <span class="menu-item__leading">
+        @if (iconName) {
+          <app-menu-icon type="icon" [icon]="iconName" />
+        } @else {
+          <ng-content select="[leading]" />
+        }
+      </span>
+      <span class="menu-item__label">{{ label() }}</span>
+      @if (sc) {
+        <span class="menu-item__shortcut">
+          <span class="menu-item__shortcut-text">{{ sc }}</span>
+        </span>
+      }
+      @if (chevron()) {
+        <app-icon class="menu-item__chevron" name="chevron-down" />
+      }
+    </span>
+  </ng-template>
+
+  @if (link !== null) {
+    <a
+      [routerLink]="link"
+      [class]="cls"
+      role="menuitem"
+      [attr.aria-label]="aria"
+      [attr.aria-disabled]="isDisabled ? 'true' : null"
+      [attr.tabindex]="isDisabled ? -1 : null"
+      (click)="onClick($event)">
+      <ng-container *ngTemplateOutlet="content" />
+    </a>
+  } @else if (url !== null) {
+    <a
+      [href]="url"
+      [attr.target]="target()"
+      [attr.rel]="rel()"
+      [class]="cls"
+      role="menuitem"
+      [attr.aria-label]="aria"
+      [attr.aria-disabled]="isDisabled ? 'true' : null"
+      [attr.tabindex]="isDisabled ? -1 : null"
+      (click)="onClick($event)">
+      <ng-container *ngTemplateOutlet="content" />
+    </a>
+  } @else {
+    <button
+      [type]="type()"
+      [class]="cls"
+      role="menuitem"
+      [disabled]="isDisabled"
+      [attr.aria-label]="aria"
+      (click)="onClick($event)">
+      <ng-container *ngTemplateOutlet="content" />
+    </button>
+  }
+}

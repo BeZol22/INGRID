@@ -1,0 +1,89 @@
+// =============================================================================
+// app-otp-input — generated from Figma "Verification code input field" frame
+// Composes app-otp-cell components into a row with auto-advance, backspace
+// navigation, paste-fill, and an optional XXX-XXX separator for 6-digit codes.
+//
+// Sizes are passed straight through to each cell. Layout gap follows Figma:
+//   sm = 8px (spacing-md), md/lg = 12px (spacing-lg).
+// =============================================================================
+
+:host {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.otp-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);             // 6 between label / row / message
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Label
+// ---------------------------------------------------------------------------
+.otp-input__label {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+// ---------------------------------------------------------------------------
+// Row of cells
+// ---------------------------------------------------------------------------
+.otp-input__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);               // 12 default (md/lg)
+}
+
+.otp-input--sm .otp-input__row {
+  gap: var(--space-2);               // 8 for sm
+}
+
+// ---------------------------------------------------------------------------
+// Group separator — visually matches the cell's display font
+// ---------------------------------------------------------------------------
+.otp-input__separator {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--color-neutral-300);   // utility-neutral-300 in Figma (#bdb3a9)
+  user-select: none;
+  // Match the cell glyph size so the dash sits at the same optical baseline
+  font-size: 60px;                   // display-xl (md/lg fallback)
+  line-height: 72px;
+}
+
+.otp-input--sm .otp-input__separator {
+  font-size: 48px;                   // display-lg
+  line-height: 60px;
+}
+
+.otp-input--md .otp-input__separator {
+  font-size: 48px;
+  line-height: 60px;
+}
+
+.otp-input--lg .otp-input__separator {
+  font-size: 60px;
+  line-height: 72px;
+}
+
+// ---------------------------------------------------------------------------
+// Hint / error message
+// ---------------------------------------------------------------------------
+.otp-input__msg {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+
+.otp-input__msg--error {
+  color: var(--text-error-primary);
+}

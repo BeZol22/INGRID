@@ -1,0 +1,135 @@
+// =============================================================================
+// app-breadcrumb-item — generated from Figma "Breadcrumb button base" frame
+// Single segment of a breadcrumb trail.
+//
+// Variants:
+//   text   — flat text/icon link (no padding, no hover bg)
+//   button — padded with hover-gold bg + radius
+//
+// Plus icon-only mode (when label is omitted but icon is set).
+// `current` marks the active/last segment with the brand color.
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.breadcrumb-item {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);                       // 4 between icon and label
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-quaternary);             // #695d53 (default)
+  font-family: var(--font-body);
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease,
+    box-shadow 0.12s ease;
+
+  &:focus { outline: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Button variant — padded with hover bg and radius
+// ---------------------------------------------------------------------------
+.breadcrumb-item--button {
+  padding: var(--space-1) var(--space-2);    // 4 / 8
+  border-radius: 6px;                        // radius-sm
+}
+
+.breadcrumb-item--button.breadcrumb-item--icon-only {
+  padding: var(--space-1);                   // 4 all around
+}
+
+// Hover (button variant) — gold bg
+.breadcrumb-item--button:hover:not(.is-disabled) {
+  background: var(--bg-primary-hover);       // #e9d09a
+  color: var(--text-secondary-hover);        // #2b2622
+}
+
+// Current (button variant) — already has gold bg
+.breadcrumb-item--button.is-current {
+  background: var(--bg-primary-hover);
+  color: var(--text-secondary-hover);
+}
+
+// Focus-visible (both variants)
+.breadcrumb-item:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--bg-page),
+    0 0 0 6px var(--focus-ring);
+  border-radius: 4px;                        // radius-xs for text variant focus halo
+}
+
+.breadcrumb-item--button:focus-visible {
+  border-radius: 6px;                        // matches the button radius
+}
+
+// ---------------------------------------------------------------------------
+// Text variant — hover changes color only
+// ---------------------------------------------------------------------------
+.breadcrumb-item--text:hover:not(.is-disabled) {
+  color: var(--text-secondary-hover);
+}
+
+.breadcrumb-item--text.is-current {
+  color: var(--text-brand-secondary);        // #98293d brand pink
+}
+
+// ---------------------------------------------------------------------------
+// Icon
+// ---------------------------------------------------------------------------
+.breadcrumb-item__icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  color: var(--fg-quaternary);               // #9f9185
+  transition: color 0.12s ease;
+}
+
+.breadcrumb-item:hover:not(.is-disabled) .breadcrumb-item__icon {
+  color: var(--fg-quaternary-hover);         // #827468
+}
+
+// Current — icon takes brand color in text variant
+.breadcrumb-item--text.is-current .breadcrumb-item__icon {
+  color: var(--fg-brand-primary);            // #d23955
+}
+
+// In button variant, current icon stays the hover color (matches Figma)
+.breadcrumb-item--button.is-current .breadcrumb-item__icon {
+  color: var(--fg-quaternary-hover);
+}
+
+// ---------------------------------------------------------------------------
+// Label
+// ---------------------------------------------------------------------------
+.breadcrumb-item__label {
+  display: inline-block;
+}
+
+// ---------------------------------------------------------------------------
+// Disabled
+// ---------------------------------------------------------------------------
+.breadcrumb-item.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breadcrumb-item,
+  .breadcrumb-item__icon { transition: none; }
+}

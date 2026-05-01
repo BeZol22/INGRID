@@ -1,0 +1,66 @@
+// =============================================================================
+// app-radio-group — generated from Figma "Radio group" frame
+// Layout + a11y wrapper around projected <app-radio-card> children.
+// Children manage their own checked state via name + [checked] + (checkedChange);
+// the group provides the label, supporting text, and `role="radiogroup"`.
+// =============================================================================
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);                      // 12 between header and items
+  font-family: var(--font-body);
+}
+
+// ---------------------------------------------------------------------------
+// Header — optional label + description
+// ---------------------------------------------------------------------------
+.radio-group__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);                    // 2 between label and description
+}
+
+.radio-group__label {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 500;
+  color: var(--text-secondary);             // #3f3731
+}
+
+.radio-group__required {
+  color: var(--text-brand-tertiary);
+  margin-left: 1px;
+}
+
+.radio-group__description {
+  font-size: var(--text-sm-size);
+  line-height: var(--text-sm-lh);
+  font-weight: 400;
+  color: var(--text-tertiary);              // #544a42
+}
+
+// ---------------------------------------------------------------------------
+// Items container — vertical stack by default; horizontal grid when needed
+// ---------------------------------------------------------------------------
+.radio-group__items {
+  display: flex;
+  gap: var(--space-3);                      // 12 (spacing-lg) between cards
+}
+
+.radio-group--vertical .radio-group__items {
+  flex-direction: column;
+}
+
+.radio-group--horizontal .radio-group__items {
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  // Each card flexes to share row width when laid out horizontally
+  > * { flex: 1 1 240px; min-width: 0; }
+}

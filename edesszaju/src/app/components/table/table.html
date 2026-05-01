@@ -1,0 +1,15 @@
+@let cls = rootClass();
+
+<section [class]="cls">
+  <header class="table-card__header">
+    <ng-content select="[header]" />
+  </header>
+
+  <div class="table-card__body" role="table">
+    <ng-content />
+  </div>
+
+  <footer class="table-card__footer">
+    <ng-content select="[footer]" />
+  </footer>
+</section>

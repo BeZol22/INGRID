@@ -1,0 +1,76 @@
+@let cls = rootClass();
+@let isLoggedIn = loggedIn();
+@let mobile = isMobile();
+@let avatarUrl = avatarSrc();
+@let name = userName();
+@let email = userEmail();
+@let lLabel = loginLabel();
+@let sLabel = signupLabel();
+@let lLink = loginRouterLink();
+@let sLink = signupRouterLink();
+
+<div [class]="cls">
+  @if (!isLoggedIn) {
+    <!-- Logged-out: Log in (secondary) + Sign up (primary).
+         On mobile both stack vertically and stretch full-width. -->
+    <app-button
+      class="nav-actions__btn"
+      variant="secondary"
+      size="md"
+      [fullWidth]="mobile"
+      [routerLink]="lLink"
+      (clicked)="onLogin($event)">
+      {{ lLabel }}
+    </app-button>
+
+    <app-button
+      class="nav-actions__btn"
+      variant="primary"
+      size="md"
+      [fullWidth]="mobile"
+      [routerLink]="sLink"
+      (clicked)="onSignup($event)">
+      {{ sLabel }}
+    </app-button>
+  } @else if (mobile) {
+    <!-- Logged-in mobile: avatar + name/email row + log-out icon -->
+    <button
+      type="button"
+      class="nav-actions__account"
+      (click)="onAccount($event)">
+      <app-avatar
+        [src]="avatarUrl"
+        [alt]="name"
+        size="md"
+        border
+        status="online" />
+      <span class="nav-actions__account-text">
+        <span class="nav-actions__account-name">{{ name }}</span>
+        @if (email) {
+          <span class="nav-actions__account-email">{{ email }}</span>
+        }
+      </span>
+    </button>
+
+    <app-button-utility
+      class="nav-actions__logout"
+      icon="log-out"
+      label="Log out"
+      hierarchy="tertiary"
+      size="sm"
+      (clicked)="onLogout($event)" />
+  } @else {
+    <!-- Logged-in desktop: avatar button only (opens dropdown menu) -->
+    <button
+      type="button"
+      class="nav-actions__avatar-btn"
+      aria-label="Account menu"
+      (click)="onAccount($event)">
+      <app-avatar
+        [src]="avatarUrl"
+        [alt]="name"
+        size="sm"
+        status="online" />
+    </button>
+  }
+</div>

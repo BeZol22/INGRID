@@ -1,0 +1,62 @@
+@let cls = rootClass();
+@let txt = label();
+@let showIcon = icon();
+@let glyph = iconName();
+@let bdg = badgeText();
+@let isDisabled = disabled();
+@let aria = ariaLabel();
+@let isCurrent = current();
+@let link = routerLink();
+@let url = href();
+
+@if (link !== null) {
+  <a
+    [routerLink]="link"
+    [class]="cls"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isCurrent ? 'page' : null"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else if (url !== null) {
+  <a
+    [attr.href]="isDisabled ? null : url"
+    [class]="cls"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isCurrent ? 'page' : null"
+    [attr.aria-disabled]="isDisabled ? 'true' : null"
+    [attr.tabindex]="isDisabled ? -1 : null"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </a>
+} @else {
+  <button
+    type="button"
+    [class]="cls"
+    [disabled]="isDisabled"
+    [attr.aria-label]="aria"
+    [attr.aria-current]="isCurrent ? 'page' : null"
+    role="tab"
+    [attr.aria-selected]="isCurrent ? 'true' : 'false'"
+    (click)="onClick($event)">
+    <ng-container *ngTemplateOutlet="content" />
+  </button>
+}
+
+<ng-template #content>
+  @if (showIcon) {
+    @if (glyph) {
+      <app-icon class="tab-button__icon" [name]="glyph" />
+    } @else {
+      <span class="tab-button__dot" aria-hidden="true"></span>
+    }
+  }
+
+  <span class="tab-button__label">{{ txt }}</span>
+
+  @if (bdg !== null) {
+    <span class="tab-button__badge" aria-hidden="true">{{ bdg }}</span>
+  }
+</ng-template>

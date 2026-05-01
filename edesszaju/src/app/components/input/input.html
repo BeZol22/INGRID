@@ -1,0 +1,54 @@
+@let cls = rootClass();
+@let id = resolvedId();
+@let lbl = label();
+@let h = hint();
+@let err = error();
+@let leadingIcon = icon();
+@let leadingTextValue = leadingText();
+@let isError = hasError();
+
+<div [class]="cls">
+  @if (lbl) {
+    <label class="input__label" [attr.for]="id">
+      {{ lbl }}@if (required()) { <span class="input__required" aria-hidden="true">*</span> }
+    </label>
+  }
+
+  <div class="input__wrap">
+    @if (leadingIcon) {
+      <app-icon class="input__icon" [name]="leadingIcon" />
+    }
+    @if (leadingTextValue) {
+      <span class="input__leading-text">{{ leadingTextValue }}</span>
+    }
+    <input
+      #input
+      class="input__field"
+      [id]="id"
+      [type]="type()"
+      [name]="name()"
+      [value]="value()"
+      [placeholder]="placeholder()"
+      [disabled]="disabled()"
+      [readOnly]="readonly()"
+      [required]="required()"
+      [attr.autocomplete]="autocomplete()"
+      [attr.inputmode]="inputMode()"
+      [attr.maxlength]="maxLength()"
+      [attr.minlength]="minLength()"
+      [attr.min]="min()"
+      [attr.max]="max()"
+      [attr.pattern]="pattern()"
+      [attr.aria-invalid]="isError ? 'true' : null"
+      [attr.aria-describedby]="(h || err) ? id + '-msg' : null"
+      (input)="onInput($event)"
+      (focus)="onFocus($event)"
+      (blur)="onBlur($event)" />
+  </div>
+
+  @if (err) {
+    <span class="input__msg input__msg--error" [id]="id + '-msg'">{{ err }}</span>
+  } @else if (h) {
+    <span class="input__msg" [id]="id + '-msg'">{{ h }}</span>
+  }
+</div>

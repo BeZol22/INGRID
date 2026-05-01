@@ -1,0 +1,20 @@
+@let cls = rootClass();
+
+<span [class]="cls" aria-hidden="true">
+  @if (showInnerDot()) {
+    <span class="step-icon__dot"></span>
+  }
+  @if (showNumber()) {
+    <span class="step-icon__number">{{ step() }}</span>
+  }
+  @if (isComplete()) {
+    <svg class="step-icon__check" viewBox="0 0 16 16" fill="none">
+      <path
+        d="M13.3333 4L6 11.3333L2.66667 8"
+        stroke="currentColor"
+        stroke-width="1.66"
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+  }
+</span>

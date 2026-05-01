@@ -1,0 +1,118 @@
+// =============================================================================
+// app-tag — generated from Figma "Tag" frame
+// Bordered pill that composes:
+//   [optional checkbox] [leading slot] [label] [optional close X | count]
+// 4 leading-visual variants from Figma (none / dot / country / avatar) are
+// expressed via the [leading] content slot — drop in any visual element.
+//
+// Sizes: sm (24h, text-xs) / md (24h, text-xs, more padding) / lg (28h, text-sm)
+// States: default / disabled / checked (via the embedded tag-checkbox)
+// =============================================================================
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.tag {
+  --_h: 24px;
+  --_pad-x: var(--space-1-5);        // 6 (spacing-sm)
+  --_pad-y: 3px;
+  --_gap: var(--space-1);            // 4 (spacing-xs)
+  --_fs: var(--text-xs-size);
+  --_lh: var(--text-xs-lh);
+  --_radius: 6px;                    // radius-sm
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_gap);
+  min-height: var(--_h);
+  padding: var(--_pad-y) var(--_pad-x);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--_radius);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--_fs);
+  line-height: var(--_lh);
+  color: var(--text-secondary);      // #3f3731
+  white-space: nowrap;
+  user-select: none;
+
+  // Tighten outer padding on the checkbox side so the box hugs the edge
+  &.tag--has-checkbox { padding-left: var(--space-1); }
+}
+
+// ---------------------------------------------------------------------------
+// Sizes
+// ---------------------------------------------------------------------------
+.tag--sm {
+  --_h: 24px;
+  --_pad-x: var(--space-1-5);        // 6
+  --_pad-y: 3px;
+  --_fs: var(--text-xs-size);
+  --_lh: var(--text-xs-lh);
+}
+
+.tag--md {
+  --_h: 24px;
+  --_pad-x: var(--space-2);          // 8
+  --_pad-y: 3px;
+  --_fs: var(--text-xs-size);
+  --_lh: var(--text-xs-lh);
+}
+
+.tag--lg {
+  --_h: 28px;
+  --_pad-x: var(--space-2);          // 8
+  --_pad-y: var(--space-1);          // 4
+  --_fs: var(--text-sm-size);
+  --_lh: var(--text-sm-lh);
+}
+
+// ---------------------------------------------------------------------------
+// Leading slot — collapses to nothing when no leading is projected
+// ---------------------------------------------------------------------------
+.tag__leading {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  &:empty { display: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Label
+// ---------------------------------------------------------------------------
+.tag__label {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ---------------------------------------------------------------------------
+// Trailing children — close + count are sized via the child component itself
+// ---------------------------------------------------------------------------
+.tag__close,
+.tag__count {
+  flex-shrink: 0;
+}
+
+// Pull the trailing close button slightly out toward the right edge so the
+// hover surface sits flush — matches the Figma trailing inset.
+.tag__close {
+  margin-right: -2px;
+}
+
+// ---------------------------------------------------------------------------
+// Disabled — soften the whole pill
+// ---------------------------------------------------------------------------
+.tag.is-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag { transition: none; }
+}

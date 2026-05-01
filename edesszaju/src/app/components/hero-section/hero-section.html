@@ -1,0 +1,17 @@
+@let cls = rootClass();
+
+<section [class]="cls">
+  <div class="hero-section__container">
+    <div class="hero-section__content">
+      <ng-content select="[overline]" />
+      <ng-content select="[heading]" />
+      <ng-content select="[description]" />
+      <ng-content select="[actions]" />
+      <ng-content />
+    </div>
+
+    <div class="hero-section__trailing">
+      <ng-content select="[trailing]" />
+    </div>
+  </div>
+</section>
