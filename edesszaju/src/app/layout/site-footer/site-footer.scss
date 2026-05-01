@@ -31,6 +31,8 @@
 .brand-icon {
   width: 1.6rem;
   height: 1.6rem;
+  // Align to optical centre of the capital "É" — see site-header for context.
+  transform: translateY(-0.2em);
 }
 
 .made-with {

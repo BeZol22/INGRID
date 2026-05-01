@@ -45,6 +45,11 @@
   color: var(--text-primary);
   text-decoration: none;
   margin-bottom: 1.5rem;
+
+  .logo-icon {
+    // Align to optical centre of "É" — script font's descenders skew geometry.
+    transform: translateY(-0.2em);
+  }
 }
 
 .field-error { margin-bottom: 1rem; }

@@ -38,6 +38,11 @@
   color: #fff;
   padding: 0 0.5rem 0.5rem;
 
+  .brand-icon {
+    // Align to optical centre of "É" — script font's descenders skew geometry.
+    transform: translateY(-0.2em);
+  }
+
   .tag {
     margin-left: auto;
     background: var(--primary);
